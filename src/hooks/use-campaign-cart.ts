@@ -88,7 +88,7 @@ export function useCampaignCart(
         }
 
         const minimumSpend =
-          freeShippingCampaign.FreeShippingCampaign.minimumSpend; // Already in euros
+          freeShippingCampaign.FreeShippingCampaign.minimumSpend / 100; // Convert from cents to euros
         const isEligible = originalTotal >= minimumSpend;
         const remainingAmount = isEligible ? 0 : minimumSpend - originalTotal;
 
@@ -180,7 +180,7 @@ export function useCampaignCart(
         }
 
         const minimumSpend =
-          freeShippingCampaign.FreeShippingCampaign.minimumSpend; // Already in euros
+          freeShippingCampaign.FreeShippingCampaign.minimumSpend / 100; // Convert from cents to euros
         const isEligible = originalTotal >= minimumSpend;
         const remainingAmount = isEligible ? 0 : minimumSpend - originalTotal;
 
@@ -248,7 +248,7 @@ export function useCampaignCart(
       }
 
       const minimumSpend =
-        freeShippingCampaign.FreeShippingCampaign.minimumSpend; // Already in euros
+        freeShippingCampaign.FreeShippingCampaign.minimumSpend / 100; // Convert from cents to euros
       const isEligible = cartTotal >= minimumSpend;
       const remainingAmount = isEligible ? 0 : minimumSpend - cartTotal;
 

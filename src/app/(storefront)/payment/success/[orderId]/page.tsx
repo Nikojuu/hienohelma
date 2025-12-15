@@ -161,13 +161,6 @@ export default async function PaymentSuccessPage({
                 </div>
               ))}
 
-              {/* Decorative separator */}
-              <div className="h-[1px] bg-gradient-to-r from-transparent via-rose-gold/20 to-transparent my-4" />
-
-              <div className="flex justify-between items-center font-primary text-lg md:text-xl font-bold text-charcoal">
-                <span>Yhteensä:</span>
-                <span>{formatPrice(order.totalAmount)}</span>
-              </div>
             </div>
           </div>
 
@@ -184,7 +177,7 @@ export default async function PaymentSuccessPage({
 
                 <h2 className="font-primary text-xl md:text-2xl font-semibold text-charcoal flex items-center gap-2 mb-6">
                   <Truck className="h-5 w-5 text-burnt-orange" />
-                  Toimitusmenetelmä
+                  Toimitus
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
@@ -294,6 +287,44 @@ export default async function PaymentSuccessPage({
                 </div>
               </div>
             )}
+
+            {/* Order Total */}
+            <div className="relative bg-cream/30 border border-rose-gold/10 p-6 md:p-8">
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-rose-gold/30" />
+              <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-rose-gold/30" />
+              <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-rose-gold/30" />
+              <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-rose-gold/30" />
+
+              <h2 className="font-primary text-xl md:text-2xl font-semibold text-charcoal mb-6">
+                Yhteensä
+              </h2>
+
+              <div className="space-y-3 font-secondary">
+                <div className="flex justify-between items-center text-charcoal/70">
+                  <span>Tuotteet:</span>
+                  <span>
+                    {formatPrice(
+                      order.OrderLineItems.reduce((sum, item) => sum + item.totalAmount, 0)
+                    )}
+                  </span>
+                </div>
+
+                {order.orderShipmentMethod && (
+                  <div className="flex justify-between items-center text-charcoal/70">
+                    <span>Toimitus:</span>
+                    <span>{formatPrice(order.orderShipmentMethod.price)}</span>
+                  </div>
+                )}
+
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-rose-gold/20 to-transparent my-2" />
+
+                <div className="flex justify-between items-center font-primary text-lg md:text-xl font-bold text-charcoal">
+                  <span>Maksettava yhteensä:</span>
+                  <span>{formatPrice(order.totalAmount)}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
