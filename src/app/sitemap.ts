@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 import { Category, Product } from "./utils/types";
-import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Get domain from store config with fallback

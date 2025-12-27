@@ -15,7 +15,7 @@ import {
   getStoreConfig,
   getSEOValue,
   SEO_FALLBACKS,
-} from "@/lib/actions/storeConfigActions";
+} from "@/lib/storeConfig";
 
 export async function generateMetadata({
   params,

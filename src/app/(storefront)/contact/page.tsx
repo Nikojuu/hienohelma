@@ -1,6 +1,6 @@
 import ContactForm from "@/components/Contactpage/ContactForm";
 import { Metadata } from "next";
-import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 import { SEO_ENABLED } from "@/app/utils/constants";
 
 export async function generateMetadata(): Promise<Metadata> {

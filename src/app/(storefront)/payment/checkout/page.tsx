@@ -2,7 +2,7 @@ import { PAYMENT_METHODS } from "@/app/utils/constants";
 import StripeCheckoutPage from "@/components/Checkout/StripeCheckoutPage";
 import { Metadata } from "next";
 import PaytrailCheckoutPage from "@/components/Checkout/PaytrailCheckoutPage";
-import { getStoreConfig } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig } from "@/lib/storeConfig";
 
 export const metadata: Metadata = {
   title: "Pupun Korvat | Tilaus",

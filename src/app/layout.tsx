@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { textPrimary, textSecondary } from "@/lib/fonts";
 import StickyNavbar from "@/components/Navigation/StickyNavbar";
-import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 import OrganizationSchema from "@/components/StructuredData/OrganizationSchema";
 import LocalBusinessSchema from "@/components/StructuredData/LocalBusinessSchema";
 import { GOOGLE_VERIFICATION, SEO_ENABLED } from "@/app/utils/constants";

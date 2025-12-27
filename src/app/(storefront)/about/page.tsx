@@ -2,7 +2,7 @@ import AboutBlock from "@/components/Aboutpage/AboutBlock";
 import { Metadata } from "next";
 import { AboutHero } from "@/components/Aboutpage/AboutHero";
 import { AboutCTA } from "@/components/Aboutpage/AboutCTA";
-import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 import { SEO_ENABLED } from "@/app/utils/constants";
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getStoreConfig } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig } from "@/lib/storeConfig";
 
 export async function generateMetadata(): Promise<Metadata> {
   try {

@@ -1,6 +1,6 @@
 import CartPage from "@/components/Cart/CartPage";
 import { Metadata } from "next";
-import { getStoreConfig } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig } from "@/lib/storeConfig";
 
 export const metadata: Metadata = {
   title: "Pupun Korvat | Ostoskori",

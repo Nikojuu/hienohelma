@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Metadata } from "next";
 import { ProductCarousel } from "@/components/Product/ProductCarousel";
 import { ApiResponseProductCardType } from "../utils/types";
-import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 import { SEO_ENABLED } from "../utils/constants";
 
 export async function generateMetadata(): Promise<Metadata> {
