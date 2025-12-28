@@ -4,28 +4,18 @@ import { Metadata, ResolvingMetadata } from "next";
 import ProductSchema from "@/components/StructuredData/ProductSchema";
 import BreadcrumbSchema from "@/components/StructuredData/BreadcrumbSchema";
 import { STORE_NAME, STORE_DOMAIN } from "@/app/utils/constants";
+import { storefront, NotFoundError } from "@/lib/storefront";
 
 const getProductDataFromApi = async (slug: string) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STOREFRONT_API_URL}/api/storefront/v1/product/${slug}`,
-    {
-      headers: {
-        "x-api-key": process.env.STOREFRONT_API_KEY || "",
-      },
-      cache: "no-store",
+  try {
+    const product = await storefront.products.getBySlug(slug, {});
+    return product;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      notFound();
     }
-  );
-
-  if (!res.ok) {
-    if (res.status === 404) {
-      notFound(); // Use Next.js notFound() to handle 404s
-    }
-    const errorData = await res.json();
-    throw new Error(errorData.error || "Failed to fetch product details");
+    throw error;
   }
-
-  const productData = await res.json();
-  return productData;
 };
 
 type Props = {
@@ -68,7 +58,11 @@ export async function generateMetadata(
   };
 }
 
-const ProductIdRoute = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const ProductIdRoute = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
   const { slug } = await params;
   const product = await getProductDataFromApi(slug);
 

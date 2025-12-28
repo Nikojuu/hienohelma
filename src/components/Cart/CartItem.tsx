@@ -3,11 +3,14 @@
 import { useCart } from "@/hooks/use-cart";
 import { X, Plus, Minus } from "lucide-react";
 import { getImageUrl, isSaleActive } from "@/lib/utils";
-import { ProductFromApi, ProductVariationFromApi } from "@/app/utils/types";
+import type {
+  ProductDetail,
+  ProductVariation,
+} from "@putiikkipalvelu/storefront-sdk";
 
 type CartItemProps = {
-  product: ProductFromApi;
-  variation?: ProductVariationFromApi;
+  product: ProductDetail;
+  variation?: ProductVariation;
   paidQuantity?: number;
   freeQuantity?: number;
 };

@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
-import { Category, Product } from "./utils/types";
-import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
+import { Category } from "./utils/types";
+import { getStoreConfig, getSEOValue } from "@/lib/storeConfig";
+import { storefront } from "@/lib/storefront";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Get domain from store config with fallback
@@ -12,26 +13,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Error fetching store config for sitemap:", error);
   }
 
-  // Fetch all products
+  // Fetch all products using SDK
   const fetchProducts = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_STOREFRONT_API_URL}/api/storefront/v1/filtered-products?slugs=all-products&page=1&pageSize=1000`,
+      const data = await storefront.products.filtered(
         {
-          headers: {
-            "x-api-key": process.env.STOREFRONT_API_KEY || "",
-          },
-          next: {
-            revalidate: 13600, // Revalidate every hour
-          },
+          slugs: ["all-products"],
+          page: 1,
+          pageSize: 1000,
+        },
+        {
+          next: { revalidate: 13600 }, // Revalidate every hour
         }
       );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
       return data.products;
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -71,9 +65,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchCategories(),
   ]);
 
-  const productUrls = products.map((product: Product) => ({
+  const productUrls = products.map((product) => ({
     url: `${domain}/product/${product.slug}`,
-    lastModified: product.createdAt,
+    lastModified: new Date(),
   }));
 
   const categoryUrls = categories.map((category: Category) => ({

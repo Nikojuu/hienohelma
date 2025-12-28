@@ -76,79 +76,6 @@ export type OrderData = {
 
   shipitData?: ShipitResponse;
 };
-// types.ts
-export interface ProductVariation {
-  id: string;
-  price?: number | null;
-  saleEndDate?: Date | null;
-  saleStartDate?: Date | null;
-  salePrice?: number | null;
-  salePercent?: string | null;
-  images: string[];
-  description?: string | null;
-  quantity: number | null;
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  images: string[];
-  slug: string;
-  metaTitle?: string | null;
-  metaDescription?: string | null;
-  createdAt?: Date;
-
-  quantity: number | null;
-  salePrice?: number | null;
-  salePercent?: string | null;
-  saleEndDate?: Date | null;
-  saleStartDate?: Date | null;
-  variations: ProductVariation[];
-}
-export interface ProductFromApi {
-  id: string;
-  name: string;
-  slug?: string;
-  images: string[];
-  price: number;
-  quantity: number | null;
-  description: string;
-  metaTitle?: string;
-  metaDescription?: string;
-  salePercent: string | null;
-  salePrice: number | null;
-  saleStartDate: Date | null;
-  saleEndDate: Date | null;
-  vatPercentage: number | null;
-  categories: {
-    id: string;
-    name: string;
-    slug: string;
-    parentId: string | null;
-  }[];
-  variations: {
-    id: string;
-    images: string[];
-    price: number;
-    description: string | null;
-    quantity: number | null;
-    salePercent: string | null;
-    salePrice: number | null;
-    saleStartDate: Date | null;
-    saleEndDate: Date | null;
-    options: {
-      value: string;
-      optionType: {
-        name: string;
-      };
-    }[];
-  }[];
-}
-
-// We can also define a type alias for the variation for easier use
-export type ProductVariationFromApi = ProductFromApi["variations"][0];
 
 export interface PriceInfo {
   currentPrice: number;
@@ -157,27 +84,6 @@ export interface PriceInfo {
   isOnSale: boolean;
 }
 
-export type ApiResponseProductCardType = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  images: string[];
-  salePrice: number | null;
-  salePercent: string | null;
-  saleEndDate: Date | null;
-  saleStartDate: Date | null;
-  slug: string;
-  quantity: number | null;
-  variations: {
-    id: string;
-    price: number | null;
-    saleEndDate: Date | null;
-    saleStartDate: Date | null;
-    salePrice: number | null;
-    salePercent: string | null;
-  }[];
-};
 export type ApiCategory = {
   id: string;
   name: string;

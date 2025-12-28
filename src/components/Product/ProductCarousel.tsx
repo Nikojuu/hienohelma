@@ -7,10 +7,10 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { ProductCard } from "../ProductCard";
-import { ApiResponseProductCardType } from "@/app/utils/types";
+import type { Product } from "@putiikkipalvelu/storefront-sdk";
 
 interface ProductCarouselProps {
-  products: ApiResponseProductCardType[];
+  products: Product[];
 }
 
 export function ProductCarousel({ products }: ProductCarouselProps) {

@@ -1,11 +1,11 @@
-import {
-  ApiResponseProductCardType,
-  PriceInfo,
-  ProductFromApi,
-  ProductVariationFromApi,
-} from "@/app/utils/types";
+import { PriceInfo } from "@/app/utils/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type {
+  Product,
+  ProductDetail,
+  ProductVariation,
+} from "@putiikkipalvelu/storefront-sdk";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -40,8 +40,8 @@ export function getImageUrl(
 // priceUtils.ts
 
 export const isSaleActive = (
-  startDate: Date | null | undefined,
-  endDate: Date | null | undefined
+  startDate: Date | string | null | undefined,
+  endDate: Date | string | null | undefined
 ): boolean => {
   // If no dates are set, sale is considered active
   if (!startDate && !endDate) {
@@ -71,7 +71,7 @@ export const isSaleActive = (
   return true;
 };
 
-export const getPriceInfo = (item: ApiResponseProductCardType): PriceInfo => {
+export const getPriceInfo = (item: Product): PriceInfo => {
   const convertToEuros = (cents: number | null): number | null =>
     cents !== null ? Number((cents / 100).toFixed(2)) : null;
 
@@ -118,8 +118,8 @@ export const getPriceInfo = (item: ApiResponseProductCardType): PriceInfo => {
 };
 
 export const getDisplayPriceSelectedProduct = (
-  product: ProductFromApi,
-  variation?: ProductVariationFromApi
+  product: ProductDetail,
+  variation?: ProductVariation
 ) => {
   if (variation) {
     // Handle variation-specific pricing logic

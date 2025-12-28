@@ -1,11 +1,11 @@
 import { CollectionPage, WithContext } from "schema-dts";
-import { ApiResponseProductCardType } from "@/app/utils/types";
+import type { Product } from "@putiikkipalvelu/storefront-sdk";
 import { STORE_DOMAIN } from "@/app/utils/constants";
 
 interface CollectionPageSchemaProps {
   name: string;
   description?: string;
-  products: ApiResponseProductCardType[];
+  products: Product[];
   categorySlug: string;
   totalCount?: number;
 }

@@ -2,14 +2,17 @@
 import { useTransition } from "react";
 import { Heart, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
-import { ProductFromApi, ProductVariationFromApi } from "@/app/utils/types";
+import type {
+  ProductDetail,
+  ProductVariation,
+} from "@putiikkipalvelu/storefront-sdk";
 import { addToWishlist } from "@/lib/actions/authActions";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 interface WishlistButtonProps {
-  product: ProductFromApi;
-  selectedVariation?: ProductVariationFromApi;
+  product: ProductDetail;
+  selectedVariation?: ProductVariation;
 }
 
 const WishlistButton = ({

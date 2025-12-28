@@ -5,9 +5,9 @@ import CategorySection from "@/components/Homepage/CategorySection";
 import { ProductCard } from "@/components/ProductCard";
 import { Metadata } from "next";
 import { ProductCarousel } from "@/components/Product/ProductCarousel";
-import { ApiResponseProductCardType } from "../utils/types";
 import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 import { SEO_ENABLED } from "../utils/constants";
+import { storefront } from "@/lib/storefront";
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
@@ -68,33 +68,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const revalidate = 3600;
 
-const getHomePageData = async (
-  take: number
-): Promise<{
-  latestProducts: ApiResponseProductCardType[];
-}> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STOREFRONT_API_URL || "https://putiikkipalvelu.fi"}/api/storefront/v1/latest-products?take=${take}`,
-    {
-      headers: {
-        "x-api-key": process.env.STOREFRONT_API_KEY || "",
-      },
-      next: { revalidate: 3600 },
-    }
-  );
-
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.error || "Failed to fetch products"); // Throw an error for the component to handle
-  }
-
-  const latestProducts: ApiResponseProductCardType[] = await res.json();
-
-  return { latestProducts };
-};
-
 export default async function Home() {
-  const { latestProducts } = await getHomePageData(6);
+  const latestProducts = await storefront.products.latest(6, {
+    next: { revalidate: 3600 },
+  });
 
   return (
     <main className="bg-warm-white">

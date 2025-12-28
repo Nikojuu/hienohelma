@@ -13,17 +13,16 @@ import { PriceDisplay } from "../PriceDisplay";
 import Breadcrumbs from "./Breadcrumbs";
 import { ImageSliderWithZoom } from "../imageSliderWithZoom";
 import { ImageSlider } from "../ImageSlider";
-import {
-  ProductFromApi,
+import type {
+  ProductDetail as ProductDetailType,
   ProductVariation,
-  ProductVariationFromApi,
-} from "@/app/utils/types";
+} from "@putiikkipalvelu/storefront-sdk";
 import WishlistButton from "./WishlistButton";
 
-const ProductDetail = ({ product }: { product: ProductFromApi }) => {
+const ProductDetail = ({ product }: { product: ProductDetailType }) => {
   const hasVariations = product.variations?.length > 0;
   const [selectedVariation, setSelectedVariation] = useState<
-    ProductVariationFromApi | undefined
+    ProductVariation | undefined
   >(hasVariations ? product.variations[0] : undefined);
 
   const handleVariationChange = (variationId: string) => {
@@ -48,7 +47,7 @@ const ProductDetail = ({ product }: { product: ProductFromApi }) => {
     : isSaleActive(product.saleStartDate, product.saleEndDate);
 
   const isOnSale = (
-    productOrVariation: ProductFromApi | ProductVariation
+    productOrVariation: ProductDetailType | ProductVariation
   ): boolean => {
     const { salePrice, price, saleStartDate, saleEndDate } = productOrVariation;
     if (salePrice == null || salePrice >= (price ?? 0)) return false;

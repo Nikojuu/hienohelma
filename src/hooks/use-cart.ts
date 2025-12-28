@@ -1,6 +1,9 @@
 "use client";
 
-import { ProductFromApi, ProductVariationFromApi } from "@/app/utils/types";
+import type {
+  ProductDetail,
+  ProductVariation,
+} from "@putiikkipalvelu/storefront-sdk";
 import { create } from "zustand";
 import {
   apiFetchCart,
@@ -12,9 +15,9 @@ import {
 } from "@/lib/actions/cartActions";
 
 export type CartItem = {
-  product: ProductFromApi;
+  product: ProductDetail;
   cartQuantity: number;
-  variation?: ProductVariationFromApi;
+  variation?: ProductVariation;
 };
 
 type CartState = {
@@ -26,8 +29,8 @@ type CartState = {
 
   // Cart operations (all call server actions)
   addItem: (
-    product: ProductFromApi,
-    variation?: ProductVariationFromApi
+    product: ProductDetail,
+    variation?: ProductVariation
   ) => Promise<void>;
 
   removeItem: (productId: string, variationId?: string) => Promise<void>;

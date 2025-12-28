@@ -1,5 +1,5 @@
 import { Store, WithContext } from "schema-dts";
-import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/actions/storeConfigActions";
+import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 
 export default async function LocalBusinessSchema() {
   try {

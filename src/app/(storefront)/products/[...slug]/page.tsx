@@ -1,8 +1,4 @@
-import {
-  ApiResponseProductCardType,
-  Category,
-  Product,
-} from "@/app/utils/types";
+import { Category } from "@/app/utils/types";
 import { PaginationComponent } from "@/components/Product/Pagination";
 import { SortOptions } from "@/components/Product/SortOptions";
 import { ProductCard } from "@/components/ProductCard";
@@ -11,11 +7,12 @@ import { Metadata } from "next";
 import { unstable_noStore as noStore } from "next/cache";
 import CollectionPageSchema from "@/components/StructuredData/CollectionPageSchema";
 import BreadcrumbSchema from "@/components/StructuredData/BreadcrumbSchema";
-import {
-  getStoreConfig,
-  getSEOValue,
-  SEO_FALLBACKS,
-} from "@/lib/storeConfig";
+import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
+import { storefront } from "@/lib/storefront";
+import type {
+  ProductSortOption,
+  Product,
+} from "@putiikkipalvelu/storefront-sdk";
 
 export async function generateMetadata({
   params,
@@ -103,39 +100,6 @@ const getCategoryMetadataFromApi = async (slug: string) => {
   const categoryData = await res.json();
   return categoryData;
 };
-type SortKey = "newest" | "price_asc" | "price_desc" | "popularity";
-
-const getProductsDataFromApi = async (
-  slugs: string[],
-  page: number,
-  pageSize: number,
-  sort: string
-) => {
-  const params = new URLSearchParams({
-    page: page.toString(),
-    pageSize: pageSize.toString(),
-    sort: sort,
-  });
-  slugs.forEach((slug) => params.append("slugs", slug));
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STOREFRONT_API_URL}/api/storefront/v1/sorted-products?${params.toString()}`,
-    {
-      headers: {
-        "x-api-key": process.env.STOREFRONT_API_KEY || "",
-      },
-      cache: "no-store",
-    }
-  );
-
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.error || "Failed to fetch products");
-  }
-
-  const productPageData = await res.json();
-  return productPageData;
-};
 
 const ProductsPage = async ({
   params,
@@ -150,19 +114,19 @@ const ProductsPage = async ({
   const slugs = slug ?? ["all-products"];
   const pageSize = 12;
   const currentPage = Number(resolvedSearchParams.page) || 1;
-  const sort = (resolvedSearchParams.sort as SortKey) || "newest";
+  const sort = (resolvedSearchParams.sort as ProductSortOption) || "newest";
 
   // Get store config from backend
   const config = await getStoreConfig();
   const domain = getSEOValue(config.seo.domain, SEO_FALLBACKS.domain);
 
-  // Single API call - totalCount included in response
-  const productPageData = await getProductsDataFromApi(
+  // Fetch products using SDK
+  const productPageData = await storefront.products.sorted({
     slugs,
-    currentPage,
+    page: currentPage,
     pageSize,
-    sort
-  );
+    sort,
+  });
 
   const products: Product[] = productPageData?.products as Product[];
   const categoryName = productPageData?.name;
@@ -190,7 +154,7 @@ const ProductsPage = async ({
           <CollectionPageSchema
             name={categoryName || "Tuotteet"}
             description={`Tutustu ${config.store.name} verkkokaupan tuotteisiin kategoriassa ${categoryName}.`}
-            products={products as ApiResponseProductCardType[]}
+            products={products}
             categorySlug={slugs.join("/")}
             totalCount={totalCount}
           />
@@ -204,11 +168,8 @@ const ProductsPage = async ({
               <SortOptions />
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-screen-xl mx-auto my-8">
-              {products.map((item: Product) => (
-                <ProductCard
-                  item={item as ApiResponseProductCardType}
-                  key={item.id}
-                />
+              {products.map((item) => (
+                <ProductCard item={item} key={item.id} />
               ))}
             </div>
             {totalPages > 1 && (

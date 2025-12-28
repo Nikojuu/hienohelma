@@ -1,15 +1,9 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  parentId: string | null;
-}
+import type { CategoryReference } from "@putiikkipalvelu/storefront-sdk";
 
 interface BreadcrumbsProps {
-  categories: Category[];
+  categories: CategoryReference[];
   productName: string;
 }
 
@@ -17,13 +11,15 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   categories,
   productName,
 }) => {
-  const getCombinedCategoryPath = (categories: Category[]): Category[] => {
+  const getCombinedCategoryPath = (
+    categories: CategoryReference[]
+  ): CategoryReference[] => {
     const categoryMap = new Map(categories.map((c) => [c.id, c]));
-    const path: Category[] = [];
+    const path: CategoryReference[] = [];
 
     for (const category of categories) {
-      const categoryPath: Category[] = [];
-      let currentCategory: Category | undefined = category;
+      const categoryPath: CategoryReference[] = [];
+      let currentCategory: CategoryReference | undefined = category;
 
       while (currentCategory) {
         categoryPath.unshift(currentCategory);

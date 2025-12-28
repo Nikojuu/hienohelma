@@ -1,9 +1,9 @@
 import { Product, WithContext } from "schema-dts";
-import { ProductFromApi } from "@/app/utils/types";
+import type { ProductDetail } from "@putiikkipalvelu/storefront-sdk";
 import { STORE_NAME, STORE_DOMAIN } from "@/app/utils/constants";
 
 interface ProductSchemaProps {
-  product: ProductFromApi;
+  product: ProductDetail;
 }
 
 export default function ProductSchema({ product }: ProductSchemaProps) {

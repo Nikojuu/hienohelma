@@ -7,10 +7,10 @@ import { Share2 } from "lucide-react";
 
 import { getPriceInfo, getImageUrl } from "@/lib/utils";
 import { Skeleton } from "./ui/skeleton";
-import { ApiResponseProductCardType } from "@/app/utils/types";
+import type { Product } from "@putiikkipalvelu/storefront-sdk";
 
 interface ProductCardProps {
-  item: ApiResponseProductCardType;
+  item: Product;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
