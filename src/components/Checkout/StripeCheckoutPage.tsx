@@ -6,8 +6,10 @@ import CustomerDataForm from "@/components/Checkout/CustomerDataForm";
 import { useCart } from "@/hooks/use-cart";
 import { CustomerData, customerDataSchema } from "@/lib/zodSchemas";
 import { SelectShipmentMethod } from "@/components/Checkout/SelectShipmentMethod";
-import type { Campaign } from "@putiikkipalvelu/storefront-sdk";
-import { ShipmentMethodsWithLocations } from "@/app/utils/types";
+import type {
+  Campaign,
+  ShipmentMethodsWithLocationsResponse,
+} from "@putiikkipalvelu/storefront-sdk";
 import { useToast } from "@/hooks/use-toast";
 import { XCircle, Loader2 } from "lucide-react";
 import { CheckoutSteps } from "@/components/Checkout/CheckoutSteps";
@@ -27,7 +29,7 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [customerData, setCustomerData] = useState<CustomerData | null>(null);
   const [shipmentMethodsAndLocations, setShipmentMethodsAndLocations] =
-    useState<ShipmentMethodsWithLocations | null>(null);
+    useState<ShipmentMethodsWithLocationsResponse | null>(null);
   const [step, setStep] = useState(1);
   const [chosenShipmentMethod, setChosenShipmentMethod] =
     useState<ChosenShipmentType | null>(null);

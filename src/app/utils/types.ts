@@ -1,51 +1,9 @@
-export interface DropInLocation {
-  id: string;
-  name: string;
-  serviceId: string;
-  address1: string;
-  price: number;
-  city: string;
-  zipcode: string;
-  merchantPrice?: number;
-  carrier: string;
-  carrierLogo: string;
-  distanceInKilometers: number;
-}
-
-export interface ShipitAgentResponse {
-  status: number;
-  locations: ShipitAgentLocation[];
-}
-
-export interface ShipitAgentLocation {
-  id: string;
-  name: string;
-  address1: string;
-  zipcode: string;
-  city: string;
-  countryCode: string;
-  serviceId: string;
-  carrier: string;
-  price: number | null;
-  merchantPrice: number | null;
-  carrierLogo: string;
-  openingHours: {
-    monday: string[];
-    tuesday: string[];
-    wednesday: string[];
-    thursday: string[];
-    friday: string[];
-    saturday: string[];
-    sunday: string[];
-    exceptions: string[];
-  } | null;
-  openingHoursRaw: string | null;
-  latitude: number;
-  longitude: number;
-  distanceInMeters: number;
-  distanceInKilometers: number;
-  metadata: unknown | null;
-}
+// Shipping types now come from SDK:
+// - ShipmentMethod
+// - ShipitShippingMethod
+// - PickupLocation
+// - ShipmentMethodsResponse
+// - ShipmentMethodsWithLocationsResponse
 
 export interface ShipitResponse {
   status: string;
@@ -55,6 +13,7 @@ export interface ShipitResponse {
   orderId: string;
   freightDoc: string[];
 }
+
 export type OrderData = {
   status: string;
   orderShipmentMethod: {
@@ -84,30 +43,7 @@ export interface PriceInfo {
   isOnSale: boolean;
 }
 
-
-
-export interface ShipmentMethods {
-  id: string;
-  name: string;
-  description: string | null; // description is nullable in your schema
-  storeId: string | null;
-  max_estimate_delivery_days: number | null; // nullable
-  min_estimate_delivery_days: number | null; // nullable
-  active: boolean;
-  price: number;
-  shipitMethod?: ShipitShippingMethod; // optional - not included in campaign responses
-}
-
-export interface ApiResponseShipmentMethods {
-  // To type the API response
-  shipmentMethods: ShipmentMethods[];
-}
-
-export interface ShipmentMethodsWithLocations {
-  pricedLocations: ShipitAgentLocation[];
-  shipmentMethods: ShipmentMethods[];
-}
-
+// ShipitShippingMethod kept for Order type (order history display)
 export interface ShipitShippingMethod {
   id: string;
   serviceId: string;
@@ -132,16 +68,16 @@ export interface ShipitShippingMethod {
   pickupPoint: boolean;
   onlyParchelLocker: boolean;
 }
+
 export type OrderCustomerData = {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
-  phone?: string | null; // Optional and nullable
+  phone?: string | null;
   address: string;
   city: string;
   postalCode: string;
-  // Orders?: Order[]; // Uncomment if you need the related Orders
 };
 
 export interface OrderLineItems {
@@ -155,9 +91,8 @@ export interface OrderLineItems {
   name: string;
   vatRate: number;
   images: string[];
-  // Optional: reference back to Order if needed
-  // order?: Order;
 }
+
 export type PreOrderLineItems = {
   itemType: string;
   quantity: number;
@@ -171,14 +106,13 @@ export type OrderShipmentMethod = {
   name: string;
   description?: string | null;
   logo?: string | null;
-  price: number; // Float in Prisma, number in TypeScript
+  price: number;
   orderId: string;
   vatRate?: number | null;
   trackingNumber?: string;
   trackingUrls?: string[];
   shipmentNumber?: string;
   freightDoc?: string[];
-  // order?: Order; // Uncomment if you need the related Order
 };
 
 export interface Order {
@@ -200,25 +134,23 @@ export interface Order {
   orderShipmentMethod?: OrderShipmentMethod;
   OrderLineItems: OrderLineItems[];
 }
+
 export enum OrderStatus {
   PENDING = "PENDING",
   PAID = "PAID",
   SHIPPED = "SHIPPED",
-  // add other statuses as needed
 }
 
 export enum ItemType {
   SHIPPING = "SHIPPING",
   VARIATION = "VARIATION",
   PRODUCT = "PRODUCT",
-  // add other item types as needed
 }
 
 export type StoreName = {
   name: string;
 };
 
-// Define the type for the StoreSettings object with the nested StoreName
 export type StoreSettingsWithName = {
   id: string;
   storeId: string;
@@ -234,9 +166,9 @@ export type StoreSettingsWithName = {
   businessId: string;
   createdAt: Date;
   updatedAt: Date;
-  defaultVatRate: number; // Assuming defaultVatRate is a number, adjust if needed
+  defaultVatRate: number;
   logoUrl: string | null;
-  Store: StoreName; // Assuming Store can be null, adjust if needed
+  Store: StoreName;
 };
 
 export type User = {

@@ -5,12 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
-  ShipmentMethodsWithLocations,
-  ShipmentMethods,
-} from "@/app/utils/types";
-import {
   calculateCartWithCampaigns,
   type Campaign,
+  type ShipmentMethodsWithLocationsResponse,
+  type ShipmentMethod,
 } from "@putiikkipalvelu/storefront-sdk";
 import { useState } from "react";
 import { useCart } from "@/hooks/use-cart";
@@ -20,7 +18,7 @@ export function SelectShipmentMethod({
   setChosenShipmentMethod,
   campaigns,
 }: {
-  shipmentMethodsAndLocations: ShipmentMethodsWithLocations | null;
+  shipmentMethodsAndLocations: ShipmentMethodsWithLocationsResponse | null;
   setChosenShipmentMethod: (shipmentMethod: {
     shipmentMethodId: string;
     pickupId: string | null;
@@ -43,8 +41,8 @@ export function SelectShipmentMethod({
     pricedLocations: [],
   };
 
-  const homeDeliveryOrCustomShipments: ShipmentMethods[] = [];
-  const parcelLockerShipments: ShipmentMethods[] = [];
+  const homeDeliveryOrCustomShipments: ShipmentMethod[] = [];
+  const parcelLockerShipments: ShipmentMethod[] = [];
 
   shipmentMethods.forEach((method) => {
     if (method.shipitMethod?.onlyParchelLocker) {
@@ -89,7 +87,7 @@ export function SelectShipmentMethod({
   };
 
   // Helper function to format shipment method price with free shipping consideration
-  const formatShipmentMethodPrice = (shipment: ShipmentMethods) => {
+  const formatShipmentMethodPrice = (shipment: ShipmentMethod) => {
     if (isShipmentMethodFreeShippingEligible(shipment.id)) {
       return "Ilmainen";
     }
