@@ -1,4 +1,4 @@
-import { User } from "@/app/utils/types";
+import { Customer } from "@putiikkipalvelu/storefront-sdk";
 import LoginForm from "@/components/Auth/Loginform";
 import { getUser } from "@/lib/actions/authActions";
 import { redirect } from "next/navigation";
@@ -8,7 +8,7 @@ const LoginPage = async ({
 }: {
   searchParams: Promise<{ returnUrl?: string }>;
 }) => {
-  const { user }: { user: User | null } = await getUser();
+  const { user }: { user: Customer | null } = await getUser();
   const resolvedSearchParams = await searchParams;
 
   if (user) {

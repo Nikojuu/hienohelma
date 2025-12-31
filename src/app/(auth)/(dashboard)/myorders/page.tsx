@@ -1,9 +1,7 @@
 import { getUser } from "@/lib/actions/authActions";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
+
+import { getImageUrl } from "@/lib/utils";
 import {
   Package,
   Calendar,
@@ -199,12 +197,10 @@ const OrderCard = ({ order }: { order: Order }) => {
                     {/* Product Image */}
                     <div className="w-12 h-12 relative flex-shrink-0">
                       {item.product.images && item.product.images.length > 0 ? (
-                        <Image
-                          src={item.product.images[0]}
+                        <img
+                          src={getImageUrl(item.product.images[0], "thumbnail")}
                           alt={item.product.name}
-                          fill
-                          className="object-cover rounded-md"
-                          sizes="48px"
+                          className="w-full h-full object-cover rounded-md"
                         />
                       ) : (
                         <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center">

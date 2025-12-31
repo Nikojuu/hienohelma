@@ -9,10 +9,10 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { User as UserType } from "@/app/utils/types";
+import { Customer } from "@putiikkipalvelu/storefront-sdk";
 import { logout } from "@/lib/actions/authActions";
 
-const CustomerDropdown = ({ user }: { user: UserType | null }) => {
+const CustomerDropdown = ({ user }: { user: Customer | null }) => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>

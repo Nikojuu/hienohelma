@@ -3,22 +3,17 @@ import { z } from "zod";
 import { cookies } from "next/headers";
 import { Resend } from "resend";
 import { STORE_NAME } from "@/app/utils/constants";
+import type {
+  Customer,
+  CustomerWithVerification,
+} from "@putiikkipalvelu/storefront-sdk";
+
 const RegisterSchema = z.object({
   firstName: z.string().min(1, "Etunimi on pakollinen"),
   lastName: z.string().min(1, "Sukunimi on pakollinen"),
   email: z.string().email("Virheellinen sähköpostiosoite"),
   password: z.string().min(8, "Salasanan on oltava vähintään 8 merkkiä pitkä"),
 });
-
-interface Customer {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  createdAt: string;
-  emailVerificationToken: string;
-  emailVerificationExpiresAt: string;
-}
 
 export async function registerCustomer(formData: FormData) {
   const validatedFields = RegisterSchema.safeParse({
@@ -66,8 +61,7 @@ export async function registerCustomer(formData: FormData) {
 
     const { customer, success } = await (response.json() as Promise<{
       success?: boolean;
-
-      customer: Customer;
+      customer: CustomerWithVerification;
     }>);
 
     // Parse successful response
@@ -104,7 +98,7 @@ export async function registerCustomer(formData: FormData) {
     return { error: "An unexpected error occurred. Please try again." };
   }
 }
-async function sendVerificationEmail(customer: Customer) {
+async function sendVerificationEmail(customer: CustomerWithVerification) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
@@ -511,7 +505,7 @@ export async function resendVerificationEmail(customerId: string) {
 
     const data = (await response.json()) as {
       success?: boolean;
-      customer?: Customer;
+      customer?: CustomerWithVerification;
     };
 
     // Send the verification email using your existing logic

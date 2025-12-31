@@ -1,9 +1,10 @@
-// Shipping types now come from SDK:
-// - ShipmentMethod
-// - ShipitShippingMethod
-// - PickupLocation
-// - ShipmentMethodsResponse
-// - ShipmentMethodsWithLocationsResponse
+// =============================================================================
+// Types from SDK (use imports instead of duplicating):
+// =============================================================================
+// Shipping: ShipmentMethod, ShipitShippingMethod, PickupLocation, ShipmentMethodsResponse, etc.
+// Customer: Customer (use instead of User), CustomerOrder, OrderLineItem, etc.
+// Pricing: PriceInfo
+// =============================================================================
 
 export interface ShipitResponse {
   status: string;
@@ -36,6 +37,7 @@ export type OrderData = {
   shipitData?: ShipitResponse;
 };
 
+// PriceInfo - now exported from SDK, keeping local for custom getPriceInfo function
 export interface PriceInfo {
   currentPrice: number;
   salePrice: number | null;
@@ -43,7 +45,7 @@ export interface PriceInfo {
   isOnSale: boolean;
 }
 
-// ShipitShippingMethod kept for Order type (order history display)
+// ShipitShippingMethod kept for Order type (checkout/payment flow)
 export interface ShipitShippingMethod {
   id: string;
   serviceId: string;
@@ -171,8 +173,5 @@ export type StoreSettingsWithName = {
   Store: StoreName;
 };
 
-export type User = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
+// User type replaced by Customer from SDK:
+// import { Customer } from '@putiikkipalvelu/storefront-sdk';
