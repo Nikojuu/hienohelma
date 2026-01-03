@@ -2,17 +2,13 @@
 
 import { z } from "zod";
 import { cookies } from "next/headers";
-import { Resend } from "resend";
-import { STORE_NAME } from "@/app/utils/constants";
 import { storefront } from "@/lib/storefront";
 import {
   ValidationError,
   VerificationRequiredError,
+  NotFoundError,
 } from "@putiikkipalvelu/storefront-sdk";
-import type {
-  Customer,
-  CustomerWithVerification,
-} from "@putiikkipalvelu/storefront-sdk";
+import type { Customer } from "@putiikkipalvelu/storefront-sdk";
 
 // =============================================================================
 // Validation Schemas
@@ -101,46 +97,8 @@ async function getGuestCartId(): Promise<string | undefined> {
   return cookieStore.get("cart-id")?.value;
 }
 
-// =============================================================================
-// Email Functions (Store-specific, not in SDK)
-// =============================================================================
-
-async function sendVerificationEmail(customer: CustomerWithVerification) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
-
-  try {
-    const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${customer.emailVerificationToken}`;
-
-    const { error } = await resend.emails.send({
-      from: `${STORE_NAME} <info@putiikkipalvelu.fi>`,
-      to: customer.email,
-      subject: `Vahvista sähköpostisi – ${STORE_NAME}`,
-      text: `Tervetuloa ${customer.firstName}! Vahvista sähköpostiosoitteesi vierailemalla: ${verificationUrl}`,
-      html: `
-        <h2>Tervetuloa ${customer.firstName}!</h2>
-        <p>Napsauta alla olevaa linkkiä vahvistaaksesi sähköpostisi:</p>
-        <a href="${verificationUrl}">Vahvista sähköposti</a>
-        <p>Tämä linkki vanhenee 24 tunnin kuluttua.</p>
-      `,
-    });
-
-    if (error) {
-      console.error("Error sending email:", error);
-      return { success: false, error: error.message };
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("Failed to send verification email:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
-    };
-  }
-}
-
-// Note: Password reset emails are now sent server-side by the API
-// for improved security (token never exposed to client)
+// Note: All verification and password reset emails are sent server-side by the API
+// for improved security (tokens are never exposed to the client)
 
 // =============================================================================
 // Auth Actions (Using SDK)
@@ -172,24 +130,12 @@ export async function registerCustomer(formData: FormData) {
       return { error: "Invalid response from server. Please try again." };
     }
 
-    // Send verification email (store-specific, not in SDK)
-    const emailResult = await sendVerificationEmail(
-      response.customer as CustomerWithVerification
-    );
-    if (!emailResult.success) {
-      console.error("Failed to send verification email:", emailResult.error);
-      // Don't fail registration, just log the error
-    }
-
-    // Remove sensitive verification token from response
-    const { emailVerificationToken, emailVerificationExpiresAt, ...customerData } =
-      response.customer as CustomerWithVerification;
-
+    // Verification email is sent automatically by the server
     return {
       success: true,
       message:
         "Registration successful! Please check your email to verify your account.",
-      customer: customerData,
+      customer: response.customer,
     };
   } catch (error) {
     console.error("Registration error:", error);
@@ -277,6 +223,11 @@ export async function getUser() {
       user: response.customer,
     };
   } catch (error) {
+    // Session expired or invalid - just return null (cookie gets cleared on next action)
+    if (error instanceof NotFoundError) {
+      return { user: null };
+    }
+
     console.error("Get user error:", error);
     return {
       user: null,
@@ -387,19 +338,10 @@ export async function deleteCustomerAccount() {
 
 export async function resendVerificationEmail(customerId: string) {
   try {
+    // Verification email is sent automatically by the server
     const response = await storefront.customer.resendVerification(customerId);
 
-    // Send the verification email using store-specific logic
-    if (response.success && response.customer) {
-      const emailResult = await sendVerificationEmail(
-        response.customer as CustomerWithVerification
-      );
-      if (!emailResult.success) {
-        return { error: "Failed to send verification email" };
-      }
-    }
-
-    return { success: true, message: "Verification email sent!" };
+    return { success: true, message: response.message || "Verification email sent!" };
   } catch (error) {
     console.error("Email verification error:", error);
     if (error instanceof ValidationError) {
@@ -534,4 +476,4 @@ export async function deleteWishlistItem(
 }
 
 // Re-export types for backwards compatibility
-export type { Customer, CustomerWithVerification };
+export type { Customer };
