@@ -1,261 +1,248 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this storefront template.
 
 ## Project Overview
 
-This is a **storefront template** for the Putiikkipalvelu multi-tenant e-commerce platform. Built with Next.js 16, React 19, TypeScript, and Tailwind CSS, this template serves as the foundation for all tenant storefronts.
+**Next.js 16 + React 19 storefront template** for Putiikkipalvelu e-commerce platform.
 
-### Template Architecture
-
-- **Purpose**: This is a reusable template that connects to Putiikkipalvelu (located at `D:\Projektit\verkkokauppapalvelu`)
-- **Multi-tenant**: Each store is built from this template with tenant-specific styling and configuration
-- **Backend API**: Connects to Putiikkipalvelu's storefront API (`/api/storefront/*` endpoints)
-- **Core Logic**: All e-commerce functionality is implemented in this template
-- **Per-store Customization**: Each tenant store has its own styling (colors, fonts, theme) via `tailwind.config.ts` and `src/lib/fonts.ts`
-
-When deploying a new store, this template is duplicated and customized with:
-- Tenant-specific `TENANT_ID` environment variable
-- Custom Tailwind theme in `tailwind.config.ts`
-- Store branding (name, logo, colors, fonts)
-- Store-specific constants in `src/app/utils/constants.ts`
-
-### Key Technologies
-- **Next.js 16** with App Router
-- **React 19** (using react-jsx transform)
-- **TypeScript** with strict mode
-- **Tailwind CSS** with custom design tokens
-- **Zustand** for client-side state management (cart, campaign cart)
-- **Zod** for schema validation
-- **React Hook Form** + Conform for form handling
-- **Radix UI** for accessible UI components
-- **Framer Motion** for animations
+- **Purpose**: Frontend template for tenant storefronts
+- **Data**: All data fetched via `@putiikkipalvelu/storefront-sdk`
+- **Multi-tenant**: Each store gets custom theme (colors, fonts, branding)
+- **Focus**: This is a pure frontend project - styling and UI components
 
 ## Development Commands
 
 ```bash
-# Start development server (runs on http://localhost:3001 by default)
-npm run dev
-
-# Build for production
-npm build
-
-# Start production server
-npm start
-
-# Run linter
-npm run lint
-
-# Preview email templates
-npm run email
+npm run dev      # Start dev server (localhost:3001)
+npm run build    # Production build
+npm start        # Start production server
+npm run lint     # Run linter
+npm run email    # Preview email templates
 ```
 
-## Architecture
+## SDK Integration
 
-### Route Structure
+Full docs: https://www.putiikkipalvelu.fi/fi/docs/sdk
 
-The app uses Next.js App Router with route groups:
-
-**Storefront routes** (`src/app/(storefront)/`):
-- `/` - Homepage with hero, category showcase, and about section
-- `/products/[...slug]` - Product listing and detail pages (catch-all dynamic route)
-- `/cart` - Shopping cart page
-- `/checkout` - Multi-step checkout flow
-- `/payment/success/[orderId]` - Payment success page
-- `/payment/cancel/[orderId]` - Payment cancellation page
-- `/about` - About page
-- `/contact` - Contact form
-- `/gallery` - Image gallery
-- `/privacy-policy` - Privacy policy
-- `/terms` - Terms and conditions
-- `/verify-email` - Email verification handler
-
-**Auth/Dashboard routes** (`src/app/(auth)/`):
-- `/login` - Customer login
-- `/register` - Customer registration
-- `/(dashboard)/mypage` - Customer dashboard home
-- `/(dashboard)/myinfo` - Customer profile management
-- `/(dashboard)/myorders` - Order history
-- `/(dashboard)/mywishlist` - Customer wishlist
-
-### Backend Integration
-
-The template communicates with **Putiikkipalvelu** (located at `D:\Projektit\verkkokauppapalvelu`), which provides:
-
-**Storefront API Endpoints** (`/api/storefront/*`):
-- Product catalog and categories
-- Customer authentication and management
-- Order processing and history
-- Campaigns and sales data
-- Wishlist management
-- Email verification
-
-**Environment Variables (required):**
-- `NEXT_PUBLIC_STOREFRONT_API_URL` - Base URL for Putiikkipalvelu API (e.g., `https://api.putiikkipalvelu.fi`)
-- `STOREFRONT_API_KEY` - API key for server-side requests (passed as `x-api-key` header)
-- `NEXT_PUBLIC_BASE_URL` - The base URL of this Next.js storefront instance
-- `TENANT_ID` - Unique tenant identifier for this store (critical for multi-tenant data isolation)
-
-**Authentication Flow:**
-- Cookie-based sessions managed by Putiikkipalvelu backend
-- Session token stored in `session_token` cookie
-- Auth actions in `src/lib/actions/authActions.ts` handle login/register/logout
-- `getUser()` server action retrieves current user from session
-- All API requests include tenant context via `TENANT_ID`
-
-### State Management
-
-**Client-side (Zustand):**
-- `src/hooks/use-cart.ts` - Main shopping cart with persistent storage
-- `src/hooks/use-campaign-cart.ts` - Calculated cart totals with campaign/sale logic
-
-**Server Actions:**
-- `src/lib/actions/authActions.ts` - Customer auth, profile, wishlist
-- `src/lib/actions/stripeActions.ts` - Stripe payment checkout
-- `src/lib/actions/paytrailActions.ts` - Paytrail payment checkout (Finnish payment provider)
-- `src/lib/actions/shipmentActions.ts` - Shipit shipping integration
-- `src/app/actions.ts` - Contact form submission (uses Resend)
-
-### Payment Methods
-
-Configured in `src/app/utils/constants.ts` via `PAYMENT_METHODS` array. Currently supports:
-- **Stripe** - Credit card payments
-- **Paytrail** - Finnish payment provider (bank transfers, mobile payments, etc.)
-
-Checkout flow creates a pending order, then redirects to payment provider. Payment webhooks (handled by backend) update order status.
-
-### Shipping Integration
-
-Uses **Shipit** API for shipping label generation and pickup point selection:
-- `getShipmentMethods()` fetches available shipping methods with pricing
-- Drop-in location selection for pickup points
-- Shipping labels created after successful payment
-
-### Store Configuration
-
-**Per-tenant customization** is done in these files:
-- `src/app/utils/constants.ts` - Store-specific constants
-  - `SEO_ENABLED` - Controls search engine indexing (set to false for template/dev mode)
-  - `STORE_NAME`, `STORE_DESCRIPTION`, `STORE_DOMAIN` - Basic store info
-  - `SHOWCASE_CATEGORIES` - Featured categories on homepage
-  - `PAYMENT_METHODS` - Enabled payment providers
-- `tailwind.config.ts` - Custom colors, fonts, and design tokens for the tenant
-- `src/lib/fonts.ts` - Store-specific font configuration
-- `.env` - Tenant-specific `TENANT_ID` and API configuration
-
-**Important**: These constants are currently hardcoded per store instance. In the future, they may be fetched from the Putiikkipalvelu backend based on `TENANT_ID`.
-
-### Image Handling
-
-Next.js Image component configured in `next.config.mjs` with remote patterns for:
-- `utfs.io` - UploadThing
-- `ik.imagekit.io` - ImageKit CDN
-- `dsh3gv4ve2.ufs.sh` - Custom CDN
-- `www.shipit.fi` & `apitest.shipit.ax` - Shipping provider logos
-- `resources.paytrail.com` - Payment provider assets
-- `picsum.photos` - Placeholder images (dev only)
-
-Custom `ImageKitImage` component (`src/components/ImageKitImage.tsx`) provides ImageKit-specific optimizations.
-
-### Email
-
-Uses **Resend** for transactional emails:
-- Email templates in `src/components/Email/`
-- React Email components (`@react-email/components`)
-- Preview emails locally with `npm run email`
-
-### Campaigns & Sales
-
-Campaign system supports:
-- **Buy X, Pay Y** campaigns (e.g., buy 3 pay for 2)
-- **Free Shipping** campaigns (minimum cart value threshold)
-- Product-level sales with start/end dates
-- Variation-level sales (override product pricing)
-
-Campaign logic calculated in `useCampaignCart` hook. Campaigns fetched from backend via `getCampaigns()` utility.
-
-### Path Aliases
-
-TypeScript configured with `@/*` alias pointing to `src/*`:
+### Client Setup
+Located at `src/lib/storefront.ts`:
 ```typescript
-import { useCart } from "@/hooks/use-cart";
-import { ProductCard } from "@/components/ProductCard";
+import { createStorefrontClient } from "@putiikkipalvelu/storefront-sdk";
+
+const storefront = createStorefrontClient({
+  apiKey: process.env.STOREFRONT_API_KEY,
+  baseUrl: process.env.NEXT_PUBLIC_STOREFRONT_API_URL,
+});
 ```
 
-### Styling
+### Available Namespaces
+- `storefront.products` - Product catalog (getBySlug, filtered, latest)
+- `storefront.categories` - Categories (list, getBySlug)
+- `storefront.store` - Store config and SEO
+- `storefront.cart` - Cart operations (get, addItem, updateQuantity, removeItem, validate)
+- `storefront.checkout` - Payment (stripe, paytrail)
+- `storefront.shipping` - Shipping methods and locations
+- `storefront.customer` - Auth and profile (login, register, logout, getProfile, updateProfile)
 
-**Tenant-specific styling** is the primary customization point for each store:
+### Types
+Import types directly from SDK:
+```typescript
+import type { Product, Category, CartItem, Customer, Order } from "@putiikkipalvelu/storefront-sdk";
+```
 
-- **Tailwind theme** (`tailwind.config.ts`) - Define custom colors, spacing, and design tokens per store
-  - Example colors: `warm-white`, `charcoal`, `burnt-orange`, `sage-green`, etc.
-  - Each tenant can have completely different color schemes
-- **Custom fonts** (`src/lib/fonts.ts`) - Store-specific typography using `next/font`
-- **Animations** - Shared across all stores via `tailwindcss-animate`
-- **Component variants** - Shared component system via `class-variance-authority`
+### Error Handling
+SDK throws typed errors: `NotFoundError`, `ValidationError`, `VerificationRequiredError`
 
-**Template vs Instance**:
-- The template contains all UI components and logic
-- Each store instance customizes only the theme, fonts, and constants
-- This ensures consistency in functionality while allowing brand differentiation
+---
 
-### TypeScript Configuration
+## Styling Architecture
+
+### CSS Variables (`src/app/globals.css`)
+
+All colors use HSL format for easy theming:
+
+**Semantic Colors** (shadcn/ui):
+```css
+--background, --foreground
+--primary, --primary-foreground
+--secondary, --secondary-foreground
+--tertiary, --tertiary-foreground
+--accent, --accent-foreground
+--muted, --muted-foreground
+--destructive, --destructive-foreground
+--border, --input, --ring
+```
+
+**Custom Theme Colors** (current jewelry theme - rename for your store):
+```css
+--rose-gold: 15 45% 65%;       /* Primary accent */
+--champagne: 38 45% 78%;       /* Secondary accent */
+--cream: 35 40% 95%;           /* Card backgrounds */
+--warm-white: 30 33% 98%;      /* Page background */
+--soft-blush: 350 35% 90%;     /* Subtle accent */
+--deep-burgundy: 350 45% 30%;  /* Sale badges, warnings */
+--charcoal: 20 15% 18%;        /* Text color */
+```
+
+### Font System (`src/lib/fonts.ts`)
+
+```typescript
+--font-primary   // Headlines (h1), currently: Recursive
+--font-secondary // Body text, currently: Ubuntu
+```
+
+Usage in Tailwind: `font-primary`, `font-secondary`
+
+### Tailwind Configuration (`tailwind.config.ts`)
+
+- **Colors**: All CSS variables mapped to Tailwind utilities
+- **Animations**: `shine`, `shimmer-x`, `shimmer-y`
+- **Dark mode**: Enabled via `.dark` class
+- **Border radius**: Uses `--radius` variable
+
+### Shadcn/UI
+
+- **Style**: `new-york`
+- **Components**: `src/components/ui/` (28+ components)
+- **Config**: `components.json`
+
+### Utility Function (`src/lib/utils.ts`)
+
+```typescript
+import { cn } from "@/lib/utils";
+
+// Merges Tailwind classes with conflict resolution
+cn("px-4 py-2", isActive && "bg-primary", className)
+```
+
+### Class Variance Authority (CVA)
+
+Used for component variants (Button, Badge):
+```typescript
+const buttonVariants = cva("base-classes", {
+  variants: {
+    variant: { default: "...", outline: "...", ghost: "..." },
+    size: { default: "...", sm: "...", lg: "..." },
+  },
+});
+```
+
+### Custom Utility Classes
+
+```css
+.text-gradient-gold    /* Gold gradient text */
+.text-gradient-rose    /* Rose gradient text */
+.shimmer-gold          /* Animated shimmer effect */
+.card-lift             /* Hover lift animation */
+.diamond-shape         /* Diamond clip-path */
+.octagon-clip          /* Octagon clip-path */
+.line-ornament         /* Decorative line with center element */
+.artistic-border       /* Double-line border effect */
+```
+
+### Animation Patterns
+
+- **Framer Motion**: Complex animations, parallax, staggered reveals
+- **tailwindcss-animate**: Simple transitions
+- **CSS keyframes**: Shimmer effects in `globals.css`
+
+---
+
+## Component Patterns
+
+### Standard Pattern
+```tsx
+import { cn } from "@/lib/utils";
+
+export function Component({ className, ...props }) {
+  return (
+    <div className={cn("base-classes", className)} {...props}>
+      {/* content */}
+    </div>
+  );
+}
+```
+
+### Card with Corner Accents
+```tsx
+<div className="group relative bg-warm-white p-6">
+  {/* Border */}
+  <div className="absolute inset-0 border border-rose-gold/10 group-hover:border-rose-gold/25 transition-colors" />
+
+  {/* Corner accents (4 corners) */}
+  <div className="absolute top-0 left-0 w-6 h-6 border-l border-t border-rose-gold/30
+                  group-hover:w-10 group-hover:h-10 transition-all duration-500" />
+</div>
+```
+
+### Gradient Dividers
+```tsx
+<div className="h-[1px] bg-gradient-to-r from-rose-gold/30 to-transparent" />
+<div className="h-[1px] bg-gradient-to-r from-transparent via-rose-gold/40 to-transparent" />
+```
+
+---
+
+## Theming (Per-Tenant)
+
+To customize for a new store:
+
+1. **Colors**: Edit CSS variables in `src/app/globals.css`
+2. **Color names**: Update `tailwind.config.ts` color keys
+3. **Fonts**: Change fonts in `src/lib/fonts.ts`
+4. **Store config**: Update `src/app/utils/constants.ts`
+5. **Find & replace**: Old color names with new across components
+
+---
+
+## Route Structure
+
+**Storefront** (`src/app/(storefront)/`):
+- `/` - Homepage
+- `/products/[...slug]` - Product listing & details
+- `/cart` - Shopping cart
+- `/checkout` - Checkout flow
+- `/about`, `/contact`, `/gallery`
+- `/privacy-policy`, `/terms`
+
+**Auth** (`src/app/(auth)/`):
+- `/login`, `/register`
+- `/mypage`, `/myinfo`, `/myorders`, `/mywishlist`
+
+---
+
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `tailwind.config.ts` | Tailwind customization |
+| `src/app/globals.css` | CSS variables & utilities |
+| `src/lib/fonts.ts` | Font configuration |
+| `src/lib/utils.ts` | `cn()` utility |
+| `src/lib/storefront.ts` | SDK client |
+| `src/components/ui/` | Shadcn components |
+| `src/app/utils/constants.ts` | Store configuration |
+
+---
+
+## Skills Available
+
+### `/pupun-korvat-styling` - Jewelry Theme
+
+Complete styling guide for the current jewelry theme. Contains:
+- **Phase 1-10**: Page-by-page component styling
+- **Foundation**: Colors, fonts, gradients
+- **Decorative patterns**: Corner accents, diamonds, dividers
+- **Animation patterns**: Framer Motion, CSS transitions
+- **Completion checklist**: Track styling progress
+
+Run `/pupun-korvat-styling` when applying or documenting theme styling.
+
+---
+
+## TypeScript
 
 - Strict mode enabled
 - Path aliases: `@/*` → `src/*`
-- JSX transform: `react-jsx` (no React import needed)
-- Target: ES2017
-
-## Important Patterns
-
-### Data Fetching
-- All data (products, categories, orders, customers) is fetched from Putiikkipalvelu API
-- API endpoints are prefixed with `/api/storefront/*`
-- Server-side requests must include:
-  - `x-api-key` header with `STOREFRONT_API_KEY`
-  - Requests are automatically scoped to `TENANT_ID` on the backend
-- Client components should use server actions, not direct API calls
-- Data is tenant-isolated on the backend - the template handles API communication
-
-### Form Validation
-- Use Zod schemas (defined in `src/lib/zodSchemas.ts`)
-- Forms use React Hook Form + Conform integration
-- Server-side validation always required
-
-### Error Handling
-- Payment actions throw `CartError` for inventory/product issues
-- Frontend should handle errors by removing invalid cart items
-
-### Localization
-- Currently Finnish-only (hardcoded strings)
-- Forms use Finnish labels and error messages
-- Consider i18n if adding multi-language support
-
-## Environment Setup
-
-### For Development (Template)
-
-Copy `.env.example` to `.env.local` and configure:
-- `NEXT_PUBLIC_STOREFRONT_API_URL` - Point to Putiikkipalvelu backend (local: `http://localhost:3000`, production: `https://api.putiikkipalvelu.fi`)
-- `STOREFRONT_API_KEY` - Get from Putiikkipalvelu admin panel
-- `TENANT_ID` - Use a test tenant ID for development
-- Payment provider keys (Stripe, Paytrail)
-- Shipping API keys (Shipit)
-- `RESEND_API_KEY` for email sending
-
-### For New Store Deployment
-
-When creating a new tenant store from this template:
-1. Duplicate this repository
-2. Set unique `TENANT_ID` for the new store
-3. Customize `tailwind.config.ts` with store branding
-4. Update `src/app/utils/constants.ts` with store info
-5. Configure `src/lib/fonts.ts` with store fonts
-6. Set production `NEXT_PUBLIC_STOREFRONT_API_URL`
-7. Deploy to hosting platform
-
-### Backend Connection
-
-This template connects to **Putiikkipalvelu** backend located at:
-- Local development: `D:\Projektit\verkkokauppapalvelu`
-- API documentation: See Putiikkipalvelu's `/api/storefront/*` endpoints
-- All stores share the same backend, isolated by `TENANT_ID`
+- JSX transform: `react-jsx`
