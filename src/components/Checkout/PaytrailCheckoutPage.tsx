@@ -56,10 +56,10 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
         description:
           "Virhe haettaessa toimitustapoja, yritä myöhemmin uudestaan",
         className:
-          "bg-red-50 border-red-200 dark:bg-red-900 dark:border-red-800",
+          "bg-wine/10 border-wine/30",
         action: (
           <div className="flex items-center space-x-2">
-            <XCircle className="h-5 w-5 text-red-500 dark:text-red-400" />
+            <XCircle className="h-5 w-5 text-wine" />
           </div>
         ),
       });
@@ -101,10 +101,10 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
         title: title,
         description: description,
         className:
-          "bg-red-50 border-red-200 dark:bg-red-900 dark:border-red-800",
+          "bg-wine/10 border-wine/30",
         action: (
           <div className="flex items-center space-x-2">
-            <XCircle className="h-5 w-5 text-red-500 dark:text-red-400" />
+            <XCircle className="h-5 w-5 text-wine" />
           </div>
         ),
       });
@@ -125,7 +125,7 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
   };
 
   return (
-    <div className="bg-warm-white min-h-screen">
+    <div className="bg-soft-ivory min-h-screen">
       <div className="max-w-screen-2xl mx-auto px-4 pt-24 md:pt-32 pb-12">
         <CheckoutSteps currentStep={step} steps={steps} />
 
@@ -149,7 +149,7 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
             <div className="mt-12 flex justify-between items-center mx-auto max-w-2xl gap-4">
               <button
                 onClick={handleGoBack}
-                className="group inline-flex items-center gap-2 px-6 py-3 border border-charcoal/30 text-charcoal font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-rose-gold hover:text-rose-gold"
+                className="group inline-flex items-center gap-2 px-6 py-3 border border-midnight/30 text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
               >
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"

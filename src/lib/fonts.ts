@@ -1,35 +1,15 @@
-import { DM_Serif_Text, Recursive, Tangerine, Ubuntu } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 
-export const textPrimary = Recursive({
+export const textPrimary = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-primary",
   display: "swap",
-  weight: "variable",
+  weight: ["400", "500", "600", "700"],
 });
 
-// export const textPrimary = DM_Serif_Text({
-//   subsets: ["latin"],
-//   variable: "--font-primary",
-//   display: "swap",
-//   weight: "400",
-// });
-
-// export const textPrimary = Bodoni_Moda({
-//   subsets: ["latin"],
-//   variable: "--font-primary",
-//   display: "swap",
-//   weight: "400",
-// });
-// export const textPrimary = Cinzel({
-//   weight: "400",
-//   subsets: ["latin"],
-//   variable: "--font-primary",
-//   display: "swap",
-// });
-
-export const textSecondary = Ubuntu({
-  weight: ["400", "700"],
+export const textSecondary = Inter({
   subsets: ["latin"],
   variable: "--font-secondary",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });

@@ -41,17 +41,15 @@ const Subtitle = ({
             alignment === "center" ? "justify-center" : "justify-start"
           }`}
         >
-          <div className="w-2 h-2 bg-rose-gold/60 diamond-shape" />
-          <div className="w-16 h-[1px] bg-gradient-to-r from-rose-gold/60 to-champagne/40" />
-          <div className="w-1.5 h-1.5 bg-champagne/50 diamond-shape" />
-          <div className="w-16 h-[1px] bg-gradient-to-l from-rose-gold/60 to-champagne/40" />
-          <div className="w-2 h-2 bg-rose-gold/60 diamond-shape" />
+          <div className="w-16 h-[1px] bg-gradient-to-r from-transparent to-blush/50" />
+          <div className="w-2 h-2 rounded-full border border-blush/60" />
+          <div className="w-16 h-[1px] bg-gradient-to-l from-transparent to-blush/50" />
         </motion.div>
 
         {/* Main title */}
         <h2
-          className={`text-2xl md:text-3xl lg:text-4xl font-primary font-bold tracking-tight ${
-            dark ? "text-warm-white" : "text-charcoal"
+          className={`text-3xl md:text-4xl lg:text-5xl font-primary tracking-tight ${
+            dark ? "text-soft-ivory" : "text-midnight"
           }`}
         >
           {subtitle}
@@ -63,20 +61,20 @@ const Subtitle = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className={`mt-4 text-sm md:text-base font-secondary max-w-2xl ${
+            className={`mt-4 text-base font-secondary max-w-2xl ${
               alignment === "center" ? "mx-auto" : ""
-            } ${dark ? "text-warm-white/70" : "text-charcoal/60"}`}
+            } ${dark ? "text-soft-ivory/70" : "text-stone"}`}
           >
             {description}
           </motion.p>
         )}
 
-        {/* Decorative line below */}
+        {/* Underline accent */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className={`mt-6 h-[1px] bg-gradient-to-r from-transparent via-rose-gold/30 to-transparent max-w-xs ${
+          className={`mt-6 w-16 h-[2px] bg-gradient-to-r from-blush to-champagne-gold ${
             alignment === "center" ? "mx-auto" : ""
           }`}
         />

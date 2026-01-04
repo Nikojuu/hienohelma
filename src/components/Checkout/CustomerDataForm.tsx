@@ -40,20 +40,14 @@ export default function CustomerDataForm({
     <form id={form.id} onSubmit={form.onSubmit}>
       <div className="mx-auto max-w-2xl">
         {/* Form card */}
-        <div className="relative bg-warm-white p-6 md:p-10">
+        <div className="relative bg-soft-ivory p-6 md:p-10">
           {/* Border frame */}
-          <div className="absolute inset-0 border border-rose-gold/15 pointer-events-none" />
-
-          {/* Corner accents */}
-          <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-rose-gold/40" />
-          <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-rose-gold/40" />
-          <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-rose-gold/40" />
-          <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-rose-gold/40" />
+          <div className="absolute inset-0 border border-stone/15 pointer-events-none" />
 
           {/* Header */}
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-            <h2 className="font-primary text-2xl md:text-3xl text-charcoal">
+            <div className="w-2 h-2 rounded-full border border-blush/60" />
+            <h2 className="font-primary text-2xl md:text-3xl text-midnight">
               Tilaajan tiedot
             </h2>
           </div>
@@ -65,7 +59,7 @@ export default function CustomerDataForm({
               <div className="space-y-2">
                 <Label
                   htmlFor={fields.first_name.id}
-                  className="text-sm font-secondary text-charcoal"
+                  className="text-sm font-secondary text-midnight"
                 >
                   Etunimi *
                 </Label>
@@ -75,10 +69,10 @@ export default function CustomerDataForm({
                   defaultValue={initialData?.first_name || ""}
                   type="text"
                   placeholder="Anna etunimesi"
-                  className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                  className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
                 />
                 {fields.first_name.errors && (
-                  <p className="text-sm font-secondary text-deep-burgundy">
+                  <p className="text-sm font-secondary text-wine">
                     {fields.first_name.errors}
                   </p>
                 )}
@@ -86,7 +80,7 @@ export default function CustomerDataForm({
               <div className="space-y-2">
                 <Label
                   htmlFor={fields.last_name.id}
-                  className="text-sm font-secondary text-charcoal"
+                  className="text-sm font-secondary text-midnight"
                 >
                   Sukunimi *
                 </Label>
@@ -96,10 +90,10 @@ export default function CustomerDataForm({
                   defaultValue={initialData?.last_name || ""}
                   type="text"
                   placeholder="Anna sukunimesi"
-                  className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                  className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
                 />
                 {fields.last_name.errors && (
-                  <p className="text-sm font-secondary text-deep-burgundy">
+                  <p className="text-sm font-secondary text-wine">
                     {fields.last_name.errors}
                   </p>
                 )}
@@ -110,20 +104,20 @@ export default function CustomerDataForm({
             <div className="space-y-2">
               <Label
                 htmlFor={fields.email.id}
-                className="text-sm font-secondary text-charcoal"
+                className="text-sm font-secondary text-midnight"
               >
-                Sähköposti *
+                Sahkoposti *
               </Label>
               <Input
                 id={fields.email.id}
                 name={fields.email.name}
                 defaultValue={initialData?.email || ""}
                 type="email"
-                placeholder="Anna sähköpostiosoitteesi"
-                className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                placeholder="Anna sahkopostiosoitteesi"
+                className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
               />
               {fields.email.errors && (
-                <p className="text-sm font-secondary text-deep-burgundy">
+                <p className="text-sm font-secondary text-wine">
                   {fields.email.errors}
                 </p>
               )}
@@ -133,7 +127,7 @@ export default function CustomerDataForm({
             <div className="space-y-2">
               <Label
                 htmlFor={fields.address.id}
-                className="text-sm font-secondary text-charcoal"
+                className="text-sm font-secondary text-midnight"
               >
                 Katuosoite *
               </Label>
@@ -143,10 +137,10 @@ export default function CustomerDataForm({
                 defaultValue={initialData?.address || ""}
                 type="text"
                 placeholder="Anna katuosoitteesi"
-                className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
               />
               {fields.address.errors && (
-                <p className="text-sm font-secondary text-deep-burgundy">
+                <p className="text-sm font-secondary text-wine">
                   {fields.address.errors}
                 </p>
               )}
@@ -157,7 +151,7 @@ export default function CustomerDataForm({
               <div className="space-y-2">
                 <Label
                   htmlFor={fields.postal_code.id}
-                  className="text-sm font-secondary text-charcoal"
+                  className="text-sm font-secondary text-midnight"
                 >
                   Postinumero *
                 </Label>
@@ -167,10 +161,10 @@ export default function CustomerDataForm({
                   defaultValue={initialData?.postal_code || ""}
                   type="text"
                   placeholder="Anna postinumerosi"
-                  className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                  className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
                 />
                 {fields.postal_code.errors && (
-                  <p className="text-sm font-secondary text-deep-burgundy">
+                  <p className="text-sm font-secondary text-wine">
                     {fields.postal_code.errors}
                   </p>
                 )}
@@ -178,7 +172,7 @@ export default function CustomerDataForm({
               <div className="space-y-2">
                 <Label
                   htmlFor={fields.city.id}
-                  className="text-sm font-secondary text-charcoal"
+                  className="text-sm font-secondary text-midnight"
                 >
                   Kaupunki *
                 </Label>
@@ -188,10 +182,10 @@ export default function CustomerDataForm({
                   defaultValue={initialData?.city || ""}
                   type="text"
                   placeholder="Anna kaupungin nimi"
-                  className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                  className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
                 />
                 {fields.city.errors && (
-                  <p className="text-sm font-secondary text-deep-burgundy">
+                  <p className="text-sm font-secondary text-wine">
                     {fields.city.errors}
                   </p>
                 )}
@@ -200,7 +194,7 @@ export default function CustomerDataForm({
 
             {/* Phone */}
             <div className="space-y-2">
-              <Label className="text-sm font-secondary text-charcoal">
+              <Label className="text-sm font-secondary text-midnight">
                 Puhelinnumero *
               </Label>
               <PhoneInput
@@ -209,10 +203,10 @@ export default function CustomerDataForm({
                 defaultCountry="FI"
                 international
                 placeholder="Anna puhelin numerosi"
-                className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
               />
               {fields.phone.errors && (
-                <p className="text-sm font-secondary text-deep-burgundy">
+                <p className="text-sm font-secondary text-wine">
                   {fields.phone.errors}
                 </p>
               )}
@@ -220,14 +214,14 @@ export default function CustomerDataForm({
           </div>
 
           {/* Decorative line before button */}
-          <div className="mt-8 mb-6 h-[1px] bg-gradient-to-r from-transparent via-rose-gold/30 to-transparent" />
+          <div className="mt-8 mb-6 h-[1px] bg-gradient-to-r from-transparent via-blush/30 to-transparent" />
 
           {/* Submit button */}
           <div className="flex justify-end">
             <button
               type="submit"
               disabled={isLoading}
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>

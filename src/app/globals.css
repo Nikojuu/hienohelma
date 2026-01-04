@@ -4,49 +4,51 @@
 
 @layer base {
   :root {
-    /* Artisan Jewelry Palette - Warm Rose Gold & Cream */
-    --background: 30 33% 98%;
-    --foreground: 20 25% 13%;
-    --card: 30 30% 96%;
-    --card-foreground: 20 25% 13%;
-    --popover: 30 30% 96%;
-    --popover-foreground: 20 25% 13%;
+    /* Fashion Boutique Palette - Modern Feminine Editorial */
+    --background: 40 30% 98%;
+    --foreground: 220 25% 15%;
+    --card: 40 20% 96%;
+    --card-foreground: 220 25% 15%;
+    --popover: 40 20% 96%;
+    --popover-foreground: 220 25% 15%;
 
-    /* Rose gold inspired primary */
-    --primary: 15 45% 65%;
-    --primary-foreground: 30 33% 98%;
-    --secondary: 30 20% 94%;
+    /* Blush inspired primary */
+    --primary: 350 60% 75%;
+    --primary-foreground: 40 30% 98%;
+    --secondary: 40 20% 94%;
+    --secondary-foreground: 220 25% 15%;
 
-    --secondary-foreground: 20 25% 13%;
     /* Champagne gold accent */
-    --tertiary: 38 50% 75%;
-    --tertiary-foreground: 20 25% 13%;
-    --muted: 30 15% 93%;
-    --muted-foreground: 20 10% 45%;
-    /* Soft blush accent */
-    --accent: 350 30% 92%;
-    --accent-foreground: 20 25% 13%;
-    --destructive: 0 65% 55%;
-    --destructive-foreground: 30 33% 98%;
-    --border: 30 20% 88%;
-    --input: 30 20% 88%;
-    --ring: 15 45% 55%;
-    --radius: 0rem;
+    --tertiary: 45 50% 70%;
+    --tertiary-foreground: 220 25% 15%;
+    --muted: 40 15% 93%;
+    --muted-foreground: 30 10% 50%;
 
-    /* Custom jewelry colors */
-    --rose-gold: 15 45% 65%;
-    --champagne: 38 45% 78%;
-    --cream: 35 40% 95%;
-    --warm-white: 30 33% 98%;
-    --soft-blush: 350 35% 90%;
-    --deep-burgundy: 350 45% 30%;
-    --charcoal: 20 15% 18%;
+    /* Whisper pink accent */
+    --accent: 350 40% 95%;
+    --accent-foreground: 220 25% 15%;
+    --destructive: 350 50% 35%;
+    --destructive-foreground: 40 30% 98%;
+    --border: 30 10% 88%;
+    --input: 30 10% 88%;
+    --ring: 350 60% 65%;
+    --radius: 2px;
 
-    --chart-1: 15 55% 55%;
-    --chart-2: 38 50% 65%;
+    /* Custom fashion colors */
+    --blush: 350 60% 75%;
+    --champagne-gold: 45 50% 70%;
+    --soft-ivory: 40 30% 98%;
+    --pearl: 40 20% 96%;
+    --midnight: 220 25% 15%;
+    --whisper-pink: 350 40% 95%;
+    --wine: 350 50% 35%;
+    --stone: 30 10% 50%;
+
+    --chart-1: 350 55% 55%;
+    --chart-2: 45 50% 65%;
     --chart-3: 350 40% 50%;
-    --chart-4: 30 45% 70%;
-    --chart-5: 20 35% 45%;
+    --chart-4: 40 45% 70%;
+    --chart-5: 220 35% 45%;
   }
 
   .dark {
@@ -56,7 +58,7 @@
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
-    --primary: 263.4 70% 50.4%;
+    --primary: 350 60% 75%;
     --primary-foreground: 210 20% 98%;
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
@@ -64,11 +66,11 @@
     --muted-foreground: 217.9 10.6% 64.9%;
     --accent: 215 27.9% 16.9%;
     --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 350 50% 35%;
     --destructive-foreground: 210 20% 98%;
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
+    --ring: 350 60% 75%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -84,6 +86,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
@@ -92,16 +95,19 @@
     @apply bg-background text-foreground;
   }
 }
+
 html {
   font-family: var(--font-secondary);
 }
+
 h1 {
   font-family: var(--font-primary);
 }
 
 .dark-background {
-  background-image: linear-gradient(to right, #0c090f, #2b273a, #0c090f);
+  background-image: linear-gradient(to right, hsl(220 25% 10%), hsl(220 20% 18%), hsl(220 25% 10%));
 }
+
 .category-item::before,
 .category-item::after {
   content: "";
@@ -141,32 +147,41 @@ h1 {
 }
 
 @layer utilities {
-  .octagon-clip {
-    clip-path: polygon(
-      30% 0%,
-      70% 0%,
-      100% 30%,
-      100% 70%,
-      70% 100%,
-      30% 100%,
-      0% 70%,
-      0% 30%
-    );
+  /* Elegant text styles */
+  .text-gradient-fashion {
+    background: linear-gradient(135deg, hsl(350 60% 65%), hsl(45 50% 70%), hsl(350 60% 75%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* Elegant text styles */
   .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(38 50% 55%), hsl(15 45% 65%), hsl(38 50% 55%));
+    background: linear-gradient(135deg, hsl(45 50% 55%), hsl(350 60% 75%), hsl(45 50% 55%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-rose {
-    background: linear-gradient(135deg, hsl(350 45% 45%), hsl(15 45% 65%), hsl(350 45% 45%));
+    background: linear-gradient(135deg, hsl(350 50% 45%), hsl(350 60% 75%), hsl(350 50% 45%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Line accent */
+  .line-accent {
+    position: relative;
+  }
+
+  .line-accent::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, hsl(350 60% 75%), transparent);
   }
 
   /* Decorative line styles */
@@ -181,7 +196,7 @@ h1 {
     top: 50%;
     width: 80px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(15 45% 65%), transparent);
+    background: linear-gradient(90deg, transparent, hsl(350 60% 75%), transparent);
   }
 
   .line-ornament::before {
@@ -194,19 +209,35 @@ h1 {
     margin-left: 20px;
   }
 
-  /* Diamond shape for decorative elements */
-  .diamond-shape {
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  /* Circle accent for decorative elements */
+  .circle-accent {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid hsl(350 60% 75% / 0.6);
   }
 
-  /* Shimmer effect for jewelry-like shine */
+  /* Shimmer effect for fashion shine */
+  .shimmer-fashion {
+    background: linear-gradient(
+      110deg,
+      transparent 20%,
+      hsl(45 60% 85% / 0.3) 40%,
+      hsl(350 60% 90% / 0.4) 50%,
+      hsl(45 60% 85% / 0.3) 60%,
+      transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
   .shimmer-gold {
     background: linear-gradient(
       110deg,
       transparent 20%,
-      hsl(38 60% 80% / 0.4) 40%,
-      hsl(38 60% 90% / 0.6) 50%,
-      hsl(38 60% 80% / 0.4) 60%,
+      hsl(45 60% 80% / 0.4) 40%,
+      hsl(45 60% 90% / 0.6) 50%,
+      hsl(45 60% 80% / 0.4) 60%,
       transparent 80%
     );
     background-size: 200% 100%;
@@ -225,10 +256,10 @@ h1 {
 
   .card-lift:hover {
     transform: translateY(-8px);
-    box-shadow: 0 25px 50px -12px hsl(15 45% 65% / 0.15);
+    box-shadow: 0 25px 50px -12px hsl(350 60% 75% / 0.15);
   }
 
-  /* Artistic border with corner accents */
+  /* Artistic border with subtle effect */
   .artistic-border {
     position: relative;
   }
@@ -237,7 +268,7 @@ h1 {
     content: '';
     position: absolute;
     inset: 0;
-    border: 1px solid hsl(15 45% 65% / 0.3);
+    border: 1px solid hsl(30 10% 50% / 0.2);
     pointer-events: none;
   }
 
@@ -248,7 +279,7 @@ h1 {
     left: -4px;
     right: -4px;
     bottom: -4px;
-    border: 1px solid hsl(38 45% 78% / 0.2);
+    border: 1px solid hsl(350 60% 75% / 0.1);
     pointer-events: none;
   }
 }

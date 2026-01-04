@@ -11,34 +11,26 @@ export const AboutCTA = () => {
   return (
     <section
       ref={ref}
-      className="relative py-24 md:py-32 bg-charcoal overflow-hidden"
+      className="relative py-24 md:py-32 bg-midnight overflow-hidden"
     >
       {/* Top gradient line */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-rose-gold/40 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blush/40 to-transparent" />
 
-      {/* Corner accents */}
-      <div className="absolute top-8 left-8 w-16 h-16 border-l border-t border-rose-gold/20 hidden md:block" />
-      <div className="absolute top-8 right-8 w-16 h-16 border-r border-t border-rose-gold/20 hidden md:block" />
-      <div className="absolute bottom-8 left-8 w-16 h-16 border-l border-b border-rose-gold/20 hidden md:block" />
-      <div className="absolute bottom-8 right-8 w-16 h-16 border-r border-b border-rose-gold/20 hidden md:block" />
-
-      {/* Floating diamonds */}
+      {/* Floating circles */}
       <motion.div
         animate={{
           y: [0, -15, 0],
-          rotate: [0, 10, 0],
         }}
         transition={{
           duration: 7,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/4 left-[15%] w-3 h-3 bg-rose-gold/15 diamond-shape hidden lg:block"
+        className="absolute top-1/4 left-[15%] w-3 h-3 rounded-full bg-blush/15 hidden lg:block"
       />
       <motion.div
         animate={{
           y: [0, 12, 0],
-          rotate: [0, -8, 0],
         }}
         transition={{
           duration: 6,
@@ -46,7 +38,7 @@ export const AboutCTA = () => {
           ease: "easeInOut",
           delay: 1,
         }}
-        className="absolute bottom-1/3 right-[12%] w-2 h-2 bg-champagne/20 diamond-shape hidden lg:block"
+        className="absolute bottom-1/3 right-[12%] w-2 h-2 rounded-full bg-champagne-gold/20 hidden lg:block"
       />
       <motion.div
         animate={{
@@ -58,7 +50,7 @@ export const AboutCTA = () => {
           ease: "easeInOut",
           delay: 2,
         }}
-        className="absolute top-1/2 right-[25%] w-1.5 h-1.5 bg-rose-gold/10 diamond-shape hidden md:block"
+        className="absolute top-1/2 right-[25%] w-1.5 h-1.5 rounded-full bg-blush/10 hidden md:block"
       />
 
       {/* Content */}
@@ -70,31 +62,28 @@ export const AboutCTA = () => {
           transition={{ duration: 0.6 }}
           className="flex items-center justify-center gap-3 mb-8"
         >
-          <div className="w-2 h-2 bg-rose-gold/40 diamond-shape" />
-          <div className="w-12 h-[1px] bg-gradient-to-r from-rose-gold/40 to-champagne/20" />
-          <div className="w-1.5 h-1.5 bg-champagne/30 diamond-shape" />
-          <div className="w-12 h-[1px] bg-gradient-to-l from-rose-gold/40 to-champagne/20" />
-          <div className="w-2 h-2 bg-rose-gold/40 diamond-shape" />
+          <div className="w-16 h-[1px] bg-gradient-to-r from-transparent to-blush/40" />
+          <div className="w-2 h-2 rounded-full border border-blush/60" />
+          <div className="w-16 h-[1px] bg-gradient-to-l from-transparent to-blush/40" />
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-2xl md:text-3xl lg:text-4xl font-primary font-bold text-warm-white mb-6"
+          className="text-2xl md:text-3xl lg:text-4xl font-primary font-bold text-soft-ivory mb-6"
         >
-          Kiinnostuitko koruista?
+          Kiinnostuitko valikoimasta?
         </motion.h2>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-sm md:text-base text-warm-white/60 font-secondary mb-10 max-w-xl mx-auto leading-relaxed"
+          className="text-sm md:text-base text-soft-ivory/60 font-secondary mb-10 max-w-xl mx-auto leading-relaxed"
         >
-          Tutustu koruvalikoimaan ja löydä sinulle tai rakkaallesi täydellinen
-          koru. Jokainen koru on uniikki taidonnäyte, valmistettu käsin
-          Suomessa.
+          Tutustu valikoimaan ja loyda sinulle tai rakkaallesi taydellinen
+          asuste. Jokainen tuote on huolella valittu laatua ja tyylia silmalla pitaen.
         </motion.p>
 
         <motion.div
@@ -105,9 +94,9 @@ export const AboutCTA = () => {
         >
           <Link
             href="/products"
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-rose-gold text-charcoal font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-champagne"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-blush text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-champagne-gold"
           >
-            <span>Selaa koruja</span>
+            <span>Selaa tuotteita</span>
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"
@@ -124,10 +113,10 @@ export const AboutCTA = () => {
           </Link>
 
           <Link
-            href="mailto:pupunkorvat.kauppa@gmail.com"
-            className="group inline-flex items-center gap-3 px-8 py-4 border border-warm-white/30 text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-rose-gold hover:text-rose-gold"
+            href="/contact"
+            className="group inline-flex items-center gap-3 px-8 py-4 border border-soft-ivory/30 text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
           >
-            <span>Ota yhteyttä</span>
+            <span>Ota yhteytta</span>
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5"
               fill="none"
@@ -149,17 +138,17 @@ export const AboutCTA = () => {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="mt-12 pt-8 border-t border-warm-white/10"
+          className="mt-12 pt-8 border-t border-soft-ivory/10"
         >
-          <p className="text-xs tracking-widest uppercase text-warm-white/40 font-secondary mb-4">
-            Seuraa minua
+          <p className="text-xs tracking-widest uppercase text-soft-ivory/40 font-secondary mb-4">
+            Seuraa meita
           </p>
           <div className="flex items-center justify-center">
             <a
-              href="https://www.instagram.com/pupun_korvat"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-warm-white/50 hover:text-rose-gold transition-colors duration-300"
+              className="text-soft-ivory/50 hover:text-blush transition-colors duration-300"
               aria-label="Instagram"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -171,7 +160,7 @@ export const AboutCTA = () => {
       </div>
 
       {/* Bottom gradient line */}
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-rose-gold/30 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blush/30 to-transparent" />
     </section>
   );
 };

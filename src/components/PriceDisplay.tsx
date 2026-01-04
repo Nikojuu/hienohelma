@@ -1,10 +1,10 @@
 import React from "react";
 
 interface PriceDisplayProps {
-  displayPrice: number; // Final calculated price to display
-  originalPrice?: number; // Optional, original price for strikethrough
-  isOnSale?: boolean; // Indicates if the product is on sale
-  salePercent?: string | null; // Optional, sale percentage to display
+  displayPrice: number;
+  originalPrice?: number;
+  isOnSale?: boolean;
+  salePercent?: string | null;
 }
 
 export const PriceDisplay: React.FC<PriceDisplayProps> = ({
@@ -23,22 +23,20 @@ export const PriceDisplay: React.FC<PriceDisplayProps> = ({
   return (
     <div className="flex flex-col items-end gap-1">
       <div className="flex items-center gap-2">
-        {isOnSale && discountPercentage !== null ? (
-          <span className="bg-red-100 text-red-500 text-xs font-medium px-2 py-0.5 rounded">
+        {isOnSale && discountPercentage !== null && (
+          <span className="px-2 py-0.5 text-xs font-secondary uppercase tracking-wider bg-wine text-soft-ivory">
             -{discountPercentage}%
           </span>
-        ) : (
-          <span className="invisible"></span>
         )}
-        {isOnSale && originalPrice ? (
-          <span className="text-gray-400 text-sm line-through">
-            €{originalPrice.toFixed(2)}
+        {isOnSale && originalPrice && (
+          <span className="text-stone text-sm line-through font-secondary">
+            {originalPrice.toFixed(2)}€
           </span>
-        ) : (
-          <span className="invisible"></span>
         )}
       </div>
-      <span className="text-lg font-bold">€{displayPrice.toFixed(2)}</span>
+      <span className={`text-lg font-secondary tabular-nums ${isOnSale ? "text-wine font-semibold" : "text-midnight font-medium"}`}>
+        {displayPrice.toFixed(2)}€
+      </span>
     </div>
   );
 };

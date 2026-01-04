@@ -95,42 +95,42 @@ const getOrders = async (userId: string): Promise<OrdersResponse> => {
   }
 };
 
-// Component to get status color and icon with Pupun Korvat theme
+// Component to get status color and icon with fashion theme
 const getStatusInfo = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PENDING:
       return {
-        color: "bg-champagne/20 text-charcoal border-champagne/40",
+        color: "bg-champagne-gold/20 text-midnight border-champagne-gold/40",
         icon: <Clock className="w-3 h-3" />,
         text: "Odottaa maksua",
       };
     case OrderStatus.PAID:
       return {
-        color: "bg-rose-gold/20 text-charcoal border-rose-gold/40",
+        color: "bg-blush/20 text-midnight border-blush/40",
         icon: <CreditCard className="w-3 h-3" />,
         text: "Maksettu",
       };
     case OrderStatus.SHIPPED:
       return {
-        color: "bg-rose-gold/30 text-charcoal border-rose-gold/50",
+        color: "bg-blush/30 text-midnight border-blush/50",
         icon: <Truck className="w-3 h-3" />,
         text: "Lähetetty",
       };
     case OrderStatus.COMPLETED:
       return {
-        color: "bg-rose-gold/20 text-charcoal border-rose-gold/40",
+        color: "bg-blush/20 text-midnight border-blush/40",
         icon: <CheckCircle className="w-3 h-3" />,
         text: "Valmis",
       };
     case OrderStatus.REFUNDED:
       return {
-        color: "bg-champagne/30 text-charcoal border-champagne/50",
+        color: "bg-champagne-gold/30 text-midnight border-champagne-gold/50",
         icon: <Package className="w-3 h-3" />,
         text: "Palautettu",
       };
     default:
       return {
-        color: "bg-cream text-charcoal/70 border-rose-gold/20",
+        color: "bg-pearl text-midnight/70 border-blush/20",
         icon: <Package className="w-3 h-3" />,
         text: status,
       };
@@ -144,23 +144,23 @@ const OrderCard = ({ order }: { order: Order }) => {
   const totalAmountEur = (order.totalAmount / 100).toFixed(2);
 
   return (
-    <div className="group relative bg-warm-white p-6 mb-6 transition-all duration-300 hover:shadow-md">
+    <div className="group relative bg-soft-ivory p-6 mb-6 transition-all duration-300 hover:shadow-md">
       {/* Border frame */}
-      <div className="absolute inset-0 border border-rose-gold/10 pointer-events-none group-hover:border-rose-gold/25 transition-colors" />
+      <div className="absolute inset-0 border border-blush/10 pointer-events-none group-hover:border-blush/25 transition-colors" />
 
       {/* Corner accents */}
-      <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
-      <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
-      <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
-      <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+      <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+      <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+      <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+      <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
 
       <div className="relative">
         <div className="flex justify-between items-start mb-4">
           <div className="space-y-2">
-            <h3 className="font-primary text-lg text-charcoal">
+            <h3 className="font-primary text-lg text-midnight">
               Tilausnumero: {order.orderNumber}
             </h3>
-            <div className="flex items-center text-sm font-secondary text-charcoal/60">
+            <div className="flex items-center text-sm font-secondary text-midnight/60">
               <Calendar className="w-4 h-4 mr-2" />
               {orderDate}
             </div>
@@ -172,26 +172,26 @@ const OrderCard = ({ order }: { order: Order }) => {
               {statusInfo.icon}
               <span>{statusInfo.text}</span>
             </div>
-            <div className="flex items-center justify-end text-xl font-primary text-charcoal">
+            <div className="flex items-center justify-end text-xl font-primary text-midnight">
               <Euro className="w-5 h-5 mr-1" />
               {totalAmountEur}
             </div>
           </div>
         </div>
 
-        <div className="mb-4 h-[1px] bg-gradient-to-r from-rose-gold/30 to-transparent" />
+        <div className="mb-4 h-[1px] bg-gradient-to-r from-blush/30 to-transparent" />
 
         <div className="space-y-3">
           {/* Order Items */}
           <div>
-            <h4 className="text-sm font-secondary font-medium text-charcoal/70 mb-3">
+            <h4 className="text-sm font-secondary font-medium text-midnight/70 mb-3">
               Tilauksen tuotteet:
             </h4>
             <div className="space-y-3">
               {order.OrderLineItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between p-3 bg-cream/30 border border-rose-gold/10"
+                  className="flex items-center justify-between p-3 bg-pearl/30 border border-blush/10"
                 >
                   <div className="flex items-center space-x-3">
                     {/* Product Image */}
@@ -211,28 +211,28 @@ const OrderCard = ({ order }: { order: Order }) => {
 
                     {/* Product Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-secondary font-medium text-charcoal truncate">
+                      <p className="text-sm font-secondary font-medium text-midnight truncate">
                         {item.product.name}
                       </p>
                       {/* Show variation options if available */}
                       {item.product.optionName && item.product.optionValue && (
-                        <p className="text-xs font-secondary text-charcoal/60">
+                        <p className="text-xs font-secondary text-midnight/60">
                           {item.product.optionName}: {item.product.optionValue}
                         </p>
                       )}
                       {/* Show if shipping item */}
                       {item.product.isShipping && (
-                        <p className="text-xs font-secondary text-rose-gold">
+                        <p className="text-xs font-secondary text-blush">
                           Toimitus
                         </p>
                       )}
                       {/* Show if product unavailable */}
                       {item.product.unavailable && (
-                        <p className="text-xs font-secondary text-deep-burgundy">
+                        <p className="text-xs font-secondary text-wine">
                           Tuote ei enää saatavilla
                         </p>
                       )}
-                      <p className="text-xs font-secondary text-charcoal/60">
+                      <p className="text-xs font-secondary text-midnight/60">
                         Määrä: {item.quantity}
                       </p>
                     </div>
@@ -240,11 +240,11 @@ const OrderCard = ({ order }: { order: Order }) => {
 
                   {/* Price */}
                   <div className="text-right">
-                    <span className="text-sm font-primary font-medium text-charcoal">
+                    <span className="text-sm font-primary font-medium text-midnight">
                       €{(item.price / 100).toFixed(2)}
                     </span>
                     {item.quantity > 1 && (
-                      <p className="text-xs font-secondary text-charcoal/60">
+                      <p className="text-xs font-secondary text-midnight/60">
                         €{((item.price * item.quantity) / 100).toFixed(2)}{" "}
                         yhteensä
                       </p>
@@ -257,13 +257,13 @@ const OrderCard = ({ order }: { order: Order }) => {
           {/* Tracking Information */}
           {order.trackingNumber && (
             <>
-              <div className="my-3 h-[1px] bg-gradient-to-r from-rose-gold/20 to-transparent" />
+              <div className="my-3 h-[1px] bg-gradient-to-r from-blush/20 to-transparent" />
               <div className="flex items-center justify-between">
-                <div className="flex items-center text-sm font-secondary text-charcoal/70">
-                  <Truck className="w-4 h-4 mr-2 text-rose-gold" />
+                <div className="flex items-center text-sm font-secondary text-midnight/70">
+                  <Truck className="w-4 h-4 mr-2 text-blush" />
                   Seurantanumero:
                 </div>
-                <span className=" text-sm font-secondary text-charcoal bg-cream/50 px-3 py-1 border border-rose-gold/20">
+                <span className=" text-sm font-secondary text-midnight bg-pearl/50 px-3 py-1 border border-blush/20">
                   {order.trackingNumber}
                 </span>
               </div>
@@ -297,34 +297,34 @@ const MyOrdersPage = async () => {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-          <h2 className="text-2xl md:text-3xl font-primary text-charcoal">
+          <div className="w-2 h-2 rounded-full border border-blush/60" />
+          <h2 className="text-2xl md:text-3xl font-primary text-midnight">
             Minun tilaukseni
           </h2>
         </div>
-        <p className="font-secondary text-charcoal/60 ml-5">
+        <p className="font-secondary text-midnight/60 ml-5">
           Näet täältä kaikki tilauksesi ja niiden tilan
         </p>
       </div>
 
       {filteredOrders.length === 0 ? (
-        <div className="relative bg-warm-white p-12 text-center">
-          <div className="absolute inset-0 border border-rose-gold/10 pointer-events-none" />
-          <div className="absolute top-0 left-0 w-8 h-8 border-l border-t border-rose-gold/30" />
-          <div className="absolute top-0 right-0 w-8 h-8 border-r border-t border-rose-gold/30" />
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-l border-b border-rose-gold/30" />
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-rose-gold/30" />
+        <div className="relative bg-soft-ivory p-12 text-center">
+          <div className="absolute inset-0 border border-blush/10 pointer-events-none" />
+          <div className="absolute top-0 left-0 w-8 h-8 border-l border-t border-blush/30" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-r border-t border-blush/30" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-l border-b border-blush/30" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-blush/30" />
           <div className="relative">
-            <Package className="w-16 h-16 text-charcoal/20 mx-auto mb-6" />
-            <h3 className="text-xl font-primary text-charcoal mb-3">
+            <Package className="w-16 h-16 text-midnight/20 mx-auto mb-6" />
+            <h3 className="text-xl font-primary text-midnight mb-3">
               Sinulla ei ole vielä tilauksia
             </h3>
-            <p className="text-sm font-secondary text-charcoal/60 mb-6">
+            <p className="text-sm font-secondary text-midnight/60 mb-6">
               Kun teet ensimmäisen tilauksesi, näet sen täältä
             </p>
             <a
               href="/products"
-              className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold"
+              className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight"
             >
               <Plane className="w-4 h-4" />
               Aloita ostokset
@@ -334,7 +334,7 @@ const MyOrdersPage = async () => {
       ) : (
         <div>
           <div className="mb-6">
-            <p className="text-sm font-secondary text-charcoal/60">
+            <p className="text-sm font-secondary text-midnight/60">
               Yhteensä {filteredOrders.length} tilausta
             </p>
           </div>

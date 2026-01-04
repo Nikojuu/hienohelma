@@ -20,27 +20,11 @@ export default function StickyNavbar({
   const getCampaignEmoji = (type: string) => {
     switch (type) {
       case "FREE_SHIPPING":
-        return "🚚";
+        return "";
       case "BUY_X_PAY_Y":
-        return "💰";
-        // case "PERCENTAGE_DISCOUNT":
-        //   return "🏷️";
-        // case "FIXED_DISCOUNT":
-        //   return "💸";
-        // case "FLASH_SALE":
-        //   return "⚡";
-        // case "SEASONAL_SALE":
-        //   return "🎉";
-        // case "NEW_CUSTOMER":
-        //   return "👋";
-        // case "LOYALTY_REWARD":
-        //   return "🎁";
-        // case "BULK_DISCOUNT":
-        //   return "📦";
-        // case "HOLIDAY_SALE":
-        //   return "🎄";
-        // default:
-        return "🎯";
+        return "";
+      default:
+        return "";
     }
   };
 
@@ -49,13 +33,10 @@ export default function StickyNavbar({
       const currentScrollY = window.scrollY;
 
       if (currentScrollY <= 10) {
-        // At the top - always show banner
         setIsScrolled(false);
       } else if (currentScrollY > lastScrollY) {
-        // Scrolling down - hide banner
         setIsScrolled(true);
       } else if (currentScrollY < lastScrollY) {
-        // Scrolling up - show banner
         setIsScrolled(false);
       }
 
@@ -67,10 +48,10 @@ export default function StickyNavbar({
   }, [lastScrollY]);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-transparent md:bg-white/90 md:backdrop-blur-md md:border-b md:border-gray-100">
+    <header className="fixed top-0 w-full z-50 bg-transparent md:bg-soft-ivory/95 md:backdrop-blur-md md:border-b md:border-stone/10">
       <nav
-        className={`w-full max-w-[3500px] mx-auto px-4 
-         flex items-center h-20  `}
+        className={`w-full max-w-[3500px] mx-auto px-4
+         flex items-center h-20`}
       >
         <Link href="/" className="lg:mr-20 hidden md:block">
           <Image
@@ -92,21 +73,16 @@ export default function StickyNavbar({
             duration: 0.3,
             ease: "easeOut",
           }}
-          className="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white text-center py-2 px-4 shadow-sm"
+          className="bg-midnight text-soft-ivory text-center py-2.5 px-4"
         >
-          <p className="text-sm font-medium tracking-wide text-center">
-            Aktiiviset kampanjat:
-          </p>
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
             {campaigns.map((campaign, index) => (
-              <span key={campaign.id}>
-                <span className="text-white text-sm font-medium tracking-wide">
+              <span key={campaign.id} className="flex items-center gap-2">
+                <span className="text-soft-ivory text-sm font-secondary tracking-wide">
                   {getCampaignEmoji(campaign.type)} {campaign.name}
                 </span>
                 {index < campaigns.length - 1 && (
-                  <span className="text-white text-sm font-medium tracking-wide mx-4">
-                    |
-                  </span>
+                  <span className="text-blush/50 text-sm hidden sm:inline">|</span>
                 )}
               </span>
             ))}

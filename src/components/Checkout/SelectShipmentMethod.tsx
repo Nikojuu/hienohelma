@@ -143,19 +143,19 @@ export function SelectShipmentMethod({
 
   return (
     <div className="space-y-8 w-full">
-      {/* Header with diamond decoration */}
+      {/* Header with circle decoration */}
       <div className="text-center">
         <div className="flex items-center justify-center gap-4 mb-4">
-          <div className="w-2 h-2 bg-rose-gold/60 diamond-shape" />
-          <div className="w-16 h-[1px] bg-gradient-to-r from-rose-gold/60 to-champagne/40" />
-          <div className="w-1.5 h-1.5 bg-champagne/50 diamond-shape" />
-          <div className="w-16 h-[1px] bg-gradient-to-l from-rose-gold/60 to-champagne/40" />
-          <div className="w-2 h-2 bg-rose-gold/60 diamond-shape" />
+          <div className="w-2 h-2 rounded-full border border-blush/60" />
+          <div className="w-16 h-[1px] bg-gradient-to-r from-blush/60 to-champagne-gold/40" />
+          <div className="w-1.5 h-1.5 rounded-full bg-champagne-gold/50" />
+          <div className="w-16 h-[1px] bg-gradient-to-l from-blush/60 to-champagne-gold/40" />
+          <div className="w-2 h-2 rounded-full border border-blush/60" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-primary text-charcoal tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-primary text-midnight tracking-tight">
           Valitse toimitustapa
         </h2>
-        <div className="mt-4 h-[1px] bg-gradient-to-r from-transparent via-rose-gold/30 to-transparent max-w-xs mx-auto" />
+        <div className="mt-4 h-[1px] bg-gradient-to-r from-transparent via-blush/30 to-transparent max-w-xs mx-auto" />
       </div>
 
       <RadioGroup
@@ -167,17 +167,17 @@ export function SelectShipmentMethod({
         {homeDeliveryOrCustomShipments.length > 0 && (
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-              <h3 className="text-xl md:text-2xl font-primary text-charcoal">
+              <div className="w-1.5 h-1.5 rounded-full bg-blush/60" />
+              <h3 className="text-xl md:text-2xl font-primary text-midnight">
                 Kotiinkuljetus
               </h3>
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-rose-gold/30 to-transparent" />
+              <div className="flex-1 h-[1px] bg-gradient-to-r from-blush/30 to-transparent" />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {homeDeliveryOrCustomShipments.map((shipment) => (
                 <div
                   key={shipment.id}
-                  className={`group relative bg-warm-white cursor-pointer transition-all duration-500 ${
+                  className={`group relative bg-soft-ivory cursor-pointer transition-all duration-500 ${
                     selectedShipmentMethod ===
                     JSON.stringify({
                       type: "method",
@@ -194,8 +194,8 @@ export function SelectShipmentMethod({
                       type: "method",
                       methodId: shipment.id,
                     })
-                      ? "border-rose-gold/40"
-                      : "border-rose-gold/10 group-hover:border-rose-gold/25"
+                      ? "border-blush/40"
+                      : "border-blush/10 group-hover:border-blush/25"
                   }`} />
 
                   {/* Corner accents */}
@@ -205,8 +205,8 @@ export function SelectShipmentMethod({
                       type: "method",
                       methodId: shipment.id,
                     })
-                      ? "border-rose-gold/60 w-8 h-8"
-                      : "border-rose-gold/30 group-hover:w-8 group-hover:h-8 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-8 h-8"
+                      : "border-blush/30 group-hover:w-8 group-hover:h-8 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 transition-all duration-500 ${
                     selectedShipmentMethod ===
@@ -214,8 +214,8 @@ export function SelectShipmentMethod({
                       type: "method",
                       methodId: shipment.id,
                     })
-                      ? "border-rose-gold/60 w-8 h-8"
-                      : "border-rose-gold/30 group-hover:w-8 group-hover:h-8 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-8 h-8"
+                      : "border-blush/30 group-hover:w-8 group-hover:h-8 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 transition-all duration-500 ${
                     selectedShipmentMethod ===
@@ -223,8 +223,8 @@ export function SelectShipmentMethod({
                       type: "method",
                       methodId: shipment.id,
                     })
-                      ? "border-rose-gold/60 w-8 h-8"
-                      : "border-rose-gold/30 group-hover:w-8 group-hover:h-8 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-8 h-8"
+                      : "border-blush/30 group-hover:w-8 group-hover:h-8 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 transition-all duration-500 ${
                     selectedShipmentMethod ===
@@ -232,8 +232,8 @@ export function SelectShipmentMethod({
                       type: "method",
                       methodId: shipment.id,
                     })
-                      ? "border-rose-gold/60 w-8 h-8"
-                      : "border-rose-gold/30 group-hover:w-8 group-hover:h-8 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-8 h-8"
+                      : "border-blush/30 group-hover:w-8 group-hover:h-8 group-hover:border-blush/50"
                   }`} />
 
                   <CardContent className="p-6 relative">
@@ -253,11 +253,11 @@ export function SelectShipmentMethod({
                         >
                           <div className="space-y-3">
                             {/* Shipment name */}
-                            <h4 className="font-primary text-lg leading-tight line-clamp-2 text-charcoal">
+                            <h4 className="font-primary text-lg leading-tight line-clamp-2 text-midnight">
                               {shipment.name}
                             </h4>
 
-                            <p className="text-sm min-h-10 font-secondary text-charcoal/60 leading-relaxed">
+                            <p className="text-sm min-h-10 font-secondary text-midnight/60 leading-relaxed">
                               {shipment.description
                                 ? shipment.description
                                 : shipment.name}
@@ -267,8 +267,8 @@ export function SelectShipmentMethod({
                             <div className="flex justify-between items-end pt-2">
                               {(shipment.min_estimate_delivery_days ||
                                 shipment.max_estimate_delivery_days) && (
-                                <div className="text-sm font-secondary text-charcoal/70">
-                                  <span className="font-medium text-charcoal">
+                                <div className="text-sm font-secondary text-midnight/70">
+                                  <span className="font-medium text-midnight">
                                     Toimitus:{" "}
                                   </span>
                                   {shipment.min_estimate_delivery_days ===
@@ -277,7 +277,7 @@ export function SelectShipmentMethod({
                                     : `${shipment.min_estimate_delivery_days}-${shipment.max_estimate_delivery_days} päivää`}
                                 </div>
                               )}
-                              <span className="font-primary text-xl text-charcoal bg-rose-gold/10 px-3 py-1.5 border border-rose-gold/20">
+                              <span className="font-primary text-xl text-midnight bg-blush/10 px-3 py-1.5 border border-blush/20">
                                 {formatShipmentMethodPrice(shipment)}
                               </span>
                             </div>
@@ -296,11 +296,11 @@ export function SelectShipmentMethod({
         {pricedLocations.length > 0 && (
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-              <h3 className="text-xl md:text-2xl font-primary text-charcoal">
+              <div className="w-1.5 h-1.5 rounded-full bg-blush/60" />
+              <h3 className="text-xl md:text-2xl font-primary text-midnight">
                 Pakettiautomaatti
               </h3>
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-rose-gold/30 to-transparent" />
+              <div className="flex-1 h-[1px] bg-gradient-to-r from-blush/30 to-transparent" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {(showAllLocations
@@ -309,7 +309,7 @@ export function SelectShipmentMethod({
               ).map((location) => (
                 <div
                   key={location.id}
-                  className={`group relative bg-warm-white cursor-pointer transition-all duration-500 ${
+                  className={`group relative bg-soft-ivory cursor-pointer transition-all duration-500 ${
                     selectedShipmentMethod ===
                     JSON.stringify({
                       type: "locker",
@@ -328,8 +328,8 @@ export function SelectShipmentMethod({
                       lockerId: location.id,
                       serviceId: location.serviceId,
                     })
-                      ? "border-rose-gold/40"
-                      : "border-rose-gold/10 group-hover:border-rose-gold/25"
+                      ? "border-blush/40"
+                      : "border-blush/10 group-hover:border-blush/25"
                   }`} />
 
                   {/* Corner accents */}
@@ -340,8 +340,8 @@ export function SelectShipmentMethod({
                       lockerId: location.id,
                       serviceId: location.serviceId,
                     })
-                      ? "border-rose-gold/60 w-6 h-6"
-                      : "border-rose-gold/30 group-hover:w-6 group-hover:h-6 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-6 h-6"
+                      : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute top-0 right-0 w-4 h-4 border-r border-t transition-all duration-500 ${
                     selectedShipmentMethod ===
@@ -350,8 +350,8 @@ export function SelectShipmentMethod({
                       lockerId: location.id,
                       serviceId: location.serviceId,
                     })
-                      ? "border-rose-gold/60 w-6 h-6"
-                      : "border-rose-gold/30 group-hover:w-6 group-hover:h-6 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-6 h-6"
+                      : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute bottom-0 left-0 w-4 h-4 border-l border-b transition-all duration-500 ${
                     selectedShipmentMethod ===
@@ -360,8 +360,8 @@ export function SelectShipmentMethod({
                       lockerId: location.id,
                       serviceId: location.serviceId,
                     })
-                      ? "border-rose-gold/60 w-6 h-6"
-                      : "border-rose-gold/30 group-hover:w-6 group-hover:h-6 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-6 h-6"
+                      : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute bottom-0 right-0 w-4 h-4 border-r border-b transition-all duration-500 ${
                     selectedShipmentMethod ===
@@ -370,8 +370,8 @@ export function SelectShipmentMethod({
                       lockerId: location.id,
                       serviceId: location.serviceId,
                     })
-                      ? "border-rose-gold/60 w-6 h-6"
-                      : "border-rose-gold/30 group-hover:w-6 group-hover:h-6 group-hover:border-rose-gold/50"
+                      ? "border-blush/60 w-6 h-6"
+                      : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
 
                   <CardContent className="p-4 relative">
@@ -392,7 +392,7 @@ export function SelectShipmentMethod({
                       >
                         <div className="space-y-3">
                           {/* Header with carrier logo and name */}
-                          <div className="flex items-center space-x-2 min-w-0 bg-cream/40 px-2 py-1 border border-rose-gold/10">
+                          <div className="flex items-center space-x-2 min-w-0 bg-pearl/40 px-2 py-1 border border-blush/10">
                             {location.carrierLogo && (
                               /* eslint-disable-next-line @next/next/no-img-element */
                               <img
@@ -401,18 +401,18 @@ export function SelectShipmentMethod({
                                 className="w-5 h-5 object-contain flex-shrink-0"
                               />
                             )}
-                            <span className="text-xs font-secondary font-medium text-charcoal/70 truncate">
+                            <span className="text-xs font-secondary font-medium text-midnight/70 truncate">
                               {location.carrier}
                             </span>
                           </div>
 
                           {/* Location name */}
-                          <h4 className="font-secondary font-medium text-sm leading-tight line-clamp-2 min-h-10 text-charcoal">
+                          <h4 className="font-secondary font-medium text-sm leading-tight line-clamp-2 min-h-10 text-midnight">
                             {location.name}
                           </h4>
 
                           {/* Address */}
-                          <div className="text-xs font-secondary text-charcoal/60 space-y-1 bg-cream/30 p-2 border border-rose-gold/10">
+                          <div className="text-xs font-secondary text-midnight/60 space-y-1 bg-pearl/30 p-2 border border-blush/10">
                             <p className="truncate font-medium">
                               {location.address1}
                             </p>
@@ -423,10 +423,10 @@ export function SelectShipmentMethod({
 
                           {/* Price and Distance */}
                           <div className="flex justify-between items-center pt-1">
-                            <span className="font-primary text-base text-charcoal bg-rose-gold/10 px-2 py-1 border border-rose-gold/20">
+                            <span className="font-primary text-base text-midnight bg-blush/10 px-2 py-1 border border-blush/20">
                               {formatParcelLocationPrice(location)}
                             </span>
-                            <span className="text-charcoal/60 text-xs font-secondary font-medium bg-cream/40 px-2 py-1 border border-rose-gold/10">
+                            <span className="text-midnight/60 text-xs font-secondary font-medium bg-pearl/40 px-2 py-1 border border-blush/10">
                               {formatDistance(location.distanceInMeters)}
                             </span>
                           </div>
@@ -444,7 +444,7 @@ export function SelectShipmentMethod({
                 <button
                   type="button"
                   onClick={() => setShowAllLocations(!showAllLocations)}
-                  className="inline-flex items-center gap-3 px-8 py-3 border border-charcoal/30 text-charcoal font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-rose-gold hover:text-rose-gold"
+                  className="inline-flex items-center gap-3 px-8 py-3 border border-midnight/30 text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
                 >
                   {showAllLocations
                     ? `Näytä vähemmän (${INITIAL_LOCATIONS_COUNT}/${pricedLocations.length})`

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Home } from "lucide-react";
 import type { CategoryReference } from "@putiikkipalvelu/storefront-sdk";
 
 interface BreadcrumbsProps {
@@ -41,13 +41,25 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   const combinedPath = getCombinedCategoryPath(categories);
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-4">
-      <ol className="flex flex-wrap items-center space-x-2">
+    <nav aria-label="Breadcrumb" className="mb-6">
+      <ol className="flex flex-wrap items-center gap-1 text-sm font-secondary">
         <li className="flex items-center">
-          <Link href="/products" className="text-gray-500 hover:text-gray-700">
+          <Link
+            href="/"
+            className="text-stone hover:text-blush transition-colors duration-300"
+          >
+            <Home className="w-4 h-4" />
+          </Link>
+          <ChevronRight className="w-4 h-4 text-stone/50 mx-1" />
+        </li>
+        <li className="flex items-center">
+          <Link
+            href="/products"
+            className="text-stone hover:text-blush transition-colors duration-300"
+          >
             Tuotteet
           </Link>
-          <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
+          <ChevronRight className="w-4 h-4 text-stone/50 mx-1" />
         </li>
         {combinedPath.map((category, index) => (
           <li key={category.id} className="flex items-center">
@@ -56,15 +68,17 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 .slice(0, index + 1)
                 .map((c) => c.slug)
                 .join("/")}`}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-stone hover:text-blush transition-colors duration-300"
             >
               {category.name}
             </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
+            <ChevronRight className="w-4 h-4 text-stone/50 mx-1" />
           </li>
         ))}
         <li className="flex items-center">
-          <span className="text-gray-900 font-medium">{productName}</span>
+          <span className="text-midnight font-medium truncate max-w-[200px]">
+            {productName}
+          </span>
         </li>
       </ol>
     </nav>

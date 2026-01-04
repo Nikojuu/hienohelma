@@ -33,18 +33,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       className="group h-full"
     >
       <Link href={`/product/${item.slug}`} className="block h-full">
-        <div className="relative h-full bg-warm-white overflow-hidden">
-          {/* Card frame */}
-          <div className="absolute inset-0 border border-rose-gold/10 z-10 pointer-events-none transition-colors duration-500 group-hover:border-rose-gold/30" />
-
-          {/* Animated corner accents */}
-          <div className="absolute top-0 left-0 w-6 h-6 border-l border-t border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/50" />
-          <div className="absolute top-0 right-0 w-6 h-6 border-r border-t border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/50" />
-          <div className="absolute bottom-0 left-0 w-6 h-6 border-l border-b border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/50" />
-          <div className="absolute bottom-0 right-0 w-6 h-6 border-r border-b border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/50" />
+        <div className="relative h-full bg-pearl overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+          {/* Subtle border */}
+          <div className="absolute inset-0 border border-stone/10 z-10 pointer-events-none transition-colors duration-500 group-hover:border-blush/30" />
 
           {/* Image section */}
-          <div className="relative aspect-square overflow-hidden bg-cream/30">
+          <div className="relative aspect-[3/4] overflow-hidden bg-pearl">
             <img
               src={getImageUrl(item.images[0], "small")}
               alt={item.name}
@@ -52,25 +46,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
               loading="lazy"
             />
 
-            {/* Elegant overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-midnight/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
             {/* Sale badge */}
             {priceInfo.isOnSale && priceInfo.salePercent && (
-              <div className="absolute top-4 left-4 z-20">
-                <div className="relative">
-                  <div className="bg-deep-burgundy text-warm-white text-xs font-secondary tracking-wider px-3 py-1.5">
-                    -{discountPercentage}%
-                  </div>
-                  <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-gradient-to-r from-deep-burgundy/60 to-transparent" />
-                </div>
+              <div className="absolute top-3 left-3 z-20">
+                <span className="px-2 py-1 text-xs font-secondary uppercase tracking-wider bg-wine text-soft-ivory">
+                  -{discountPercentage}%
+                </span>
               </div>
             )}
 
             {/* Share button - appears on hover */}
-            <div className="absolute top-4 right-4 z-20 opacity-0 transform translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
+            <div className="absolute top-3 right-3 z-20 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
               <button
-                className="p-2.5 bg-warm-white/90 backdrop-blur-sm text-charcoal hover:bg-rose-gold hover:text-warm-white transition-colors duration-300"
+                className="p-2 bg-soft-ivory/90 backdrop-blur-sm text-midnight hover:bg-blush hover:text-soft-ivory transition-colors duration-300"
                 onClick={(e) => {
                   e.preventDefault();
                   const url = `${window.location.origin}/product/${item.slug}`;
@@ -86,34 +77,34 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
               </button>
             </div>
 
-            {/* View product indicator at bottom */}
+            {/* Quick view indicator at bottom */}
             <div className="absolute bottom-0 left-0 right-0 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-              <div className="bg-charcoal/90 backdrop-blur-sm text-warm-white text-center py-3">
-                <span className="text-xs tracking-[0.2em] uppercase font-secondary">
-                  Näytä tuote
+              <div className="bg-midnight/90 backdrop-blur-sm text-soft-ivory text-center py-3">
+                <span className="text-xs tracking-[0.15em] uppercase font-secondary">
+                  Nayta tuote
                 </span>
               </div>
             </div>
           </div>
 
           {/* Content section */}
-          <div className="p-4 space-y-3">
+          <div className="p-4 space-y-2">
             {/* Product name */}
-            <h3 className="font-primary font-semibold text-base text-charcoal line-clamp-2 group-hover:text-rose-gold transition-colors duration-300 leading-tight">
+            <h3 className="text-lg font-primary text-midnight line-clamp-2 group-hover:text-blush transition-colors duration-300 leading-tight">
               {item.name}
             </h3>
 
             {/* Price and availability row */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div className="flex items-center justify-between gap-2">
               {/* Price */}
-              <div className="flex items-baseline font-bold gap-2">
+              <div className="flex items-baseline gap-2">
                 {priceInfo.isOnSale && (
-                  <span className="text-xs text-charcoal/40 line-through font-secondary">
+                  <span className="text-sm text-stone line-through font-secondary">
                     {priceInfo.currentPrice.toFixed(2)}€
                   </span>
                 )}
                 <span
-                  className={`text-lg font-primary font-bold ${priceInfo.isOnSale ? "text-deep-burgundy" : "text-charcoal"}`}
+                  className={`text-base font-secondary tabular-nums ${priceInfo.isOnSale ? "text-wine font-semibold" : "text-midnight"}`}
                 >
                   {priceInfo.isOnSale
                     ? priceInfo.salePrice!.toFixed(2)
@@ -125,22 +116,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
               {/* Availability indicator */}
               <div className="flex items-center gap-1.5">
                 <div
-                  className={`w-2 h-2 rounded-full ${
+                  className={`w-1.5 h-1.5 rounded-full ${
                     hasVariations
-                      ? "bg-champagne"
+                      ? "bg-champagne-gold"
                       : isAvailable
                         ? "bg-emerald-500"
-                        : "bg-deep-burgundy"
+                        : "bg-wine"
                   }`}
                 />
-                <span className="text-sm text-charcoal/60 font-secondary">
+                <span className="text-xs text-stone font-secondary">
                   {hasVariations ? "Vaihtoehtoja" : quantityInfo}
                 </span>
               </div>
             </div>
-
-            {/* Decorative line */}
-            <div className="h-[1px] w-12 bg-gradient-to-r from-rose-gold/40 to-transparent group-hover:w-full transition-all duration-500" />
           </div>
         </div>
       </Link>
@@ -150,29 +138,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
 export const LoadingProductCard: React.FC = () => {
   return (
-    <div className="relative bg-warm-white overflow-hidden h-full">
-      {/* Card frame */}
-      <div className="absolute inset-0 border border-rose-gold/10 z-10 pointer-events-none" />
-
-      {/* Corner accents */}
-      <div className="absolute top-0 left-0 w-6 h-6 border-l border-t border-rose-gold/20 z-10" />
-      <div className="absolute top-0 right-0 w-6 h-6 border-r border-t border-rose-gold/20 z-10" />
-      <div className="absolute bottom-0 left-0 w-6 h-6 border-l border-b border-rose-gold/20 z-10" />
-      <div className="absolute bottom-0 right-0 w-6 h-6 border-r border-b border-rose-gold/20 z-10" />
+    <div className="relative bg-pearl overflow-hidden h-full">
+      {/* Subtle border */}
+      <div className="absolute inset-0 border border-stone/10 z-10 pointer-events-none" />
 
       {/* Image skeleton with shimmer */}
-      <div className="relative aspect-square w-full bg-cream/30 overflow-hidden">
-        <div className="absolute inset-0 shimmer-gold" />
+      <div className="relative aspect-[3/4] w-full bg-pearl overflow-hidden">
+        <div className="absolute inset-0 shimmer-fashion" />
       </div>
 
       {/* Content skeleton */}
       <div className="p-4 space-y-3">
-        <Skeleton className="h-5 w-3/4 bg-cream/50" />
+        <Skeleton className="h-5 w-3/4 bg-stone/10" />
         <div className="flex items-center justify-between">
-          <Skeleton className="h-5 w-16 bg-cream/50" />
-          <Skeleton className="h-4 w-14 bg-cream/50" />
+          <Skeleton className="h-4 w-16 bg-stone/10" />
+          <Skeleton className="h-3 w-14 bg-stone/10" />
         </div>
-        <Skeleton className="h-[1px] w-12 bg-rose-gold/20" />
       </div>
     </div>
   );

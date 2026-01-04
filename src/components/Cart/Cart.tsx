@@ -28,7 +28,6 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const initializedRef = useRef<boolean>(false);
 
-  // Calculate cart with campaigns applied
   const {
     calculatedItems,
     cartTotal,
@@ -37,15 +36,12 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
     freeShipping,
   } = calculateCartWithCampaigns(items, campaigns);
 
-  // Handle hydration mismatch for client-only content
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Sync cart from Redis on mount
   useEffect(() => {
     if (!initializedRef.current) {
-      // Always sync -   backend returns empty cart if no session/cart-id exists
       syncWithBackend();
       initializedRef.current = true;
     }
@@ -65,25 +61,25 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
         <div className="relative">
           <ShoppingCart
             aria-hidden="true"
-            className="h-5 w-5 text-charcoal/70 transition-colors duration-300 group-hover:text-rose-gold"
+            className="h-5 w-5 text-midnight/70 transition-colors duration-300 group-hover:text-blush"
           />
           {isMounted && itemCount > 0 && (
-            <span className="absolute -top-2 -right-2 w-4 h-4 bg-rose-gold text-warm-white text-[10px] font-secondary flex items-center justify-center rounded-full">
+            <span className="absolute -top-2 -right-2 w-4 h-4 bg-blush text-soft-ivory text-[10px] font-secondary flex items-center justify-center rounded-full">
               {itemCount}
             </span>
           )}
         </div>
       </SheetTrigger>
 
-      <SheetContent className="flex w-full flex-col sm:max-w-md bg-warm-white border-l border-rose-gold/20">
+      <SheetContent className="flex w-full flex-col sm:max-w-md bg-soft-ivory border-l border-stone/20">
         {/* Header */}
-        <SheetHeader className="pr-6 pb-4 border-b border-rose-gold/15">
+        <SheetHeader className="pr-6 pb-4 border-b border-stone/15">
           <div className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-            <SheetTitle className="font-primary text-2xl md:text-3xl text-charcoal">
+            <div className="w-2 h-2 rounded-full border border-blush/60" />
+            <SheetTitle className="font-primary text-2xl md:text-3xl text-midnight">
               Ostoskori
             </SheetTitle>
-            <span className="text-sm font-secondary text-charcoal/50">
+            <span className="text-sm font-secondary text-stone">
               ({itemCount})
             </span>
           </div>
@@ -111,16 +107,16 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
             </div>
 
             {/* Footer with totals */}
-            <div className="pr-6 pt-4 border-t border-rose-gold/15 space-y-4">
+            <div className="pr-6 pt-4 border-t border-stone/15 space-y-4">
               {/* Campaign savings */}
               {totalSavings > 0 && (
                 <div className="space-y-2 text-sm font-secondary">
-                  <div className="flex justify-between text-charcoal/60">
-                    <span>Alkuperäinen hinta</span>
+                  <div className="flex justify-between text-stone">
+                    <span>Alkuperainen hinta</span>
                     <span>{(originalTotal / 100).toFixed(2)} €</span>
                   </div>
-                  <div className="flex justify-between text-deep-burgundy">
-                    <span>Kampanja säästö</span>
+                  <div className="flex justify-between text-wine">
+                    <span>Kampanja saasto</span>
                     <span>-{(totalSavings / 100).toFixed(2)} €</span>
                   </div>
                 </div>
@@ -128,17 +124,16 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
 
               {/* Free shipping status */}
               {freeShipping.campaignName && (
-                <div className="relative p-3 text-center">
-                  <div className="absolute inset-0 border border-rose-gold/20 pointer-events-none" />
+                <div className="relative p-3 text-center border border-stone/10">
                   {freeShipping.isEligible ? (
-                    <p className="text-xs font-secondary text-charcoal/80">
-                      <span className="text-rose-gold">✓</span> Ilmainen
+                    <p className="text-xs font-secondary text-midnight/80">
+                      <span className="text-blush">✓</span> Ilmainen
                       toimitus!
                     </p>
                   ) : (
-                    <p className="text-xs font-secondary text-charcoal/60">
-                      Lisää{" "}
-                      <span className="text-rose-gold font-medium">
+                    <p className="text-xs font-secondary text-stone">
+                      Lisaa{" "}
+                      <span className="text-blush font-medium">
                         {(freeShipping.remainingAmount / 100).toFixed(2)} €
                       </span>{" "}
                       ilmaiseen toimitukseen
@@ -149,17 +144,17 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
 
               {/* Total */}
               <div className="flex justify-between items-center py-2">
-                <span className="font-secondary text-charcoal uppercase tracking-wider text-sm">
-                  Yhteensä
+                <span className="font-secondary text-midnight uppercase tracking-wider text-sm">
+                  Yhteensa
                 </span>
-                <span className="text-base text-charcoal font-bold">
+                <span className="text-base text-midnight font-semibold">
                   {(cartTotal / 100).toFixed(2)} €
                 </span>
               </div>
 
               {totalSavings > 0 && (
-                <p className="text-xs font-secondary text-center text-deep-burgundy">
-                  Säästät {(totalSavings / 100).toFixed(2)} € kampanjalla!
+                <p className="text-xs font-secondary text-center text-wine">
+                  Saastat {(totalSavings / 100).toFixed(2)} € kampanjalla!
                 </p>
               )}
 
@@ -168,7 +163,7 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
                 <SheetTrigger asChild>
                   <Link
                     href="/cart"
-                    className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold"
+                    className="group w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight"
                   >
                     <span>Siirry tilaamaan</span>
                     <svg
@@ -194,9 +189,9 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
           <div className="flex-1 flex flex-col items-center justify-center px-6">
             {/* Decorative element */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-rose-gold/40" />
-              <div className="w-2 h-2 bg-rose-gold/30 diamond-shape" />
-              <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-rose-gold/40" />
+              <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-blush/40" />
+              <div className="w-2 h-2 rounded-full border border-blush/60" />
+              <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-blush/40" />
             </div>
 
             <div aria-hidden="true" className="relative mb-6 h-48 w-48">
@@ -204,24 +199,24 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
                 src="https://dsh3gv4ve2.ufs.sh/f/PRCJ5a0N1o4i4qKGOmoWuI5hetYs2UbcZvCKz06lFmBSQgq9"
                 fill
                 sizes="200px, 200px"
-                alt="Tyhjä ostoskori"
+                alt="Tyhja ostoskori"
                 className="object-contain opacity-80"
               />
             </div>
 
-            <h3 className="font-primary text-xl md:text-2xl text-charcoal mb-2">
-              Ostoskorisi on tyhjä
+            <h3 className="font-primary text-xl md:text-2xl text-midnight mb-2">
+              Ostoskorisi on tyhja
             </h3>
-            <p className="text-sm md:text-base font-secondary text-charcoal/60 text-center mb-6">
-              Löydä itsellesi sopiva koru kokoelmastamme
+            <p className="text-sm md:text-base font-secondary text-stone text-center mb-6">
+              Loyda itsellesi sopiva vaate valikoimastamme
             </p>
 
             <SheetTrigger asChild>
               <Link
                 href="/products"
-                className="group inline-flex items-center gap-2 px-6 py-3 border border-charcoal/30 text-charcoal font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-rose-gold hover:text-rose-gold"
+                className="group inline-flex items-center gap-2 px-6 py-3 border border-midnight/30 text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
               >
-                <span>Selaa koruja</span>
+                <span>Selaa tuotteita</span>
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                   fill="none"

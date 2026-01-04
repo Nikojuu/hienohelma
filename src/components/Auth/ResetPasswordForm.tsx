@@ -24,11 +24,11 @@ const ResetPasswordSchema = z
   .object({
     password: z
       .string()
-      .min(8, "Salasanan on oltava vähintään 8 merkkiä pitkä"),
+      .min(8, "Salasanan on oltava vahintaan 8 merkkia pitka"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Salasanat eivät täsmää",
+    message: "Salasanat eivat tasmaa",
     path: ["confirmPassword"],
   });
 
@@ -74,26 +74,13 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         toast({
           title: "Virhe",
           description: errorMessage,
-          className:
-            "bg-red-50 border-red-200 dark:bg-red-900 dark:border-red-800",
-          action: (
-            <div className="flex items-center space-x-2">
-              <XCircle className="h-5 w-5 text-red-500 dark:text-red-400" />
-            </div>
-          ),
+          variant: "destructive",
         });
       } else if (result.success) {
         setFormSuccess(result.message);
         toast({
           title: "Salasana vaihdettu",
           description: result.message,
-          className:
-            "bg-green-50 border-green-200 dark:bg-green-900 dark:border-green-800",
-          action: (
-            <div className="flex items-center space-x-2">
-              <CheckCircle className="h-5 w-5 text-green-500 dark:text-green-400" />
-            </div>
-          ),
         });
 
         // Redirect to login after 2 seconds
@@ -107,63 +94,57 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   }
 
   return (
-    <div className="w-full pt-8 md:pt-16 pb-16 md:pb-24 bg-warm-white min-h-screen">
+    <div className="w-full pt-8 md:pt-16 pb-16 md:pb-24 bg-soft-ivory min-h-screen">
       <div className="container mx-auto px-4">
         <Subtitle subtitle="Vaihda salasana" />
 
         <div className="max-w-lg mx-auto mt-12">
           {/* Form card */}
-          <div className="relative bg-warm-white p-8 md:p-10">
+          <div className="relative bg-soft-ivory p-8 md:p-10">
             {/* Border frame */}
-            <div className="absolute inset-0 border border-rose-gold/15 pointer-events-none" />
-
-            {/* Corner accents */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-rose-gold/40" />
-            <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-rose-gold/40" />
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-rose-gold/40" />
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-rose-gold/40" />
+            <div className="absolute inset-0 border border-stone/15 pointer-events-none" />
 
             {/* Header */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-              <h2 className="font-primary text-2xl md:text-3xl text-charcoal">
+              <div className="w-2 h-2 rounded-full border border-blush/60" />
+              <h2 className="font-primary text-2xl md:text-3xl text-midnight">
                 Uusi salasana
               </h2>
             </div>
 
-            <p className="font-secondary text-sm text-charcoal/70 mb-8">
-              Syötä uusi salasanasi. Salasanan tulee olla vähintään 8 merkkiä
-              pitkä.
+            <p className="font-secondary text-sm text-midnight/70 mb-8">
+              Syota uusi salasanasi. Salasanan tulee olla vahintaan 8 merkkia
+              pitka.
             </p>
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* Form Status Messages */}
                 {formError && (
-                  <div className="flex items-start space-x-3 p-4 bg-deep-burgundy/10 border border-deep-burgundy/30">
-                    <XCircle className="h-5 w-5 text-deep-burgundy flex-shrink-0 mt-0.5" />
+                  <div className="flex items-start space-x-3 p-4 bg-wine/10 border border-wine/30">
+                    <XCircle className="h-5 w-5 text-wine flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-sm font-secondary text-charcoal/80">
+                      <p className="text-sm font-secondary text-midnight/80">
                         {formError}
                       </p>
                       <Link
                         href="/forgot-password"
-                        className="text-sm font-secondary text-rose-gold hover:underline mt-2 inline-block"
+                        className="text-sm font-secondary text-blush hover:underline mt-2 inline-block"
                       >
-                        Pyydä uusi palautuslinkki
+                        Pyyda uusi palautuslinkki
                       </Link>
                     </div>
                   </div>
                 )}
 
                 {formSuccess && (
-                  <div className="flex items-center space-x-3 p-4 bg-rose-gold/10 border border-rose-gold/30">
-                    <CheckCircle className="h-5 w-5 text-rose-gold flex-shrink-0" />
+                  <div className="flex items-center space-x-3 p-4 bg-blush/10 border border-blush/30">
+                    <CheckCircle className="h-5 w-5 text-blush flex-shrink-0" />
                     <div>
-                      <p className="text-sm font-secondary text-charcoal/80">
+                      <p className="text-sm font-secondary text-midnight/80">
                         {formSuccess}
                       </p>
-                      <p className="text-sm font-secondary text-charcoal/60 mt-1">
+                      <p className="text-sm font-secondary text-midnight/60 mt-1">
                         Sinut ohjataan kirjautumissivulle...
                       </p>
                     </div>
@@ -175,7 +156,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-secondary text-charcoal">
+                      <FormLabel className="text-sm font-secondary text-midnight">
                         Uusi salasana *
                       </FormLabel>
                       <FormControl>
@@ -183,15 +164,15 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                           <Input
                             type={showPassword ? "text" : "password"}
                             {...field}
-                            className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
-                            placeholder="Vähintään 8 merkkiä"
+                            className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
+                            placeholder="Vahintaan 8 merkkia"
                           />
                           <button
                             type="button"
-                            className="absolute right-0 top-0 h-full px-3 py-2 text-charcoal/60 hover:text-rose-gold transition-colors"
+                            className="absolute right-0 top-0 h-full px-3 py-2 text-stone hover:text-blush transition-colors"
                             onClick={() => setShowPassword(!showPassword)}
                             aria-label={
-                              showPassword ? "Piilota salasana" : "Näytä salasana"
+                              showPassword ? "Piilota salasana" : "Nayta salasana"
                             }
                           >
                             {showPassword ? (
@@ -202,7 +183,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                           </button>
                         </div>
                       </FormControl>
-                      <FormMessage className="text-sm font-secondary text-deep-burgundy" />
+                      <FormMessage className="text-sm font-secondary text-wine" />
                     </FormItem>
                   )}
                 />
@@ -212,7 +193,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-secondary text-charcoal">
+                      <FormLabel className="text-sm font-secondary text-midnight">
                         Vahvista salasana *
                       </FormLabel>
                       <FormControl>
@@ -220,19 +201,19 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                           <Input
                             type={showConfirmPassword ? "text" : "password"}
                             {...field}
-                            className="bg-cream/50 border-rose-gold/20 focus:border-rose-gold/50 focus:ring-rose-gold/20 font-secondary text-charcoal placeholder:text-charcoal/40"
+                            className="bg-pearl border-stone/20 focus:border-blush/50 focus:ring-blush/20 font-secondary text-midnight placeholder:text-stone"
                             placeholder="Kirjoita salasana uudelleen"
                           />
                           <button
                             type="button"
-                            className="absolute right-0 top-0 h-full px-3 py-2 text-charcoal/60 hover:text-rose-gold transition-colors"
+                            className="absolute right-0 top-0 h-full px-3 py-2 text-stone hover:text-blush transition-colors"
                             onClick={() =>
                               setShowConfirmPassword(!showConfirmPassword)
                             }
                             aria-label={
                               showConfirmPassword
                                 ? "Piilota salasana"
-                                : "Näytä salasana"
+                                : "Nayta salasana"
                             }
                           >
                             {showConfirmPassword ? (
@@ -243,18 +224,18 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                           </button>
                         </div>
                       </FormControl>
-                      <FormMessage className="text-sm font-secondary text-deep-burgundy" />
+                      <FormMessage className="text-sm font-secondary text-wine" />
                     </FormItem>
                   )}
                 />
 
                 {/* Decorative line before buttons */}
-                <div className="h-[1px] bg-gradient-to-r from-transparent via-rose-gold/30 to-transparent" />
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-blush/30 to-transparent" />
 
                 <button
                   type="submit"
                   disabled={isLoading || !!formSuccess}
-                  className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? "Vaihdetaan..." : "Vaihda salasana"}
                 </button>

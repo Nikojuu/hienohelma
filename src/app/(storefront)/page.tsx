@@ -74,15 +74,15 @@ export default async function Home() {
   });
 
   return (
-    <main className="bg-warm-white">
-      {/* Hero Section - Full viewport artisan showcase */}
+    <main className="bg-soft-ivory">
+      {/* Hero Section - Full viewport fashion showcase */}
       <Hero />
 
       {/* Latest Products Section */}
-      <section className="relative py-8 bg-gradient-to-b from-warm-white via-cream/20 to-warm-white">
+      <section className="relative py-8 bg-gradient-to-b from-soft-ivory via-pearl/20 to-soft-ivory">
         <Subtitle
-          subtitle="Uusimmat tuotteet"
-          description="Tuoreimmat lisäykset tuotevalikoimaan - jokainen huolella valittu"
+          subtitle="Uudet tuotteet"
+          description="Tutustu viimeisimpiin lisayksiin - jokainen huolella valittu sinulle"
         />
 
         {/* Desktop grid */}
@@ -97,9 +97,9 @@ export default async function Home() {
           <div className="flex justify-center mt-16">
             <a
               href="/products"
-              className="group inline-flex items-center gap-3 px-8 py-4 border border-charcoal/20 text-charcoal font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-rose-gold hover:text-rose-gold"
+              className="group inline-flex items-center gap-3 px-8 py-4 border border-midnight/20 text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
             >
-              <span>Näytä kaikki tuotteet</span>
+              <span>Nayta kaikki tuotteet</span>
               <svg
                 className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                 fill="none"
@@ -120,11 +120,12 @@ export default async function Home() {
         {/* Mobile carousel */}
         <ProductCarousel products={latestProducts} />
       </section>
+
       {/* Categories Section */}
       <section className="relative">
         <Subtitle
-          subtitle="Tuotekokoelmat"
-          description="Tutustu huolella kuratoituun valikoimaamme"
+          subtitle="Kategoriat"
+          description="Tutustu valikoimaamme kategorioittain"
         />
         <CategorySection />
       </section>
@@ -133,45 +134,31 @@ export default async function Home() {
       <AboutMeSection />
 
       {/* Final CTA Section */}
-      <section className="relative py-20 md:py-28 bg-gradient-to-b from-warm-white via-cream/40 to-soft-blush/30 overflow-hidden">
+      <section className="relative py-20 md:py-28 bg-gradient-to-b from-soft-ivory via-pearl/40 to-whisper-pink/30 overflow-hidden">
         {/* Decorative border frame */}
-        <div className="absolute inset-6 sm:inset-10 border border-rose-gold/15 pointer-events-none" />
-
-        {/* Corner accents */}
-        <div className="absolute top-6 left-6 sm:top-10 sm:left-10 w-8 h-8 border-l-2 border-t-2 border-rose-gold/40" />
-        <div className="absolute top-6 right-6 sm:top-10 sm:right-10 w-8 h-8 border-r-2 border-t-2 border-rose-gold/40" />
-        <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 w-8 h-8 border-l-2 border-b-2 border-rose-gold/40" />
-        <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 w-8 h-8 border-r-2 border-b-2 border-rose-gold/40" />
-
-        {/* Floating diamonds */}
-        <div className="absolute top-1/4 left-[15%] w-2 h-2 bg-rose-gold/25 diamond-shape hidden sm:block" />
-        <div className="absolute top-1/3 right-[12%] w-3 h-3 bg-champagne/30 diamond-shape hidden sm:block" />
-        <div className="absolute bottom-1/3 left-[20%] w-1.5 h-1.5 bg-rose-gold/20 diamond-shape hidden md:block" />
+        <div className="absolute inset-6 sm:inset-10 border border-stone/10 pointer-events-none" />
 
         <div className="container mx-auto px-4 max-w-3xl text-center relative z-10">
           {/* Decorative header */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-2 h-2 bg-rose-gold/50 diamond-shape" />
-            <div className="w-12 h-[1px] bg-gradient-to-r from-rose-gold/50 to-champagne/30" />
-            <div className="w-1.5 h-1.5 bg-champagne/40 diamond-shape" />
-            <div className="w-12 h-[1px] bg-gradient-to-l from-rose-gold/50 to-champagne/30" />
-            <div className="w-2 h-2 bg-rose-gold/50 diamond-shape" />
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-16 h-[1px] bg-gradient-to-r from-transparent to-blush/50" />
+            <div className="w-2 h-2 rounded-full border border-blush/60" />
+            <div className="w-16 h-[1px] bg-gradient-to-l from-transparent to-blush/50" />
           </div>
 
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-primary font-bold text-charcoal mb-4">
-            Löydä sinun tuotteesi
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-primary text-midnight mb-4">
+            Loyda tyylisi
           </h2>
 
-          <p className="text-sm md:text-base text-charcoal/60 font-secondary mb-10 max-w-2xl mx-auto leading-relaxed">
-            Laadukas valikoima huolella valittuja tuotteita.
-            Olitpa etsimässä lahjaa tai jotain erityistä itsellesi - täältä
-            löydät sen.
+          <p className="text-base text-stone font-secondary mb-10 max-w-2xl mx-auto leading-relaxed">
+            Valikoimastamme loydat ajattomia klassikoita ja kauden uusimmat trendit.
+            Olitpa etsimassa jotain erityista itsellesi tai lahjaa - taalta loydat sen.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/products"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight"
             >
               Selaa kaikkia tuotteita
               <svg
@@ -190,9 +177,9 @@ export default async function Home() {
             </a>
             <a
               href="/contact"
-              className="group inline-flex items-center gap-3 px-8 py-4 border border-charcoal/30 text-charcoal font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-rose-gold hover:text-rose-gold"
+              className="group inline-flex items-center gap-3 px-8 py-4 border border-midnight/30 text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
             >
-              Ota yhteyttä
+              Ota yhteytta
             </a>
           </div>
         </div>

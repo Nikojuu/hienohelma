@@ -52,14 +52,15 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        // Custom Jewelry Colors
-        "rose-gold": "hsl(var(--rose-gold))",
-        champagne: "hsl(var(--champagne))",
-        cream: "hsl(var(--cream))",
-        "warm-white": "hsl(var(--warm-white))",
-        "soft-blush": "hsl(var(--soft-blush))",
-        "deep-burgundy": "hsl(var(--deep-burgundy))",
-        charcoal: "hsl(var(--charcoal))",
+        // Custom Fashion Colors
+        blush: "hsl(var(--blush))",
+        "champagne-gold": "hsl(var(--champagne-gold))",
+        "soft-ivory": "hsl(var(--soft-ivory))",
+        pearl: "hsl(var(--pearl))",
+        midnight: "hsl(var(--midnight))",
+        "whisper-pink": "hsl(var(--whisper-pink))",
+        wine: "hsl(var(--wine))",
+        stone: "hsl(var(--stone))",
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",

@@ -14,10 +14,8 @@ export function ImageSlider({ images, productName }: iAppProps) {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
 
-  // Derive loading state from loadedImages
   const isLoading = !loadedImages.has(mainImageIndex);
 
-  // Preload all images on mount
   useEffect(() => {
     images.forEach((image, index) => {
       const img = new window.Image();
@@ -51,13 +49,7 @@ export function ImageSlider({ images, productName }: iAppProps) {
   return (
     <div className="grid gap-4 items-start">
       {/* Main Image */}
-      <div className="relative overflow-hidden aspect-square w-full group bg-cream/30">
-        {/* Corner accents */}
-        <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-12 group-hover:h-12 group-hover:border-rose-gold/50" />
-        <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-12 group-hover:h-12 group-hover:border-rose-gold/50" />
-        <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-12 group-hover:h-12 group-hover:border-rose-gold/50" />
-        <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-rose-gold/30 z-10 transition-all duration-500 group-hover:w-12 group-hover:h-12 group-hover:border-rose-gold/50" />
-
+      <div className="relative overflow-hidden aspect-square w-full group bg-pearl">
         <img
           src={getImageUrl(images[mainImageIndex], "small")}
           srcSet={`${getImageUrl(images[mainImageIndex], "small")} 400w, ${getImageUrl(images[mainImageIndex], "medium")} 800w`}
@@ -73,7 +65,7 @@ export function ImageSlider({ images, productName }: iAppProps) {
         {/* Loading Indicator */}
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center z-20">
-            <Loader2 className="w-8 h-8 text-rose-gold animate-spin" />
+            <Loader2 className="w-8 h-8 text-blush animate-spin" />
           </div>
         )}
 
@@ -83,7 +75,7 @@ export function ImageSlider({ images, productName }: iAppProps) {
             onClick={handlePreviousClick}
             variant="ghost"
             size="icon"
-            className="bg-warm-white/80 backdrop-blur-sm hover:bg-rose-gold hover:text-warm-white transition-all duration-300 h-10 w-10"
+            className="bg-soft-ivory/80 backdrop-blur-sm hover:bg-blush hover:text-soft-ivory transition-all duration-300 h-10 w-10"
           >
             <ChevronLeft className="w-5 h-5" />
           </Button>
@@ -91,22 +83,39 @@ export function ImageSlider({ images, productName }: iAppProps) {
             onClick={handleNextClick}
             variant="ghost"
             size="icon"
-            className="bg-warm-white/80 backdrop-blur-sm hover:bg-rose-gold hover:text-warm-white transition-all duration-300 h-10 w-10"
+            className="bg-soft-ivory/80 backdrop-blur-sm hover:bg-blush hover:text-soft-ivory transition-all duration-300 h-10 w-10"
           >
             <ChevronRight className="w-5 h-5" />
           </Button>
         </div>
+
+        {/* Dot indicators */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleImageClick(index)}
+              className={cn(
+                "w-2 h-2 rounded-full transition-all duration-300",
+                index === mainImageIndex
+                  ? "bg-blush w-6"
+                  : "bg-soft-ivory/60 hover:bg-soft-ivory"
+              )}
+              aria-label={`Kuva ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Thumbnails */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-4 gap-2">
         {images.map((image, index) => (
           <div
             className={cn(
               "relative aspect-square overflow-hidden cursor-pointer transition-all duration-300",
               index === mainImageIndex
-                ? "ring-2 ring-rose-gold ring-offset-2 ring-offset-warm-white"
-                : "ring-1 ring-charcoal/10 hover:ring-rose-gold/40"
+                ? "ring-2 ring-blush"
+                : "ring-1 ring-stone/10 hover:ring-blush/40"
             )}
             key={index}
             onClick={() => handleImageClick(index)}

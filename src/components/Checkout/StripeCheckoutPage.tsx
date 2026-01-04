@@ -57,15 +57,8 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
       toast({
         title: "Virhe haettaessa toimitustapoja",
         description:
-          "Virhe haettaessa toimitustapoja, yritä myöhemmin uudestaan",
-        className:
-          "bg-red-50 border-red-200 dark:bg-red-900 dark:border-red-800",
-        action: (
-          <div className="flex items-center space-x-2">
-            <XCircle className="h-5 w-5 text-red-500 dark:text-red-400" />
-            <div className="flex flex-col"></div>
-          </div>
-        ),
+          "Virhe haettaessa toimitustapoja, yrita myohemmin uudestaan",
+        variant: "destructive",
       });
       console.error("Error fetching payment methods:", error);
     }
@@ -98,8 +91,8 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
       console.error("Checkout error:", error);
       toast({
         title: "Virhe",
-        description: "Maksun käsittely epäonnistui. Yritä uudelleen.",
-        className: "bg-red-50 border-red-200",
+        description: "Maksun kasittely epaonnistui. Yrita uudelleen.",
+        variant: "destructive",
       });
       setIsLoading(false);
     }
@@ -141,7 +134,7 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
           <div className="mt-12 flex justify-between items-center mx-auto max-w-2xl gap-4">
             <button
               onClick={handleGoBack}
-              className="group inline-flex items-center gap-2 px-6 py-3 border border-charcoal/30 text-charcoal font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-rose-gold hover:text-rose-gold"
+              className="group inline-flex items-center gap-2 px-6 py-3 border border-midnight/30 text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
             >
               <svg
                 className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
@@ -162,7 +155,7 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
               type="button"
               onClick={handleStripeCheckout}
               disabled={!chosenShipmentMethod || isLoading}
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>

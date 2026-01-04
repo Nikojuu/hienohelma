@@ -138,7 +138,7 @@ const ProductsPage = async ({
           />
         </>
       )}
-      <section className="pt-8 md:pt-16 container mx-auto px-4 bg-warm-white">
+      <section className="pt-8 md:pt-16 container mx-auto px-4 bg-soft-ivory">
         <Subtitle subtitle={categoryName || "Tuotteet"} />
         {products && products.length > 0 ? (
           <>
@@ -161,35 +161,35 @@ const ProductsPage = async ({
           </>
         ) : (
           <div className="max-w-screen-xl mx-auto py-16 md:py-24">
-            <div className="relative bg-warm-white p-8 md:p-12 text-center">
+            <div className="relative bg-soft-ivory p-8 md:p-12 text-center">
               {/* Card frame */}
-              <div className="absolute inset-0 border border-rose-gold/10 pointer-events-none" />
+              <div className="absolute inset-0 border border-blush/10 pointer-events-none" />
 
               {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-8 h-8 border-l border-t border-rose-gold/30" />
-              <div className="absolute top-0 right-0 w-8 h-8 border-r border-t border-rose-gold/30" />
-              <div className="absolute bottom-0 left-0 w-8 h-8 border-l border-b border-rose-gold/30" />
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-rose-gold/30" />
+              <div className="absolute top-0 left-0 w-8 h-8 border-l border-t border-blush/30" />
+              <div className="absolute top-0 right-0 w-8 h-8 border-r border-t border-blush/30" />
+              <div className="absolute bottom-0 left-0 w-8 h-8 border-l border-b border-blush/30" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-blush/30" />
 
-              {/* Diamond decoration */}
+              {/* Circle decoration */}
               <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="w-1.5 h-1.5 bg-champagne/50 diamond-shape" />
-                <div className="w-12 h-[1px] bg-gradient-to-r from-rose-gold/40 to-transparent" />
-                <div className="w-2 h-2 bg-rose-gold/40 diamond-shape" />
-                <div className="w-12 h-[1px] bg-gradient-to-l from-rose-gold/40 to-transparent" />
-                <div className="w-1.5 h-1.5 bg-champagne/50 diamond-shape" />
+                <div className="w-1.5 h-1.5 rounded-full bg-champagne-gold/50" />
+                <div className="w-12 h-[1px] bg-gradient-to-r from-blush/40 to-transparent" />
+                <div className="w-2 h-2 rounded-full border border-blush/40" />
+                <div className="w-12 h-[1px] bg-gradient-to-l from-blush/40 to-transparent" />
+                <div className="w-1.5 h-1.5 rounded-full bg-champagne-gold/50" />
               </div>
 
-              <h3 className="text-xl md:text-2xl font-primary font-semibold text-charcoal mb-4">
+              <h3 className="text-xl md:text-2xl font-primary font-semibold text-midnight mb-4">
                 Tuotteita ei löytynyt
               </h3>
-              <p className="text-sm md:text-base font-secondary text-charcoal/60 max-w-md mx-auto">
+              <p className="text-sm md:text-base font-secondary text-midnight/60 max-w-md mx-auto">
                 Tällä kategorialla ei ole vielä tuotteita. Tutustu muihin
                 kategorioihin.
               </p>
 
               {/* Bottom line */}
-              <div className="mt-6 h-[1px] bg-gradient-to-r from-transparent via-rose-gold/20 to-transparent max-w-xs mx-auto" />
+              <div className="mt-6 h-[1px] bg-gradient-to-r from-transparent via-blush/20 to-transparent max-w-xs mx-auto" />
             </div>
           </div>
         )}

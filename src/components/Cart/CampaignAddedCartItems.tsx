@@ -57,20 +57,14 @@ export const CampaignAddedCartItems = ({
         return (
           <div
             key={`${itemKey}-${i}`}
-            className="relative p-4 md:p-6 bg-cream/30 border border-rose-gold/10"
+            className="relative p-4 md:p-6 bg-pearl/30 border border-stone/10"
           >
-            {/* Corner accents */}
-            <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-rose-gold/30" />
-            <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-rose-gold/30" />
-            <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-rose-gold/30" />
-            <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-rose-gold/30" />
-
             <div className="flex gap-4 md:gap-6">
               {/* Product image */}
               {product.slug ? (
                 <Link
                   href={`/product/${product.slug}`}
-                  className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0 overflow-hidden bg-warm-white group"
+                  className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0 overflow-hidden bg-soft-ivory group"
                 >
                   <img
                     src={getImageUrl(
@@ -83,7 +77,7 @@ export const CampaignAddedCartItems = ({
                   />
                 </Link>
               ) : (
-                <div className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0 overflow-hidden bg-warm-white">
+                <div className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0 overflow-hidden bg-soft-ivory">
                   <img
                     src={getImageUrl(
                       variation?.images[0] || product.images[0],
@@ -102,12 +96,12 @@ export const CampaignAddedCartItems = ({
                 {product.slug ? (
                   <Link
                     href={`/product/${product.slug}`}
-                    className="block font-secondary text-sm md:text-base text-charcoal hover:text-rose-gold transition-colors duration-300 line-clamp-2 mb-2"
+                    className="block font-secondary text-sm md:text-base text-midnight hover:text-blush transition-colors duration-300 line-clamp-2 mb-2"
                   >
                     {product.name}
                   </Link>
                 ) : (
-                  <span className="block font-secondary text-sm md:text-base text-charcoal line-clamp-2 mb-2">
+                  <span className="block font-secondary text-sm md:text-base text-midnight line-clamp-2 mb-2">
                     {product.name}
                   </span>
                 )}
@@ -118,7 +112,7 @@ export const CampaignAddedCartItems = ({
                     {variation.options.map((opt) => (
                       <p
                         key={`${opt.optionType.name}-${opt.value}`}
-                        className="text-xs font-secondary text-charcoal/50"
+                        className="text-xs font-secondary text-stone"
                       >
                         {opt.optionType.name}: {opt.value}
                       </p>
@@ -130,18 +124,18 @@ export const CampaignAddedCartItems = ({
                 <div className="mb-3">
                   {isOnSale && salePrice ? (
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-base font-secondary text-deep-burgundy font-medium">
+                      <span className="text-base font-secondary text-wine font-medium">
                         {(salePrice / 100).toFixed(2)} €
                       </span>
-                      <span className="text-xs font-secondary text-charcoal/40 line-through">
+                      <span className="text-xs font-secondary text-stone line-through">
                         {(displayPrice / 100).toFixed(2)} €
                       </span>
-                      <span className="text-xs font-secondary bg-deep-burgundy/10 text-deep-burgundy px-2 py-0.5">
+                      <span className="text-xs font-secondary bg-wine/10 text-wine px-2 py-0.5">
                         ALE
                       </span>
                     </div>
                   ) : (
-                    <span className="text-base font-secondary text-charcoal">
+                    <span className="text-base font-secondary text-midnight">
                       {(displayPrice / 100).toFixed(2)} €
                     </span>
                   )}
@@ -152,12 +146,12 @@ export const CampaignAddedCartItems = ({
                   <button
                     onClick={() => decrementQuantity(product.id, variation?.id)}
                     disabled={cartQuantity === 1}
-                    className="w-8 h-8 flex items-center justify-center border border-charcoal/20 text-charcoal/70 transition-colors duration-300 hover:border-rose-gold hover:text-rose-gold disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-8 h-8 flex items-center justify-center border border-stone/20 text-midnight/70 transition-colors duration-300 hover:border-blush hover:text-blush disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Minus className="w-4 h-4" />
-                    <span className="sr-only">Vähennä määrää</span>
+                    <span className="sr-only">Vahenna maaraa</span>
                   </button>
-                  <span className="w-8 text-center text-sm font-secondary text-charcoal">
+                  <span className="w-8 text-center text-sm font-secondary text-midnight">
                     {cartQuantity || 0}
                   </span>
                   <button
@@ -166,17 +160,17 @@ export const CampaignAddedCartItems = ({
                       isOutOfStock ||
                       (!isUnlimitedStock && cartQuantity >= stockQuantity)
                     }
-                    className="w-8 h-8 flex items-center justify-center border border-charcoal/20 text-charcoal/70 transition-colors duration-300 hover:border-rose-gold hover:text-rose-gold disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-8 h-8 flex items-center justify-center border border-stone/20 text-midnight/70 transition-colors duration-300 hover:border-blush hover:text-blush disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Plus className="w-4 h-4" />
-                    <span className="sr-only">Lisää määrää</span>
+                    <span className="sr-only">Lisaa maaraa</span>
                   </button>
                 </div>
 
                 {/* Campaign info */}
                 {freeQuantity > 0 && (
-                  <div className="mt-3 p-2 bg-soft-blush/30 border border-rose-gold/15">
-                    <p className="text-xs font-secondary text-rose-gold text-center">
+                  <div className="mt-3 p-2 bg-whisper-pink/30 border border-blush/15">
+                    <p className="text-xs font-secondary text-blush text-center">
                       Kampanja: Osta{" "}
                       {buyXPayYCampaign?.BuyXPayYCampaign?.buyQuantity}, maksa{" "}
                       {buyXPayYCampaign?.BuyXPayYCampaign?.payQuantity}
@@ -189,7 +183,7 @@ export const CampaignAddedCartItems = ({
               <button
                 aria-label="Poista tuote"
                 onClick={() => removeItem(product.id, variation?.id)}
-                className="self-start p-2 text-charcoal/40 hover:text-deep-burgundy transition-colors duration-300"
+                className="self-start p-2 text-stone hover:text-wine transition-colors duration-300"
               >
                 <X className="w-5 h-5" />
               </button>

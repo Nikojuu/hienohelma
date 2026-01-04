@@ -36,21 +36,8 @@ const AboutBlock = ({ blockInfo }: { blockInfo: AboutBlockType }) => {
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="relative w-full lg:w-1/2 group"
       >
-        {/* Decorative frame behind image */}
-        <div
-          className={`absolute -inset-3 border border-rose-gold/20 ${
-            blockInfo.reverse ? "translate-x-3" : "-translate-x-3"
-          } translate-y-3 transition-all duration-500 group-hover:border-rose-gold/40`}
-        />
-
-        {/* Corner accents */}
-        <div className="absolute -top-1 -left-1 w-6 h-6 border-l-2 border-t-2 border-rose-gold/50 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/70" />
-        <div className="absolute -top-1 -right-1 w-6 h-6 border-r-2 border-t-2 border-rose-gold/50 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/70" />
-        <div className="absolute -bottom-1 -left-1 w-6 h-6 border-l-2 border-b-2 border-rose-gold/50 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/70" />
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 border-r-2 border-b-2 border-rose-gold/50 z-10 transition-all duration-500 group-hover:w-10 group-hover:h-10 group-hover:border-rose-gold/70" />
-
         {/* Image wrapper */}
-        <div className="relative aspect-[4/5] overflow-hidden bg-cream">
+        <div className="relative aspect-[4/5] overflow-hidden bg-pearl">
           <Image
             fill
             alt={blockInfo.title}
@@ -60,7 +47,7 @@ const AboutBlock = ({ blockInfo }: { blockInfo: AboutBlockType }) => {
             priority
           />
           {/* Subtle overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-warm-white/10 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-midnight/10 via-transparent to-soft-ivory/10 pointer-events-none" />
         </div>
       </motion.div>
 
@@ -80,15 +67,15 @@ const AboutBlock = ({ blockInfo }: { blockInfo: AboutBlockType }) => {
         } lg:py-12 z-10`}
       >
         {/* Content card */}
-        <div className="relative bg-warm-white/95 backdrop-blur-sm p-8 md:p-10 lg:p-12 border border-rose-gold/10 shadow-lg">
-          {/* Small decorative diamond */}
+        <div className="relative bg-soft-ivory/95 backdrop-blur-sm p-8 md:p-10 lg:p-12 border border-stone/10 shadow-lg">
+          {/* Small decorative circle */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-            <div className="w-12 h-[1px] bg-gradient-to-r from-rose-gold/50 to-transparent" />
+            <div className="w-2 h-2 rounded-full border border-blush/60" />
+            <div className="w-12 h-[1px] bg-gradient-to-r from-blush/50 to-transparent" />
           </div>
 
           {/* Title */}
-          <h3 className="font-primary text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-6 tracking-tight">
+          <h3 className="font-primary text-2xl md:text-3xl lg:text-4xl font-bold text-midnight mb-6 tracking-tight">
             {blockInfo.title}
           </h3>
 
@@ -97,7 +84,7 @@ const AboutBlock = ({ blockInfo }: { blockInfo: AboutBlockType }) => {
             {blockInfo.text.split("\n\n").map((paragraph, index) => (
               <p
                 key={index}
-                className="text-sm md:text-base leading-relaxed text-charcoal/70 font-secondary"
+                className="text-sm md:text-base leading-relaxed text-midnight/70 font-secondary"
               >
                 {paragraph.trim()}
               </p>
@@ -105,7 +92,7 @@ const AboutBlock = ({ blockInfo }: { blockInfo: AboutBlockType }) => {
           </div>
 
           {/* Bottom decorative line */}
-          <div className="mt-8 h-[1px] bg-gradient-to-r from-rose-gold/40 via-champagne/30 to-transparent max-w-32" />
+          <div className="mt-8 h-[1px] bg-gradient-to-r from-blush/40 via-champagne-gold/30 to-transparent max-w-32" />
         </div>
       </motion.div>
     </section>

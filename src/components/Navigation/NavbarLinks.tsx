@@ -30,7 +30,7 @@ const DesktopDropdown: React.FC<{
     >
       <Link
         href={categoryPath}
-        className="flex items-center justify-between gap-3 px-5 py-3 text-charcoal/80 font-secondary text-sm tracking-wide capitalize transition-all duration-300 hover:text-rose-gold hover:bg-soft-blush/30"
+        className="flex items-center justify-between gap-3 px-5 py-3 text-midnight/80 font-secondary text-sm tracking-wide capitalize transition-all duration-300 hover:text-blush hover:bg-whisper-pink/30"
       >
         <span>{category.name}</span>
         {hasChildren && (
@@ -45,10 +45,10 @@ const DesktopDropdown: React.FC<{
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-full top-0 min-w-[200px] bg-warm-white/98 backdrop-blur-md border border-rose-gold/10 shadow-lg z-[60]"
+            className="absolute left-full top-0 min-w-[200px] bg-soft-ivory/98 backdrop-blur-md border border-stone/10 shadow-lg z-[60]"
           >
             {/* Decorative top line */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-rose-gold/30 via-champagne/20 to-transparent" />
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-blush/30 via-champagne-gold/20 to-transparent" />
 
             <div className="py-2">
               {category.children?.map((child) => (
@@ -70,7 +70,7 @@ export function NavbarLinks({ categories }: { categories: Category[] }) {
   const [isShopHovered, setIsShopHovered] = useState(false);
 
   const navLinkClasses =
-    "relative px-4 py-2 font-secondary text-sm tracking-[0.05em] uppercase text-charcoal/80 transition-all duration-300 hover:text-rose-gold group";
+    "relative px-4 py-2 font-secondary text-sm tracking-[0.05em] uppercase text-midnight/80 transition-all duration-300 hover:text-blush group";
 
   return (
     <div className="flex h-20 items-center">
@@ -91,8 +91,8 @@ export function NavbarLinks({ categories }: { categories: Category[] }) {
                 }`}
               />
             </span>
-            {/* Hover underline */}
-            <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-gradient-to-r from-rose-gold to-champagne scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            {/* Hover underline - expands from center */}
+            <span className="absolute bottom-0 left-1/2 w-0 h-[1px] bg-blush transition-all duration-300 group-hover:w-full group-hover:left-0" />
           </Link>
 
           <AnimatePresence>
@@ -104,23 +104,17 @@ export function NavbarLinks({ categories }: { categories: Category[] }) {
                 transition={{ duration: 0.2 }}
                 className="absolute left-0 top-full pt-2"
               >
-                <div className="relative min-w-[220px] bg-warm-white/98 backdrop-blur-md border border-rose-gold/10 shadow-xl">
-                  {/* Decorative corner accents */}
-                  <div className="absolute -top-1 -left-1 w-3 h-3 border-l border-t border-rose-gold/30" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 border-r border-t border-rose-gold/30" />
-                  <div className="absolute -bottom-1 -left-1 w-3 h-3 border-l border-b border-rose-gold/30" />
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 border-r border-b border-rose-gold/30" />
-
+                <div className="relative min-w-[220px] bg-soft-ivory/98 backdrop-blur-md border border-stone/10 shadow-xl">
                   {/* Decorative top gradient */}
-                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-rose-gold/40 to-transparent" />
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blush/40 to-transparent" />
 
                   <div className="py-3">
                     {/* View all products link */}
                     <Link
                       href="/products"
-                      className="flex items-center gap-2 px-5 py-2.5 text-charcoal font-secondary text-sm tracking-wide transition-all duration-300 hover:text-rose-gold hover:bg-soft-blush/30 border-b border-rose-gold/10 mb-2"
+                      className="flex items-center gap-2 px-5 py-2.5 text-midnight font-secondary text-sm tracking-wide transition-all duration-300 hover:text-blush hover:bg-whisper-pink/30 border-b border-stone/10 mb-2"
                     >
-                      <span className="w-1 h-1 bg-rose-gold/60 diamond-shape" />
+                      <span className="w-1 h-1 rounded-full bg-blush/60" />
                       <span>Kaikki tuotteet</span>
                     </Link>
 
@@ -136,21 +130,21 @@ export function NavbarLinks({ categories }: { categories: Category[] }) {
 
         {/* About Link */}
         <Link href="/about" className={navLinkClasses}>
-          <span className="hidden lg:inline">Meistä</span>
-          <span className="lg:hidden">Meistä</span>
-          <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-gradient-to-r from-rose-gold to-champagne scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="hidden lg:inline">Meista</span>
+          <span className="lg:hidden">Meista</span>
+          <span className="absolute bottom-0 left-1/2 w-0 h-[1px] bg-blush transition-all duration-300 group-hover:w-full group-hover:left-0" />
         </Link>
 
         {/* Gallery Link */}
         <Link href="/gallery" className={navLinkClasses}>
           Galleria
-          <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-gradient-to-r from-rose-gold to-champagne scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute bottom-0 left-1/2 w-0 h-[1px] bg-blush transition-all duration-300 group-hover:w-full group-hover:left-0" />
         </Link>
 
         {/* Contact Link */}
         <Link href="/contact" className={navLinkClasses}>
           Yhteydenotto
-          <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-gradient-to-r from-rose-gold to-champagne scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute bottom-0 left-1/2 w-0 h-[1px] bg-blush transition-all duration-300 group-hover:w-full group-hover:left-0" />
         </Link>
       </nav>
     </div>

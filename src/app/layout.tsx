@@ -28,7 +28,6 @@ export async function generateMetadata(): Promise<Metadata> {
         template: `%s | ${config.store.name}`,
       },
       description,
-      // Disable SEO indexing when SEO_ENABLED is false (for template/development)
       robots: SEO_ENABLED
         ? "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
         : "noindex, nofollow",
@@ -65,7 +64,6 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch (error) {
     console.error("Error generating metadata:", error);
 
-    // Fallback metadata if API fails
     return {
       metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
       title: SEO_FALLBACKS.title,
@@ -75,14 +73,13 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-// Separate viewport export (Next.js 14+ requirement)
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFBF7" }, // warm-white
-    { media: "(prefers-color-scheme: dark)", color: "#3B3939" }, // charcoal
+    { media: "(prefers-color-scheme: light)", color: "#FAF9F7" }, // soft-ivory
+    { media: "(prefers-color-scheme: dark)", color: "#1E2433" }, // midnight
   ],
 };
 
@@ -105,7 +102,7 @@ export default async function RootLayout({
         <LocalBusinessSchema />
       </head>
 
-      <body className="bg-warm-white">
+      <body className="bg-soft-ivory">
         <StickyNavbar campaigns={campaigns}>
           <Navbar campaigns={campaigns} />
         </StickyNavbar>

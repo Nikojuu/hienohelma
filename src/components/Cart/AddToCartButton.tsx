@@ -7,6 +7,7 @@ import type {
   ProductVariation,
 } from "@putiikkipalvelu/storefront-sdk";
 import { toast } from "@/hooks/use-toast";
+import { ShoppingBag } from "lucide-react";
 
 const AddToCartButton = ({
   product,
@@ -19,7 +20,6 @@ const AddToCartButton = ({
   const addItem = useCart((state) => state.addItem);
   const cartItems = useCart((state) => state.items);
 
-  // Determine stock availability
   const availableStock = selectedVariation
     ? selectedVariation.quantity
     : product.quantity;
@@ -38,25 +38,23 @@ const AddToCartButton = ({
     availableStock !== null && currentCartQuantity >= availableStock;
 
   const handleAddToCart = async () => {
-    if (isOutOfStock) return; // Prevent action if out of stock
+    if (isOutOfStock) return;
 
     try {
       await addItem(product, selectedVariation);
       setIsSuccess(true);
     } catch (error: any) {
-      // Handle cart limit error
       if (error.code === "CART_LIMIT_EXCEEDED") {
         toast({
           variant: "destructive",
-          title: "Ostoskorin raja täynnä",
-          description: error.message || "Ostoskorissa voi olla maksimissaan rajallinen määrä eri tuotteita.",
+          title: "Ostoskorin raja taynna",
+          description: error.message || "Ostoskorissa voi olla maksimissaan rajallinen maara eri tuotteita.",
         });
       } else {
-        // Handle other errors
         toast({
           variant: "destructive",
           title: "Virhe",
-          description: "Tuotteen lisääminen ostoskoriin epäonnistui. Yritä uudelleen.",
+          description: "Tuotteen lisaaminen ostoskoriin epaonnistui. Yrita uudelleen.",
         });
       }
       console.error("Failed to add to cart:", error);
@@ -74,14 +72,15 @@ const AddToCartButton = ({
     <Button
       onClick={handleAddToCart}
       size="lg"
-      className="w-full"
-      disabled={isOutOfStock} // Disable button if out of stock
+      className="w-full bg-midnight text-soft-ivory hover:bg-blush hover:text-midnight transition-all duration-300"
+      disabled={isOutOfStock}
     >
+      <ShoppingBag className="mr-2 h-4 w-4" />
       {isOutOfStock
         ? "Ei varastossa"
         : isSuccess
-          ? "Lisätty"
-          : "Lisää ostoskoriin"}
+          ? "Lisatty!"
+          : "Lisaa ostoskoriin"}
     </Button>
   );
 };

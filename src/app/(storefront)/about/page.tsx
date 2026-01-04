@@ -80,7 +80,7 @@ const aboutPageBlock3 = {
 
 const AboutPage = () => {
   return (
-    <main className="bg-warm-white">
+    <main className="bg-soft-ivory">
       {/* Hero Section */}
       <AboutHero />
 

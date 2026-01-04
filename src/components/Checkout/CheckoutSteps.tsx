@@ -14,10 +14,10 @@ export function CheckoutSteps({ currentStep, steps }: CheckoutStepsProps) {
       {/* Progress bar */}
       <div className="relative mb-8">
         {/* Background line */}
-        <div className="absolute top-4 left-0 w-full h-[2px] bg-rose-gold/20" />
+        <div className="absolute top-4 left-0 w-full h-[2px] bg-blush/20" />
         {/* Progress line */}
         <div
-          className="absolute top-4 left-0 h-[2px] bg-rose-gold transition-all duration-500"
+          className="absolute top-4 left-0 h-[2px] bg-blush transition-all duration-500"
           style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
         />
 
@@ -32,15 +32,15 @@ export function CheckoutSteps({ currentStep, steps }: CheckoutStepsProps) {
               <div
                 className={`relative w-8 h-8 flex items-center justify-center transition-all duration-300 ${
                   step.number < currentStep
-                    ? "bg-rose-gold"
+                    ? "bg-blush"
                     : step.number === currentStep
-                    ? "bg-charcoal"
-                    : "bg-cream border-2 border-rose-gold/30"
+                    ? "bg-midnight"
+                    : "bg-pearl border-2 border-blush/30"
                 }`}
               >
                 {step.number < currentStep ? (
                   <svg
-                    className="w-4 h-4 text-warm-white"
+                    className="w-4 h-4 text-soft-ivory"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -56,17 +56,17 @@ export function CheckoutSteps({ currentStep, steps }: CheckoutStepsProps) {
                   <span
                     className={`text-sm font-secondary ${
                       step.number === currentStep
-                        ? "text-warm-white"
-                        : "text-charcoal/50"
+                        ? "text-soft-ivory"
+                        : "text-midnight/50"
                     }`}
                   >
                     {step.number}
                   </span>
                 )}
 
-                {/* Diamond accent for current step */}
+                {/* Circle accent for current step */}
                 {step.number === currentStep && (
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-rose-gold diamond-shape" />
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-blush" />
                 )}
               </div>
 
@@ -74,8 +74,8 @@ export function CheckoutSteps({ currentStep, steps }: CheckoutStepsProps) {
               <span
                 className={`mt-3 text-sm font-secondary transition-colors duration-300 ${
                   step.number <= currentStep
-                    ? "text-charcoal"
-                    : "text-charcoal/40"
+                    ? "text-midnight"
+                    : "text-midnight/40"
                 }`}
               >
                 {step.title}

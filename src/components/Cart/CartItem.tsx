@@ -32,19 +32,16 @@ export default function CartItem({
     )
   );
 
-  // Determine stock logic based on variation or product
   const stockQuantity =
     variation?.quantity !== undefined ? variation.quantity : product.quantity;
 
   const isUnlimitedStock = stockQuantity === null;
   const isOutOfStock = stockQuantity === 0;
 
-  // Use campaign quantities if provided, otherwise fall back to cart quantity
   const displayQuantity = cartItem?.cartQuantity || 0;
   const hasCampaignData =
     paidQuantity !== undefined && freeQuantity !== undefined;
 
-  // Sale price logic
   let displayPrice = product.price;
   let salePrice = null;
   let isOnSale = false;
@@ -62,16 +59,10 @@ export default function CartItem({
   }
 
   return (
-    <div className="relative p-4 bg-cream/30 border border-rose-gold/10">
-      {/* Small corner accents */}
-      <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-rose-gold/30" />
-      <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-rose-gold/30" />
-      <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-rose-gold/30" />
-      <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-rose-gold/30" />
-
+    <div className="relative p-4 bg-pearl border border-stone/10">
       <div className="flex gap-4">
         {/* Product image */}
-        <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden bg-warm-white">
+        <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden bg-soft-ivory">
           <img
             src={getImageUrl(variation?.images?.[0] ?? product.images[0], "thumbnail")}
             alt={product.name}
@@ -82,7 +73,7 @@ export default function CartItem({
 
         {/* Product details */}
         <div className="flex-1 min-w-0">
-          <h4 className="font-secondary text-sm text-charcoal line-clamp-1 mb-1">
+          <h4 className="font-secondary text-sm text-midnight line-clamp-1 mb-1">
             {product.name}
           </h4>
 
@@ -92,7 +83,7 @@ export default function CartItem({
               {variation.options.map((opt) => (
                 <p
                   key={`${opt.optionType.name}-${opt.value}`}
-                  className="text-xs font-secondary text-charcoal/50"
+                  className="text-xs font-secondary text-stone"
                 >
                   {opt.optionType.name}: {opt.value}
                 </p>
@@ -103,8 +94,8 @@ export default function CartItem({
           {/* Campaign info */}
           {hasCampaignData && freeQuantity > 0 && (
             <div className="flex items-center gap-2 text-xs font-secondary mb-2">
-              <span className="text-charcoal/60">Maksat: {paidQuantity}</span>
-              <span className="text-rose-gold">Ilmainen: {freeQuantity}</span>
+              <span className="text-stone">Maksat: {paidQuantity}</span>
+              <span className="text-blush">Ilmainen: {freeQuantity}</span>
             </div>
           )}
 
@@ -113,11 +104,11 @@ export default function CartItem({
             <button
               onClick={() => decrementQuantity(product.id, variation?.id)}
               disabled={displayQuantity <= 1}
-              className="w-7 h-7 flex items-center justify-center border border-charcoal/20 text-charcoal/70 transition-colors duration-300 hover:border-rose-gold hover:text-rose-gold disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-7 h-7 flex items-center justify-center border border-stone/20 text-midnight/70 transition-colors duration-300 hover:border-blush hover:text-blush disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <Minus className="w-3 h-3" />
             </button>
-            <span className="w-8 text-center text-sm font-secondary text-charcoal">
+            <span className="w-8 text-center text-sm font-secondary text-midnight">
               {displayQuantity}
             </span>
             <button
@@ -126,7 +117,7 @@ export default function CartItem({
                 isOutOfStock ||
                 (!isUnlimitedStock && displayQuantity >= stockQuantity)
               }
-              className="w-7 h-7 flex items-center justify-center border border-charcoal/20 text-charcoal/70 transition-colors duration-300 hover:border-rose-gold hover:text-rose-gold disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-7 h-7 flex items-center justify-center border border-stone/20 text-midnight/70 transition-colors duration-300 hover:border-blush hover:text-blush disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <Plus className="w-3 h-3" />
             </button>
@@ -140,26 +131,26 @@ export default function CartItem({
             {isOnSale && salePrice ? (
               <>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-secondary text-deep-burgundy font-medium">
+                  <span className="text-sm font-secondary text-wine font-medium">
                     {(salePrice / 100).toFixed(2)} €
                   </span>
-                  <span className="text-[10px] font-secondary bg-deep-burgundy/10 text-deep-burgundy px-1.5 py-0.5">
+                  <span className="text-[10px] font-secondary bg-wine/10 text-wine px-1.5 py-0.5">
                     ALE
                   </span>
                 </div>
-                <span className="text-xs font-secondary text-charcoal/40 line-through">
+                <span className="text-xs font-secondary text-stone line-through">
                   {(displayPrice / 100).toFixed(2)} €
                 </span>
               </>
             ) : (
-              <span className="text-sm font-secondary text-charcoal">
+              <span className="text-sm font-secondary text-midnight">
                 {(displayPrice / 100).toFixed(2)} €
               </span>
             )}
 
             {/* Campaign pricing breakdown */}
             {hasCampaignData && freeQuantity > 0 && (
-              <div className="text-[10px] font-secondary text-charcoal/50 mt-1">
+              <div className="text-[10px] font-secondary text-stone mt-1">
                 {paidQuantity > 0 && (
                   <p>
                     {paidQuantity} ×{" "}
@@ -170,7 +161,7 @@ export default function CartItem({
                   </p>
                 )}
                 {freeQuantity > 0 && (
-                  <p className="text-rose-gold">{freeQuantity} × 0.00 €</p>
+                  <p className="text-blush">{freeQuantity} × 0.00 €</p>
                 )}
               </div>
             )}
@@ -179,7 +170,7 @@ export default function CartItem({
           {/* Remove button */}
           <button
             onClick={() => removeItem(product.id, variation?.id)}
-            className="flex items-center gap-1 text-xs font-secondary text-charcoal/50 transition-colors duration-300 hover:text-deep-burgundy"
+            className="flex items-center gap-1 text-xs font-secondary text-stone transition-colors duration-300 hover:text-wine"
           >
             <X className="w-3 h-3" />
             <span>Poista</span>

@@ -106,34 +106,34 @@ const WishlistPage = async () => {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-1.5 h-1.5 bg-rose-gold/60 diamond-shape" />
-          <h2 className="text-2xl md:text-3xl font-primary text-charcoal">
+          <div className="w-2 h-2 rounded-full border border-blush/60" />
+          <h2 className="text-2xl md:text-3xl font-primary text-midnight">
             Toivelista
           </h2>
         </div>
-        <p className="font-secondary text-charcoal/60 ml-5">
+        <p className="font-secondary text-midnight/60 ml-5">
           Täältä löydät kaikki suosikkituotteesi
         </p>
       </div>
 
       {wishlistItems.length === 0 ? (
-        <div className="relative bg-warm-white p-12 text-center">
-          <div className="absolute inset-0 border border-rose-gold/10 pointer-events-none" />
-          <div className="absolute top-0 left-0 w-8 h-8 border-l border-t border-rose-gold/30" />
-          <div className="absolute top-0 right-0 w-8 h-8 border-r border-t border-rose-gold/30" />
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-l border-b border-rose-gold/30" />
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-rose-gold/30" />
+        <div className="relative bg-soft-ivory p-12 text-center">
+          <div className="absolute inset-0 border border-blush/10 pointer-events-none" />
+          <div className="absolute top-0 left-0 w-8 h-8 border-l border-t border-blush/30" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-r border-t border-blush/30" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-l border-b border-blush/30" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-blush/30" />
           <div className="relative">
-            <Heart className="w-16 h-16 text-charcoal/20 mx-auto mb-6" />
-            <h3 className="text-xl font-primary text-charcoal mb-3">
+            <Heart className="w-16 h-16 text-midnight/20 mx-auto mb-6" />
+            <h3 className="text-xl font-primary text-midnight mb-3">
               Toivelistasi on tyhjä
             </h3>
-            <p className="text-sm font-secondary text-charcoal/60 mb-6">
+            <p className="text-sm font-secondary text-midnight/60 mb-6">
               Lisää tuotteita toivelistaan selatessasi kauppaa
             </p>
             <a
               href="/products"
-              className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold"
+              className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight"
             >
               <ShoppingCart className="w-4 h-4" />
               Selaa tuotteita
@@ -143,7 +143,7 @@ const WishlistPage = async () => {
       ) : (
         <div>
           <div className="mb-6">
-            <p className="text-sm font-secondary text-charcoal/60">
+            <p className="text-sm font-secondary text-midnight/60">
               Näytetään {wishlistItems.length} tuotetta
             </p>
           </div>
@@ -195,21 +195,21 @@ const WishlistPage = async () => {
               return (
                 <div
                   key={item.id}
-                  className="group relative bg-warm-white p-6 transition-all duration-300 hover:shadow-md"
+                  className="group relative bg-soft-ivory p-6 transition-all duration-300 hover:shadow-md"
                 >
                   {/* Border frame */}
-                  <div className="absolute inset-0 border border-rose-gold/10 pointer-events-none group-hover:border-rose-gold/25 transition-colors" />
+                  <div className="absolute inset-0 border border-blush/10 pointer-events-none group-hover:border-blush/25 transition-colors" />
 
                   {/* Corner accents */}
-                  <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
-                  <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
-                  <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
-                  <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-rose-gold/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+                  <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+                  <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+                  <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-blush/20 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
 
                   <div className="relative">
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-6">
                       <div className="flex items-start space-x-4 flex-1">
-                        <div className="relative w-24 h-24 overflow-hidden bg-cream/30 border border-rose-gold/10 flex-shrink-0">
+                        <div className="relative w-24 h-24 overflow-hidden bg-pearl/30 border border-blush/10 flex-shrink-0">
                           <img
                             src={getImageUrl(displayImage, "thumbnail")}
                             alt={item.product.name}
@@ -217,11 +217,11 @@ const WishlistPage = async () => {
                           />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-primary text-lg text-charcoal mb-2">
+                          <h4 className="font-primary text-lg text-midnight mb-2">
                             {item.product.name}
                           </h4>
                           {item.variation && (
-                            <div className="text-xs font-secondary text-charcoal/60 mb-3 space-y-0.5">
+                            <div className="text-xs font-secondary text-midnight/60 mb-3 space-y-0.5">
                               {item.variation.options.map((opt) => (
                                 <div
                                   key={`${opt.optionType.name}-${opt.value}`}
@@ -232,23 +232,23 @@ const WishlistPage = async () => {
                             </div>
                           )}
                           <div className="flex items-center gap-3 mb-3">
-                            <span className="text-xl font-primary text-charcoal flex items-center">
+                            <span className="text-xl font-primary text-midnight flex items-center">
                               <Euro className="w-5 h-5 mr-1" />
                               {effectivePrice.toFixed(2)}
                             </span>
                             {isItemOnSale && (
                               <>
-                                <span className="text-sm font-secondary text-charcoal/50 line-through flex items-center">
+                                <span className="text-sm font-secondary text-midnight/50 line-through flex items-center">
                                   <Euro className="w-3 h-3" />
                                   {originalPrice.toFixed(2)}
                                 </span>
-                                <span className="px-2 py-1 bg-deep-burgundy/10 border border-deep-burgundy/30 text-deep-burgundy text-xs font-secondary tracking-wider uppercase">
+                                <span className="px-2 py-1 bg-wine/10 border border-wine/30 text-wine text-xs font-secondary tracking-wider uppercase">
                                   TARJOUS
                                 </span>
                               </>
                             )}
                           </div>
-                          <p className="text-xs font-secondary text-charcoal/50">
+                          <p className="text-xs font-secondary text-midnight/50">
                             Lisätty:{" "}
                             {new Date(item.createdAt).toLocaleDateString(
                               "fi-FI"
@@ -259,7 +259,7 @@ const WishlistPage = async () => {
                       <div className="flex flex-col sm:flex-row gap-3 sm:items-start">
                         <a
                           href={`/product/${item.product.slug}`}
-                          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold whitespace-nowrap"
+                          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight whitespace-nowrap"
                         >
                           <ShoppingCart className="w-4 h-4" />
                           Katso tuote

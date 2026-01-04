@@ -23,14 +23,14 @@ export function SortOptions() {
   const createQueryString = (name: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set(name, value);
-    params.set("page", "1"); // Reset to first page when sorting changes
+    params.set("page", "1");
     return params.toString();
   };
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-      <span className="text-xs tracking-[0.2em] uppercase font-secondary text-charcoal/60">
-        Järjestä:
+      <span className="text-xs tracking-[0.2em] uppercase font-secondary text-stone">
+        Jarjesta:
       </span>
       <div className="flex flex-wrap gap-2">
         {sortOptions.map((option) => (
@@ -39,8 +39,8 @@ export function SortOptions() {
             href={`${pathname}?${createQueryString("sort", option.value)}`}
             className={`text-sm font-secondary px-4 py-2 border transition-all duration-300 ${
               currentSort === option.value
-                ? "border-rose-gold bg-rose-gold/10 text-charcoal"
-                : "border-charcoal/10 text-charcoal/60 hover:border-rose-gold/40 hover:text-charcoal"
+                ? "border-blush bg-blush/10 text-midnight"
+                : "border-stone/20 text-stone hover:border-blush/40 hover:text-midnight"
             }`}
           >
             {option.label}

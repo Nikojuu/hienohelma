@@ -12,7 +12,7 @@ export function CheckoutButton({
       {pending ? (
         <button
           disabled
-          className="inline-flex items-center gap-3 px-8 py-4 bg-charcoal/50 text-warm-white font-secondary text-sm tracking-wider uppercase cursor-not-allowed"
+          className="inline-flex items-center gap-3 px-8 py-4 bg-midnight/50 text-soft-ivory font-secondary text-sm tracking-wider uppercase cursor-not-allowed"
         >
           <Loader2 className="w-4 h-4 animate-spin" />
           <span>Odota</span>
@@ -21,7 +21,7 @@ export function CheckoutButton({
         <button
           type="submit"
           disabled={disabled}
-          className="group inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-warm-white font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-rose-gold disabled:opacity-50 disabled:cursor-not-allowed"
+          className="group inline-flex items-center gap-3 px-8 py-4 bg-midnight text-soft-ivory font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:bg-blush hover:text-midnight disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span>Siirry maksamaan</span>
           <svg

@@ -86,16 +86,16 @@ const ProductDetail = ({ product }: { product: ProductDetailType }) => {
         {/* Product Info Section */}
         <div className="md:w-1/2 flex flex-col">
           {/* Product Name */}
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-primary font-bold text-charcoal leading-tight mb-6">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-primary text-midnight leading-tight mb-6">
             {product.name}
           </h1>
 
           {/* Decorative line */}
-          <div className="h-[1px] w-16 bg-gradient-to-r from-rose-gold/60 to-transparent mb-6" />
+          <div className="h-[1px] w-16 bg-gradient-to-r from-blush/60 to-transparent mb-6" />
 
           {/* Price Section */}
           <div className="mb-8">
-            <span className="text-xs tracking-[0.2em] uppercase font-secondary text-charcoal/50 block mb-2">
+            <span className="text-xs tracking-[0.2em] uppercase font-secondary text-stone block mb-2">
               Hinta
             </span>
             <PriceDisplay
@@ -113,15 +113,15 @@ const ProductDetail = ({ product }: { product: ProductDetailType }) => {
           </div>
 
           {/* Separator */}
-          <div className="h-[1px] bg-gradient-to-r from-rose-gold/20 via-rose-gold/10 to-transparent mb-8" />
+          <div className="h-[1px] bg-gradient-to-r from-blush/20 via-blush/10 to-transparent mb-8" />
 
           {/* Description */}
           {!selectedVariation?.description && product.description && (
             <div className="mb-8">
-              <span className="text-xs tracking-[0.2em] uppercase font-secondary text-charcoal/50 block mb-3">
+              <span className="text-xs tracking-[0.2em] uppercase font-secondary text-stone block mb-3">
                 Kuvaus
               </span>
-              <p className="text-sm md:text-base font-secondary text-charcoal/70 leading-relaxed">
+              <p className="text-sm md:text-base font-secondary text-midnight/70 leading-relaxed">
                 {product.description}
               </p>
             </div>
@@ -131,12 +131,12 @@ const ProductDetail = ({ product }: { product: ProductDetailType }) => {
           {!hasVariations && (
             <div
               className={`flex items-center gap-2 text-sm font-secondary mb-8 ${
-                isProductInStock ? "text-emerald-600" : "text-deep-burgundy"
+                isProductInStock ? "text-emerald-600" : "text-wine"
               }`}
             >
               <div
                 className={`w-2 h-2 rounded-full ${
-                  isProductInStock ? "bg-emerald-500" : "bg-deep-burgundy"
+                  isProductInStock ? "bg-emerald-500" : "bg-wine"
                 }`}
               />
               <span>
@@ -151,17 +151,17 @@ const ProductDetail = ({ product }: { product: ProductDetailType }) => {
               {/* Variation Description */}
               {selectedVariation?.description && (
                 <div className="mb-6">
-                  <span className="text-xs tracking-[0.2em] uppercase font-secondary text-charcoal/50 block mb-3">
+                  <span className="text-xs tracking-[0.2em] uppercase font-secondary text-stone block mb-3">
                     Kuvaus
                   </span>
-                  <p className="text-sm md:text-base font-secondary text-charcoal/70 leading-relaxed">
+                  <p className="text-sm md:text-base font-secondary text-midnight/70 leading-relaxed">
                     {selectedVariation.description}
                   </p>
                 </div>
               )}
 
               {/* Variation Selector */}
-              <label className="text-xs tracking-[0.2em] uppercase font-secondary text-charcoal/50 block mb-3">
+              <label className="text-xs tracking-[0.2em] uppercase font-secondary text-stone block mb-3">
                 {selectedVariation?.options[0]?.optionType.name}
               </label>
 
@@ -169,17 +169,17 @@ const ProductDetail = ({ product }: { product: ProductDetailType }) => {
                 onValueChange={handleVariationChange}
                 value={selectedVariation?.id}
               >
-                <SelectTrigger className="w-full h-12 border-charcoal/20 bg-warm-white font-secondary text-charcoal hover:border-rose-gold/40 transition-colors duration-300">
+                <SelectTrigger className="w-full h-12 border-stone/20 bg-soft-ivory font-secondary text-midnight hover:border-blush/40 transition-colors duration-300">
                   {selectedVariation?.options
                     .map((opt) => opt.value)
                     .join(" / ")}
                 </SelectTrigger>
-                <SelectContent className="bg-warm-white border-charcoal/20">
+                <SelectContent className="bg-soft-ivory border-stone/20">
                   {product.variations.map((variation) => (
                     <SelectItem
                       key={variation.id}
                       value={variation.id}
-                      className="font-secondary text-charcoal hover:bg-rose-gold/10 focus:bg-rose-gold/10 cursor-pointer"
+                      className="font-secondary text-midnight hover:bg-blush/10 focus:bg-blush/10 cursor-pointer"
                     >
                       {variation.options.map((opt) => opt.value).join(" / ")}
                     </SelectItem>
@@ -191,12 +191,12 @@ const ProductDetail = ({ product }: { product: ProductDetailType }) => {
               {selectedVariation && (
                 <div
                   className={`flex items-center gap-2 text-sm font-secondary mt-4 ${
-                    isVariationInStock ? "text-emerald-600" : "text-deep-burgundy"
+                    isVariationInStock ? "text-emerald-600" : "text-wine"
                   }`}
                 >
                   <div
                     className={`w-2 h-2 rounded-full ${
-                      isVariationInStock ? "bg-emerald-500" : "bg-deep-burgundy"
+                      isVariationInStock ? "bg-emerald-500" : "bg-wine"
                     }`}
                   />
                   <span>
