@@ -228,29 +228,13 @@ const MobileLinks = memo(({ categories, logoUrl }: { categories: Category[]; log
               )}
             </AnimatePresence>
 
-            {/* Other navigation links */}
-            <Link
-              href="/about"
-              onClick={handleLinkClick}
-              className="py-4 text-midnight font-secondary text-base tracking-[0.05em] uppercase border-b border-stone/10 transition-colors duration-300 hover:text-blush"
-            >
-              Meista
-            </Link>
-
-            <Link
-              href="/gallery"
-              onClick={handleLinkClick}
-              className="py-4 text-midnight font-secondary text-base tracking-[0.05em] uppercase border-b border-stone/10 transition-colors duration-300 hover:text-blush"
-            >
-              Galleria
-            </Link>
-
+            {/* Contact link */}
             <Link
               href="/contact"
               onClick={handleLinkClick}
               className="py-4 text-midnight font-secondary text-base tracking-[0.05em] uppercase border-b border-stone/10 transition-colors duration-300 hover:text-blush"
             >
-              Yhteydenotto
+              Yhteystiedot
             </Link>
 
             {/* Decorative footer element */}

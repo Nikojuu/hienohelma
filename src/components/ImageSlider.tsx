@@ -49,14 +49,14 @@ export function ImageSlider({ images, productName }: iAppProps) {
   return (
     <div className="grid gap-4 items-start">
       {/* Main Image */}
-      <div className="relative overflow-hidden aspect-square w-full group bg-pearl">
+      <div className="relative overflow-hidden aspect-[3/4] w-full group bg-[#f8f7f5]">
         <img
           src={getImageUrl(images[mainImageIndex], "small")}
           srcSet={`${getImageUrl(images[mainImageIndex], "small")} 400w, ${getImageUrl(images[mainImageIndex], "medium")} 800w`}
           sizes="400px"
           alt={productName || "Tuotekuva"}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
+            "absolute inset-0 w-full h-full object-contain transition-opacity duration-300",
             isLoading ? "opacity-0" : "opacity-100"
           )}
           onLoad={handleImageLoad}

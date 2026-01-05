@@ -25,7 +25,7 @@ export function Footer({ logoUrl }: { logoUrl: string }) {
               </div>
             </Link>
             <p className="text-soft-ivory/60 font-secondary text-sm text-center md:text-left max-w-xs leading-relaxed">
-              Laadukkaat tuotteet ja moderni ostoskokemus.
+              Persoonallista pukeutumista Jyväskylästä.
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export function Footer({ logoUrl }: { logoUrl: string }) {
             </h3>
             <nav className="flex flex-col items-center gap-3">
               <Link
-                href="/about"
+                href="/contact"
                 className="text-sm font-secondary text-soft-ivory/70 hover:text-blush transition-colors duration-300"
               >
                 Yhteystiedot

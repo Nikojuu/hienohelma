@@ -87,7 +87,7 @@ export function ImageSliderWithZoom({ images, productName }: ImageSliderWithZoom
       {/* Main Image Container */}
       <div
         ref={imageContainerRef}
-        className="relative group bg-pearl aspect-square w-full cursor-none"
+        className="relative group bg-[#f8f7f5] aspect-[3/4] w-full cursor-none"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
@@ -97,7 +97,7 @@ export function ImageSliderWithZoom({ images, productName }: ImageSliderWithZoom
             src={getImageUrl(images[mainImageIndex], "large")}
             alt={productName || "Tuotekuva"}
             className={cn(
-              "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
+              "absolute inset-0 w-full h-full object-contain transition-opacity duration-300",
               isLoading ? "opacity-0" : "opacity-100"
             )}
             onLoad={handleImageLoad}

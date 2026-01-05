@@ -38,11 +38,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
           <div className="absolute inset-0 border border-stone/10 z-10 pointer-events-none transition-colors duration-500 group-hover:border-blush/30" />
 
           {/* Image section */}
-          <div className="relative aspect-[3/4] overflow-hidden bg-pearl">
+          <div className="relative aspect-[3/4] overflow-hidden bg-[#f8f7f5]">
             <img
               src={getImageUrl(item.images[0], "small")}
               alt={item.name}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
 

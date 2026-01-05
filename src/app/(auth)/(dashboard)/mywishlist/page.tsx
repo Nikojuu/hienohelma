@@ -209,11 +209,11 @@ const WishlistPage = async () => {
                   <div className="relative">
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-6">
                       <div className="flex items-start space-x-4 flex-1">
-                        <div className="relative w-24 h-24 overflow-hidden bg-pearl/30 border border-blush/10 flex-shrink-0">
+                        <div className="relative w-24 h-24 overflow-hidden bg-[#f8f7f5] border border-blush/10 flex-shrink-0">
                           <img
                             src={getImageUrl(displayImage, "thumbnail")}
                             alt={item.product.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <div className="flex-1 min-w-0">

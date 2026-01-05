@@ -54,7 +54,7 @@ export default function StickyNavbar({
         className={`w-full max-w-[3500px] mx-auto px-4
          flex items-center h-20`}
       >
-        <Link href="/" className="lg:mr-20 hidden md:block">
+        <Link href="/" className="lg:mr-20 ml-10 lg:ml-20 hidden md:block">
           <Image
             src={logoUrl}
             alt="logo"
