@@ -15,7 +15,6 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import type { Category } from "@putiikkipalvelu/storefront-sdk";
-import { LOGO_URL } from "@/app/utils/constants";
 
 const buildCategoryPath = (
   category: Category,
@@ -113,7 +112,7 @@ const MobileCategory = memo(
 
 MobileCategory.displayName = "MobileCategory";
 
-const MobileLinks = memo(({ categories }: { categories: Category[] }) => {
+const MobileLinks = memo(({ categories, logoUrl }: { categories: Category[]; logoUrl: string }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false);
 
@@ -154,7 +153,7 @@ const MobileLinks = memo(({ categories }: { categories: Category[] }) => {
               onClick={handleLinkClick}
             >
               <Image
-                src={LOGO_URL}
+                src={logoUrl}
                 alt="Logo"
                 width={64}
                 height={64}

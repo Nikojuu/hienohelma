@@ -15,7 +15,6 @@ export const STORE_DOMAIN = "https://www.testikauppa.fi"; // Change to your actu
 export const EMAIL = "info@putiikkipalvelu.fi";
 
 // Branding
-export const LOGO_URL = "/logo.svg";
 export const OPEN_GRAPH_IMAGE = "/og-image.jpg"; // Default OpenGraph image (1200x630px recommended)
 export const TWITTER_IMAGE = "/twitter-image.jpg"; // Default Twitter card image
 
@@ -35,23 +34,23 @@ export const CUSTOMER_SERVICE_EMAIL = EMAIL;
 // Thease are shown as highlighted 3 categories on the homepage used in CategorySection.tsx
 export const SHOWCASE_CATEGORIES = [
   {
-    title: "Pyörät",
-    description: "tarvitsetko pyörän? täältä löydät kaupunkiin tai maastoon",
-    image: "/pyörä1.jpg",
-    link: "/products/kaulakorut",
+    title: "Uutuudet",
+    description: "Tutustu uusimpiin tulokkaisiimme - löydä kauden trendit ensimmäisenä",
+    image: "/uutuudet.avif",
+    link: "/products/uutuudet",
   },
   {
-    title: "Kengät",
+    title: "Mekot",
     description:
-      "Kenkävalikoimastani löydät varmasti mieleisesi kengät jokaiseen tilaisuuteen",
-    image: "/lenkkarit.jpg",
-    link: "/products/korvakorut",
+      "Kauniit mekot jokaiseen tilaisuuteen - löydä omasi valikoimastamme",
+    image: "/mekot.avif",
+    link: "/products/mekot",
   },
   {
-    title: "Hajusteet",
+    title: "Ale",
     description:
-      "Hajusteet ovat tärkeä osa pukeutumista ja tyyliä täältä löydät omasi",
-    image: "/tuoksu.jpg",
-    link: "/products/rannekorut",
+      "Tarjouksemme odottavat sinua - nappaa suosikkisi edullisesti",
+    image: "/alennukset.avif",
+    link: "/products/ale",
   },
 ];

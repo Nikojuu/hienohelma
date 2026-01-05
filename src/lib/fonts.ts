@@ -1,4 +1,4 @@
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 
 export const textPrimary = Cormorant_Garamond({
   subsets: ["latin"],
@@ -7,7 +7,7 @@ export const textPrimary = Cormorant_Garamond({
   weight: ["400", "500", "600", "700"],
 });
 
-export const textSecondary = Inter({
+export const textSecondary = Jost({
   subsets: ["latin"],
   variable: "--font-secondary",
   display: "swap",

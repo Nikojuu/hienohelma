@@ -2,25 +2,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Truck, Leaf, Sparkles } from "lucide-react";
+import { ArrowRight, MapPin, Sparkles, Globe } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const features = [
   {
+    icon: Globe,
+    title: "Euroopasta",
+    description: "Viikoittain uutuuksia",
+  },
+  {
     icon: Sparkles,
-    title: "Laatu",
-    description: "Huolella valitut materiaalit",
+    title: "Persoonallista",
+    description: "Yksilöllisiä löytöjä",
   },
   {
-    icon: Leaf,
-    title: "Kestavyys",
-    description: "Vastuullisia valintoja",
-  },
-  {
-    icon: Truck,
-    title: "Nopea toimitus",
-    description: "Toimitamme nopeasti",
+    icon: MapPin,
+    title: "Jyväskylässä",
+    description: "Kivijalkamyymälä",
   },
 ];
 
@@ -69,9 +69,9 @@ const AboutMeSection = () => {
               <div className="relative aspect-[4/5] overflow-hidden bg-pearl/30">
                 <Image
                   fill
-                  alt="Fashion boutique"
+                  alt="Hienohelma - Persoonallista muotia"
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  src="/ostoksille.jpg"
+                  src="/aboutus.jpg"
                   className="object-cover"
                   priority
                 />
@@ -79,28 +79,6 @@ const AboutMeSection = () => {
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-midnight/20 via-transparent to-transparent" />
               </div>
-
-              {/* Floating accent card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                }
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="absolute -bottom-8 -right-4 lg:-right-8 bg-soft-ivory p-6 shadow-lg border border-stone/10 max-w-[200px]"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-whisper-pink flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-blush" />
-                  </div>
-                  <span className="text-2xl font-primary font-bold text-midnight">
-                    100%
-                  </span>
-                </div>
-                <p className="text-xs text-stone font-secondary">
-                  Asiakastyytyvaisyys
-                </p>
-              </motion.div>
             </div>
           </motion.div>
 
@@ -127,29 +105,20 @@ const AboutMeSection = () => {
               variants={itemVariants}
               className="text-3xl lg:text-4xl font-primary text-midnight mb-6 leading-tight"
             >
-              Intohimona
+              Persoonallista
               <br />
-              <span className="text-gradient-fashion">Ajaton tyyli</span>
+              <span className="text-gradient-fashion">Pukeutumista</span>
             </motion.h2>
 
             {/* Description */}
             <motion.p
               variants={itemVariants}
-              className="text-base text-midnight/70 font-secondary mb-6 leading-relaxed"
+              className="text-base text-midnight/70 font-secondary mb-8 leading-relaxed"
             >
-              Uskomme, etta tyyli on henkilokohtaista ilmaisua. Valikoimamme
-              koostuu ajattomista klassikoista ja kauden tyylikkaimmista
-              uutuuksista - kaikki huolella valittu laatua arvostaville
-              naisille.
-            </motion.p>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-sm text-stone font-secondary mb-8 leading-relaxed"
-            >
-              Jokainen asuste on valittu silmalla pitaen laatua, mukavuutta ja
-              kestavyytta. Haluamme tarjota vaatteita, jotka tuntuvat hyvalta ja
-              kestavat aikaa.
+              Hienohelma on jyväskyläläinen naisten vaatekauppa, joka tarjoaa
+              persoonallisia ja yksilöllisiä vaatteita. Tuomme viikoittain uusia
+              löytöjä Euroopasta ja valikoimastamme löydät mekkoja, puseroita,
+              neuleita ja paljon muuta - koossa kuin koossa.
             </motion.p>
 
             {/* Features grid */}
