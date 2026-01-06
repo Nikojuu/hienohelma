@@ -4,14 +4,14 @@ import PaytrailCheckoutPage from "@/components/Checkout/PaytrailCheckoutPage";
 import { getStoreConfig } from "@/lib/storeConfig";
 
 export const metadata: Metadata = {
-  title: "Pupun Korvat | Tilaus",
-  description: "Tilaa käsintehtyjä koruja Pupun Korvista.",
+  title: "Hienohelma | Tilaus",
+  description: "Tilaa tyylikkäitä naisten vaatteita ja asusteita Hienohelmasta.",
   robots: {
     index: false,
     follow: false,
   },
   openGraph: {
-    title: "Pupun Korvat |  Tilaus",
+    title: "Hienohelma | Tilaus",
     type: "website",
   },
 };

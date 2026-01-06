@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import { getStoreConfig } from "@/lib/storeConfig";
 
 export const metadata: Metadata = {
-  title: "Pupun Korvat | Ostoskori",
+  title: "Hienohelma | Ostoskori",
   description:
-    "Tutustu Pupun Korvien käsintehtyihin koruihin ja löydä ainutlaatuinen lahja tai itsellesi sopiva koru.",
+    "Tutustu Hienohelman tyylikkääseen naisten muotivalikoimaan ja löydä itsellesi sopivat asusteet.",
   robots: "noindex, nofollow",
 };
 
