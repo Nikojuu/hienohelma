@@ -45,7 +45,7 @@ export function SelectShipmentMethod({
   const parcelLockerShipments: ShipmentMethod[] = [];
 
   shipmentMethods.forEach((method) => {
-    if (method.shipitMethod?.onlyParchelLocker) {
+    if (method.shipitMethod?.showPickupPoints) {
       parcelLockerShipments.push(method);
     } else {
       homeDeliveryOrCustomShipments.push(method);
@@ -63,7 +63,7 @@ export function SelectShipmentMethod({
 
     // Find the shipment method that matches this serviceId
     const matchingShipmentMethod = parcelLockerShipments.find(
-      (method) => method.shipitMethod?.serviceId === serviceId
+      (method) => method.shipitMethod?.serviceIds?.includes(serviceId)
     );
 
     if (!matchingShipmentMethod) return false;
@@ -116,7 +116,7 @@ export function SelectShipmentMethod({
 
       // Find the shipment method that corresponds to the selected locker's service
       const shipmentMethod = parcelLockerShipments.find(
-        (method) => method.shipitMethod?.serviceId === serviceId
+        (method) => method.shipitMethod?.serviceIds?.includes(serviceId)
       );
 
       if (shipmentMethod) {
