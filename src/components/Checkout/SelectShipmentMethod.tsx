@@ -9,6 +9,7 @@ import {
   type Campaign,
   type ShipmentMethodsWithLocationsResponse,
   type ShipmentMethod,
+  type PickupLocation,
 } from "@putiikkipalvelu/storefront-sdk";
 import { useState } from "react";
 import { useCart } from "@/hooks/use-cart";
@@ -22,6 +23,7 @@ export function SelectShipmentMethod({
   setChosenShipmentMethod: (shipmentMethod: {
     shipmentMethodId: string;
     pickupId: string | null;
+    serviceId: string | null;
   }) => void;
   campaigns: Campaign[];
 }) {
@@ -36,40 +38,23 @@ export function SelectShipmentMethod({
   const items = useCart((state) => state.items);
   const { freeShipping } = calculateCartWithCampaigns(items, campaigns);
 
-  const { shipmentMethods, pricedLocations } = shipmentMethodsAndLocations || {
-    shipmentMethods: [],
-    pricedLocations: [],
-  };
-
-  const homeDeliveryOrCustomShipments: ShipmentMethod[] = [];
-  const parcelLockerShipments: ShipmentMethod[] = [];
-
-  shipmentMethods.forEach((method) => {
-    if (method.shipitMethod?.showPickupPoints) {
-      parcelLockerShipments.push(method);
-    } else {
-      homeDeliveryOrCustomShipments.push(method);
-    }
-  });
+  // Use the new simplified response structure
+  const { homeDeliveryMethods, pickupLocations } =
+    shipmentMethodsAndLocations || {
+      homeDeliveryMethods: [],
+      pickupLocations: [],
+    };
 
   // Check if a shipment method is eligible for free shipping
   const isShipmentMethodFreeShippingEligible = (shipmentMethodId: string) =>
     freeShipping.isEligible &&
     (freeShipping.eligibleShipmentMethodIds?.includes(shipmentMethodId) ?? false);
 
-  // Check if a parcel location is eligible for free shipping
-  const isParcelLocationFreeShippingEligible = (serviceId: string) => {
-    if (!freeShipping.isEligible) return false;
-
-    // Find the shipment method that matches this serviceId
-    const matchingShipmentMethod = parcelLockerShipments.find(
-      (method) => method.shipitMethod?.serviceIds?.includes(serviceId)
-    );
-
-    if (!matchingShipmentMethod) return false;
-
-    return freeShipping.eligibleShipmentMethodIds?.includes(matchingShipmentMethod.id) ?? false;
-  };
+  // Check if a pickup location is eligible for free shipping
+  const isPickupLocationFreeShippingEligible = (location: PickupLocation) =>
+    freeShipping.isEligible &&
+    (freeShipping.eligibleShipmentMethodIds?.includes(location.shipmentMethodId) ??
+      false);
 
   // Helper function to format distance
   const formatDistance = (distanceInMeters: number) => {
@@ -80,12 +65,6 @@ export function SelectShipmentMethod({
     }
   };
 
-  // Helper function to format price with free shipping consideration
-  const formatPrice = (merchantPrice: number | null) => {
-    if (merchantPrice === null) return "Ilmainen";
-    return `${(merchantPrice / 100).toFixed(2)}€`;
-  };
-
   // Helper function to format shipment method price with free shipping consideration
   const formatShipmentMethodPrice = (shipment: ShipmentMethod) => {
     if (isShipmentMethodFreeShippingEligible(shipment.id)) {
@@ -94,15 +73,12 @@ export function SelectShipmentMethod({
     return `${(shipment.price / 100).toFixed(2)}€`;
   };
 
-  // Helper function to format parcel location price with free shipping consideration
-  const formatParcelLocationPrice = (location: {
-    merchantPrice: number | null;
-    serviceId: string;
-  }) => {
-    if (isParcelLocationFreeShippingEligible(location.serviceId)) {
+  // Helper function to format pickup location price with free shipping consideration
+  const formatPickupLocationPrice = (location: PickupLocation) => {
+    if (isPickupLocationFreeShippingEligible(location)) {
       return "Ilmainen";
     }
-    return formatPrice(location.merchantPrice);
+    return `${(location.price / 100).toFixed(2)}€`;
   };
 
   const handleShipmentMethodChange = (value: string) => {
@@ -111,32 +87,19 @@ export function SelectShipmentMethod({
     // Parse the JSON string back into an object
     const data = JSON.parse(value);
 
-    if (data.type === "locker") {
-      const { lockerId, serviceId } = data;
-
-      // Find the shipment method that corresponds to the selected locker's service
-      const shipmentMethod = parcelLockerShipments.find(
-        (method) => method.shipitMethod?.serviceIds?.includes(serviceId)
-      );
-
-      if (shipmentMethod) {
-        const shipmentMethodId = shipmentMethod.id;
-        setChosenShipmentMethod({
-          shipmentMethodId: shipmentMethodId,
-          pickupId: lockerId,
-        });
-      } else {
-        console.error(
-          "Could not find a matching shipment method for serviceId:",
-          serviceId
-        );
-      }
-    } else if (data.type === "method") {
-      // Handle regular shipment methods if needed
-      const { methodId } = data;
+    if (data.type === "pickup") {
+      // Pickup location - shipmentMethodId is already on the location
       setChosenShipmentMethod({
-        shipmentMethodId: methodId,
+        shipmentMethodId: data.shipmentMethodId,
+        pickupId: data.pickupId,
+        serviceId: data.serviceId,
+      });
+    } else if (data.type === "method") {
+      // Home delivery method
+      setChosenShipmentMethod({
+        shipmentMethodId: data.methodId,
         pickupId: null,
+        serviceId: null,
       });
     }
   };
@@ -163,8 +126,8 @@ export function SelectShipmentMethod({
         onValueChange={handleShipmentMethodChange}
         className="space-y-8"
       >
-        {/* Home Delivery / Custom Shipments Section */}
-        {homeDeliveryOrCustomShipments.length > 0 && (
+        {/* Home Delivery Section */}
+        {homeDeliveryMethods.length > 0 && (
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-blush/60" />
@@ -174,7 +137,7 @@ export function SelectShipmentMethod({
               <div className="flex-1 h-[1px] bg-gradient-to-r from-blush/30 to-transparent" />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {homeDeliveryOrCustomShipments.map((shipment) => (
+              {homeDeliveryMethods.map((shipment) => (
                 <div
                   key={shipment.id}
                   className={`group relative bg-soft-ivory cursor-pointer transition-all duration-500 ${
@@ -292,84 +255,62 @@ export function SelectShipmentMethod({
           </div>
         )}
 
-        {/* Parcel Locker Section */}
-        {pricedLocations.length > 0 && (
+        {/* Pickup Locations Section */}
+        {pickupLocations.length > 0 && (
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-blush/60" />
               <h3 className="text-xl md:text-2xl font-primary text-midnight">
-                Pakettiautomaatti
+                Noutopisteet
               </h3>
               <div className="flex-1 h-[1px] bg-gradient-to-r from-blush/30 to-transparent" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {(showAllLocations
-                ? pricedLocations
-                : pricedLocations.slice(0, INITIAL_LOCATIONS_COUNT)
-              ).map((location) => (
+                ? pickupLocations
+                : pickupLocations.slice(0, INITIAL_LOCATIONS_COUNT)
+              ).map((location) => {
+                const radioValue = JSON.stringify({
+                  type: "pickup",
+                  shipmentMethodId: location.shipmentMethodId,
+                  pickupId: location.id,
+                  serviceId: location.serviceId,
+                });
+
+                return (
                 <div
-                  key={location.id}
+                  key={`${location.id}-${location.shipmentMethodId}`}
                   className={`group relative bg-soft-ivory cursor-pointer transition-all duration-500 ${
-                    selectedShipmentMethod ===
-                    JSON.stringify({
-                      type: "locker",
-                      lockerId: location.id,
-                      serviceId: location.serviceId,
-                    })
+                    selectedShipmentMethod === radioValue
                       ? "shadow-lg"
                       : "hover:shadow-md"
                   }`}
                 >
                   {/* Border frame */}
                   <div className={`absolute inset-0 border pointer-events-none transition-colors duration-500 ${
-                    selectedShipmentMethod ===
-                    JSON.stringify({
-                      type: "locker",
-                      lockerId: location.id,
-                      serviceId: location.serviceId,
-                    })
+                    selectedShipmentMethod === radioValue
                       ? "border-blush/40"
                       : "border-blush/10 group-hover:border-blush/25"
                   }`} />
 
                   {/* Corner accents */}
                   <div className={`absolute top-0 left-0 w-4 h-4 border-l border-t transition-all duration-500 ${
-                    selectedShipmentMethod ===
-                    JSON.stringify({
-                      type: "locker",
-                      lockerId: location.id,
-                      serviceId: location.serviceId,
-                    })
+                    selectedShipmentMethod === radioValue
                       ? "border-blush/60 w-6 h-6"
                       : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute top-0 right-0 w-4 h-4 border-r border-t transition-all duration-500 ${
-                    selectedShipmentMethod ===
-                    JSON.stringify({
-                      type: "locker",
-                      lockerId: location.id,
-                      serviceId: location.serviceId,
-                    })
+                    selectedShipmentMethod === radioValue
                       ? "border-blush/60 w-6 h-6"
                       : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute bottom-0 left-0 w-4 h-4 border-l border-b transition-all duration-500 ${
-                    selectedShipmentMethod ===
-                    JSON.stringify({
-                      type: "locker",
-                      lockerId: location.id,
-                      serviceId: location.serviceId,
-                    })
+                    selectedShipmentMethod === radioValue
                       ? "border-blush/60 w-6 h-6"
                       : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
                   <div className={`absolute bottom-0 right-0 w-4 h-4 border-r border-b transition-all duration-500 ${
-                    selectedShipmentMethod ===
-                    JSON.stringify({
-                      type: "locker",
-                      lockerId: location.id,
-                      serviceId: location.serviceId,
-                    })
+                    selectedShipmentMethod === radioValue
                       ? "border-blush/60 w-6 h-6"
                       : "border-blush/30 group-hover:w-6 group-hover:h-6 group-hover:border-blush/50"
                   }`} />
@@ -377,17 +318,13 @@ export function SelectShipmentMethod({
                   <CardContent className="p-4 relative">
                     <div className="flex items-start space-x-3">
                       <RadioGroupItem
-                        value={JSON.stringify({
-                          type: "locker",
-                          lockerId: location.id,
-                          serviceId: location.serviceId,
-                        })}
-                        id={`location-${location.id}`}
+                        value={radioValue}
+                        id={`location-${location.id}-${location.shipmentMethodId}`}
                         className="mt-1.5 flex-shrink-0"
                       />
 
                       <Label
-                        htmlFor={`location-${location.id}`}
+                        htmlFor={`location-${location.id}-${location.shipmentMethodId}`}
                         className="block cursor-pointer w-full min-w-0"
                       >
                         <div className="space-y-3">
@@ -424,7 +361,7 @@ export function SelectShipmentMethod({
                           {/* Price and Distance */}
                           <div className="flex justify-between items-center pt-1">
                             <span className="font-primary text-base text-midnight bg-blush/10 px-2 py-1 border border-blush/20">
-                              {formatParcelLocationPrice(location)}
+                              {formatPickupLocationPrice(location)}
                             </span>
                             <span className="text-midnight/60 text-xs font-secondary font-medium bg-pearl/40 px-2 py-1 border border-blush/10">
                               {formatDistance(location.distanceInMeters)}
@@ -435,11 +372,12 @@ export function SelectShipmentMethod({
                     </div>
                   </CardContent>
                 </div>
-              ))}
+              );
+              })}
             </div>
 
             {/* Show More/Less Button */}
-            {pricedLocations.length > INITIAL_LOCATIONS_COUNT && (
+            {pickupLocations.length > INITIAL_LOCATIONS_COUNT && (
               <div className="flex justify-center pt-4">
                 <button
                   type="button"
@@ -447,8 +385,8 @@ export function SelectShipmentMethod({
                   className="inline-flex items-center gap-3 px-8 py-3 border border-midnight/30 text-midnight font-secondary text-sm tracking-wider uppercase transition-all duration-300 hover:border-blush hover:text-blush"
                 >
                   {showAllLocations
-                    ? `Näytä vähemmän (${INITIAL_LOCATIONS_COUNT}/${pricedLocations.length})`
-                    : `Näytä lisää (${pricedLocations.length - INITIAL_LOCATIONS_COUNT} lisää)`}
+                    ? `Näytä vähemmän (${INITIAL_LOCATIONS_COUNT}/${pickupLocations.length})`
+                    : `Näytä lisää (${pickupLocations.length - INITIAL_LOCATIONS_COUNT} lisää)`}
                 </button>
               </div>
             )}

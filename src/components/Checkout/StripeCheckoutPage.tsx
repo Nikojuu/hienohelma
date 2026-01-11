@@ -22,6 +22,7 @@ import { apiCreateStripeCheckoutSession } from "@/lib/actions/stripeActions";
 export type ChosenShipmentType = {
   shipmentMethodId: string;
   pickupId: string | null;
+  serviceId: string | null;
 };
 
 const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {

@@ -22,6 +22,7 @@ import PaymentSelection from "./PaytrailPaymentSelection";
 export type ChosenShipmentType = {
   shipmentMethodId: string;
   pickupId: string | null;
+  serviceId: string | null;
 };
 
 const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
