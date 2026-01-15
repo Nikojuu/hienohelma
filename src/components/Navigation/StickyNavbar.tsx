@@ -20,8 +20,6 @@ export default function StickyNavbar({
 
   const getCampaignEmoji = (type: string) => {
     switch (type) {
-      case "FREE_SHIPPING":
-        return "";
       case "BUY_X_PAY_Y":
         return "";
       default:

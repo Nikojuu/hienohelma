@@ -28,13 +28,8 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const initializedRef = useRef<boolean>(false);
 
-  const {
-    calculatedItems,
-    cartTotal,
-    originalTotal,
-    totalSavings,
-    freeShipping,
-  } = calculateCartWithCampaigns(items, campaigns);
+  const { calculatedItems, cartTotal, originalTotal, totalSavings } =
+    calculateCartWithCampaigns(items, campaigns);
 
   useEffect(() => {
     setIsMounted(true);
@@ -119,26 +114,6 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
                     <span>Kampanja saasto</span>
                     <span>-{(totalSavings / 100).toFixed(2)} €</span>
                   </div>
-                </div>
-              )}
-
-              {/* Free shipping status */}
-              {freeShipping.campaignName && (
-                <div className="relative p-3 text-center border border-stone/10">
-                  {freeShipping.isEligible ? (
-                    <p className="text-xs font-secondary text-midnight/80">
-                      <span className="text-blush">✓</span> Ilmainen
-                      toimitus!
-                    </p>
-                  ) : (
-                    <p className="text-xs font-secondary text-stone">
-                      Lisaa{" "}
-                      <span className="text-blush font-medium">
-                        {(freeShipping.remainingAmount / 100).toFixed(2)} €
-                      </span>{" "}
-                      ilmaiseen toimitukseen
-                    </p>
-                  )}
                 </div>
               )}
 
