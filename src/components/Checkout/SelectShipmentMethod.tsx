@@ -1,23 +1,18 @@
 "use client";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import {
-  calculateCartWithCampaigns,
-  type Campaign,
   type ShipmentMethodsWithLocationsResponse,
   type ShipmentMethod,
   type PickupLocation,
 } from "@putiikkipalvelu/storefront-sdk";
 import { useState } from "react";
-import { useCart } from "@/hooks/use-cart";
 
 export function SelectShipmentMethod({
   shipmentMethodsAndLocations,
   setChosenShipmentMethod,
-  campaigns,
 }: {
   shipmentMethodsAndLocations: ShipmentMethodsWithLocationsResponse | null;
   setChosenShipmentMethod: (shipmentMethod: {
@@ -25,7 +20,6 @@ export function SelectShipmentMethod({
     pickupId: string | null;
     serviceId: string | null;
   }) => void;
-  campaigns: Campaign[];
 }) {
   const [selectedShipmentMethod, setSelectedShipmentMethod] =
     useState<unknown>(null);
@@ -34,27 +28,12 @@ export function SelectShipmentMethod({
   // Number of parcel lockers to show initially
   const INITIAL_LOCATIONS_COUNT = 4;
 
-  // Get cart items and free shipping status
-  const items = useCart((state) => state.items);
-  const { freeShipping } = calculateCartWithCampaigns(items, campaigns);
-
-  // Use the new simplified response structure
+  // Use the simplified response structure
   const { homeDeliveryMethods, pickupLocations } =
     shipmentMethodsAndLocations || {
       homeDeliveryMethods: [],
       pickupLocations: [],
     };
-
-  // Check if a shipment method is eligible for free shipping
-  const isShipmentMethodFreeShippingEligible = (shipmentMethodId: string) =>
-    freeShipping.isEligible &&
-    (freeShipping.eligibleShipmentMethodIds?.includes(shipmentMethodId) ?? false);
-
-  // Check if a pickup location is eligible for free shipping
-  const isPickupLocationFreeShippingEligible = (location: PickupLocation) =>
-    freeShipping.isEligible &&
-    (freeShipping.eligibleShipmentMethodIds?.includes(location.shipmentMethodId) ??
-      false);
 
   // Helper function to format distance
   const formatDistance = (distanceInMeters: number) => {
@@ -65,19 +44,13 @@ export function SelectShipmentMethod({
     }
   };
 
-  // Helper function to format shipment method price with free shipping consideration
+  // Helper function to format shipment method price
   const formatShipmentMethodPrice = (shipment: ShipmentMethod) => {
-    if (isShipmentMethodFreeShippingEligible(shipment.id)) {
-      return "Ilmainen";
-    }
     return `${(shipment.price / 100).toFixed(2)}€`;
   };
 
-  // Helper function to format pickup location price with free shipping consideration
+  // Helper function to format pickup location price
   const formatPickupLocationPrice = (location: PickupLocation) => {
-    if (isPickupLocationFreeShippingEligible(location)) {
-      return "Ilmainen";
-    }
     return `${(location.price / 100).toFixed(2)}€`;
   };
 

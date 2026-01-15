@@ -29,13 +29,8 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
   const router = useRouter();
   const cart = useCart();
 
-  const {
-    calculatedItems,
-    cartTotal,
-    originalTotal,
-    totalSavings,
-    freeShipping,
-  } = calculateCartWithCampaigns(cart.items, campaigns);
+  const { calculatedItems, cartTotal, originalTotal, totalSavings } =
+    calculateCartWithCampaigns(cart.items, campaigns);
 
   const buyXPayYCampaign = campaigns.find(
     (campaign) => campaign.type === "BUY_X_PAY_Y" && campaign.isActive
@@ -223,45 +218,10 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
                   </div>
                 )}
 
-                {/* Free shipping status */}
-                {freeShipping.campaignName && (
-                  <div className="py-4 border-b border-stone/15">
-                    <div className="relative p-4 text-center">
-                      <div className="absolute inset-0 border border-blush/20 pointer-events-none" />
-                      {freeShipping.isEligible ? (
-                        <div>
-                          <p className="text-base font-secondary text-midnight">
-                            <span className="text-blush">✓</span> Ilmainen
-                            toimitus!
-                          </p>
-                          <p className="text-sm font-secondary text-midnight/50 mt-1">
-                            {freeShipping.campaignName}
-                          </p>
-                        </div>
-                      ) : (
-                        <div>
-                          <p className="text-base font-secondary text-midnight/70">
-                            Lisaa tuotteita{" "}
-                            <span className="text-blush font-medium">
-                              {(freeShipping.remainingAmount / 100).toFixed(2)} €
-                            </span>{" "}
-                            arvosta
-                          </p>
-                          <p className="text-sm font-secondary text-midnight/50 mt-1">
-                            ja saat ilmaisen toimituksen!
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
                 {/* Shipping note */}
                 <div className="py-3">
                   <p className="text-sm font-secondary text-midnight/50">
-                    {freeShipping.isEligible
-                      ? "Ilmainen toimitus sisallytetty!"
-                      : "Toimitusmaksu lisataan kun toimitustapa on valittu"}
+                    Toimitusmaksu lisataan kun toimitustapa on valittu
                   </p>
                 </div>
 

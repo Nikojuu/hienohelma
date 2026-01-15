@@ -147,7 +147,6 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
               <SelectShipmentMethod
                 shipmentMethodsAndLocations={shipmentMethodsAndLocations}
                 setChosenShipmentMethod={setChosenShipmentMethod}
-                campaigns={campaigns}
               />
             </div>
             <div className="mt-12 flex justify-between items-center mx-auto max-w-2xl gap-4">
