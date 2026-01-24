@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { CampaignAddedCartItems } from "./CampaignAddedCartItems";
+import { DiscountCodeInput } from "./DiscountCodeInput";
 import {
   calculateCartWithCampaigns,
   type Campaign,
@@ -22,6 +23,22 @@ export type ShipmentMethods = {
   cost: number;
 };
 
+/**
+ * Calculate discount amount from discount code
+ */
+function calculateDiscountAmount(
+  discount: { discountType: "PERCENTAGE" | "FIXED_AMOUNT"; discountValue: number } | null,
+  cartTotal: number
+): number {
+  if (!discount) return 0;
+
+  if (discount.discountType === "PERCENTAGE") {
+    return Math.round(cartTotal * (discount.discountValue / 100));
+  }
+  // FIXED_AMOUNT: discountValue is already in cents
+  return discount.discountValue;
+}
+
 const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isValidating, setIsValidating] = useState(false);
@@ -31,6 +48,9 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
 
   const { calculatedItems, cartTotal, originalTotal, totalSavings } =
     calculateCartWithCampaigns(cart.items, campaigns);
+
+  // Calculate discount amount locally
+  const discountAmount = calculateDiscountAmount(cart.discount, cartTotal);
 
   const buyXPayYCampaign = campaigns.find(
     (campaign) => campaign.type === "BUY_X_PAY_Y" && campaign.isActive
@@ -48,7 +68,7 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
 
     try {
       setValidationError(null);
-      const validation = await cart.validateCart();
+      const validation = await cart.validateCart(campaigns);
 
       if (validation.hasChanges) {
         const messages: string[] = [];
@@ -59,13 +79,16 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
         }
         if (validation.changes.quantityAdjusted > 0) {
           messages.push(
-            `${validation.changes.quantityAdjusted} tuotteen maaraa vahennettiin varastotilanteen mukaan`
+            `${validation.changes.quantityAdjusted} tuotteen määrää vähennettiin varastotilanteen mukaan`
           );
         }
         if (validation.changes.priceChanged > 0) {
           messages.push(
-            `${validation.changes.priceChanged} tuotteen hinta paivitettiin`
+            `${validation.changes.priceChanged} tuotteen hinta päivitettiin`
           );
+        }
+        if (validation.changes.discountCouponRemoved) {
+          messages.push("Alennuskoodi poistettiin kampanja-alennuksen vuoksi");
         }
 
         toast({
@@ -87,7 +110,7 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
       console.error("Validation failed:", error);
       toast({
         title: "Virhe",
-        description: "Ostoskorin tarkistus epaonnistui. Yrita uudelleen.",
+        description: "Ostoskorin tarkistus epäonnistui. Yritä uudelleen.",
         variant: "destructive",
       });
     } finally {
@@ -138,16 +161,16 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
                       src="https://dsh3gv4ve2.ufs.sh/f/PRCJ5a0N1o4i4qKGOmoWuI5hetYs2UbcZvCKz06lFmBSQgq9"
                       fill
                       loading="eager"
-                      alt="Tyhja ostoskori"
+                      alt="Tyhjä ostoskori"
                       className="object-contain opacity-80"
                     />
                   </div>
 
                   <h3 className="font-primary text-4xl text-midnight mb-2">
-                    Ostoskorisi on tyhja
+                    Ostoskorisi on tyhjä
                   </h3>
                   <p className="text-base font-secondary text-midnight/60 mb-8">
-                    Loyda itsellesi sopiva vaate valikoimastamme
+                    Löydä itsellesi sopiva vaate valikoimastamme
                   </p>
 
                   <Link
@@ -201,7 +224,7 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
                   <div className="space-y-3 pb-4 border-b border-stone/15">
                     <div className="flex items-center justify-between">
                       <span className="text-base font-secondary text-midnight/60">
-                        Alkuperainen hinta
+                        Alkuperäinen hinta
                       </span>
                       <span className="text-base font-secondary text-midnight/60">
                         {`${(originalTotal / 100).toFixed(2)} €`}
@@ -209,7 +232,7 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-base font-secondary text-wine">
-                        Kampanja saasto
+                        Kampanja säästö
                       </span>
                       <span className="text-base font-secondary text-wine font-medium">
                         {`-${(totalSavings / 100).toFixed(2)} €`}
@@ -225,21 +248,61 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
                   </p>
                 </div>
 
+                {/* Discount code - only show when no campaign discount applies */}
+                {cart.items.length > 0 && totalSavings === 0 && (
+                  <div className="py-3 border-t border-blush/15">
+                    <DiscountCodeInput campaigns={campaigns} />
+                  </div>
+                )}
+
+                {/* Discount code savings */}
+                {cart.discount && discountAmount > 0 && (
+                  <div className="space-y-3 py-3 border-t border-blush/15">
+                    <div className="flex items-center justify-between">
+                      <span className="text-base font-secondary text-midnight/60">
+                        Välisumma
+                      </span>
+                      <span className="text-base font-secondary text-midnight/60">
+                        {`${(cartTotal / 100).toFixed(2)} €`}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base font-secondary text-wine">
+                        Alennus ({cart.discount.code})
+                      </span>
+                      <span className="text-base font-secondary text-wine font-medium">
+                        {`-${(discountAmount / 100).toFixed(2)} €`}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Total */}
                 <div className="flex items-center justify-between pt-4 border-t border-blush/20">
                   <span className="font-secondary text-midnight uppercase tracking-wider text-base">
-                    Yhteensa
+                    Yhteensä
                   </span>
                   <span className="text-lg text-midnight">
-                    {`${(cartTotal / 100).toFixed(2)} €`}
+                    {cart.discount && discountAmount > 0
+                      ? `${((cartTotal - discountAmount) / 100).toFixed(2)} €`
+                      : `${(cartTotal / 100).toFixed(2)} €`}
                   </span>
                 </div>
 
-                {/* Savings badge */}
+                {/* Campaign savings badge */}
                 {totalSavings > 0 && (
                   <div className="text-center pt-2">
                     <span className="inline-block text-sm font-secondary text-wine bg-wine/10 px-4 py-2">
-                      Saastat {(totalSavings / 100).toFixed(2)} € kampanjalla!
+                      Säästät {(totalSavings / 100).toFixed(2)} € kampanjalla!
+                    </span>
+                  </div>
+                )}
+
+                {/* Discount code savings badge */}
+                {cart.discount && discountAmount > 0 && totalSavings === 0 && (
+                  <div className="text-center pt-2">
+                    <span className="inline-block text-sm font-secondary text-wine bg-wine/10 px-4 py-2">
+                      Säästät {(discountAmount / 100).toFixed(2)} € alennuskoodilla!
                     </span>
                   </div>
                 )}

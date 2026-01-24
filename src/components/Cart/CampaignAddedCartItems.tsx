@@ -149,7 +149,7 @@ export const CampaignAddedCartItems = ({
                     className="w-8 h-8 flex items-center justify-center border border-stone/20 text-midnight/70 transition-colors duration-300 hover:border-blush hover:text-blush disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Minus className="w-4 h-4" />
-                    <span className="sr-only">Vahenna maaraa</span>
+                    <span className="sr-only">Vähennä määrää</span>
                   </button>
                   <span className="w-8 text-center text-sm font-secondary text-midnight">
                     {cartQuantity || 0}
@@ -163,7 +163,7 @@ export const CampaignAddedCartItems = ({
                     className="w-8 h-8 flex items-center justify-center border border-stone/20 text-midnight/70 transition-colors duration-300 hover:border-blush hover:text-blush disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Plus className="w-4 h-4" />
-                    <span className="sr-only">Lisaa maaraa</span>
+                    <span className="sr-only">Lisää määrää</span>
                   </button>
                 </div>
 

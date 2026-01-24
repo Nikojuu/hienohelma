@@ -47,14 +47,14 @@ const AddToCartButton = ({
       if (error.code === "CART_LIMIT_EXCEEDED") {
         toast({
           variant: "destructive",
-          title: "Ostoskorin raja taynna",
-          description: error.message || "Ostoskorissa voi olla maksimissaan rajallinen maara eri tuotteita.",
+          title: "Ostoskorin raja täynnä",
+          description: error.message || "Ostoskorissa voi olla maksimissaan rajallinen määrä eri tuotteita.",
         });
       } else {
         toast({
           variant: "destructive",
           title: "Virhe",
-          description: "Tuotteen lisaaminen ostoskoriin epaonnistui. Yrita uudelleen.",
+          description: "Tuotteen lisääminen ostoskoriin epäonnistui. Yritä uudelleen.",
         });
       }
       console.error("Failed to add to cart:", error);
