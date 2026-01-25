@@ -25,8 +25,19 @@ import { apiCreateStripeCheckoutSession } from "@/lib/actions/stripeActions";
 
 const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
   const { toast } = useToast();
-  const { items: cartItems } = useCart();
+  const { items: cartItems, discount } = useCart();
   const { cartTotal } = calculateCartWithCampaigns(cartItems, campaigns);
+
+  // Calculate discount amount from discount code (if applied)
+  const discountAmount = discount
+    ? discount.discountType === "PERCENTAGE"
+      ? Math.round((cartTotal * discount.discountValue) / 100)
+      : discount.discountValue
+    : 0;
+
+  // Cart total after discount code (used for free shipping threshold)
+  const cartTotalAfterDiscount = cartTotal - discountAmount;
+
   const [isLoading, setIsLoading] = useState(false);
   const [customerData, setCustomerData] = useState<CustomerData | null>(null);
   const [shippingOptions, setShippingOptions] =
@@ -49,21 +60,28 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
     if (!data) {
       return;
     }
-    try {
-      // Fetch shipping options for the customer's postal code
-      // Pass campaigns for accurate free shipping calculation
-      const response = await getShippingOptions(data.postal_code, cartItems, campaigns);
-      setShippingOptions(response);
+
+    // Fetch shipping options for the customer's postal code
+    // Pass campaigns and discountAmount for accurate free shipping calculation
+    const result = await getShippingOptions(
+      data.postal_code,
+      cartItems,
+      campaigns,
+      discountAmount
+    );
+
+    if (result.success) {
+      setShippingOptions(result.data);
       setStep(2);
-    } catch (error) {
+    } else {
       toast({
         title: "Virhe haettaessa toimitustapoja",
-        description:
-          "Virhe haettaessa toimitustapoja, yrita myohemmin uudestaan",
+        description: result.error || "Yritä myöhemmin uudestaan",
         variant: "destructive",
       });
-      console.error("Error fetching shipping options:", error);
+      console.error("Error fetching shipping options:", result.error);
     }
+
     setIsLoading(false);
   };
 
@@ -80,29 +98,30 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
       return;
     }
 
-    try {
-      // Use the validated data
-      const validatedCustomerData = validationResult.data;
+    // Use the validated data
+    const validatedCustomerData = validationResult.data;
 
-      // Convert to the format expected by the checkout API
-      const chosenShipmentMethod = selectedShipping
-        ? {
-            shipmentMethodId: selectedShipping.shipmentMethodId,
-            pickupId: selectedShipping.pickupPointId,
-            serviceId: selectedShipping.serviceId,
-          }
-        : null;
+    // Convert to the format expected by the checkout API
+    const chosenShipmentMethod = selectedShipping
+      ? {
+          shipmentMethodId: selectedShipping.shipmentMethodId,
+          pickupId: selectedShipping.pickupPointId,
+          serviceId: selectedShipping.serviceId,
+        }
+      : null;
 
-      const res = await apiCreateStripeCheckoutSession(
-        chosenShipmentMethod,
-        validatedCustomerData
-      );
-      router.push(res.url);
-    } catch (error) {
-      console.error("Checkout error:", error);
+    const result = await apiCreateStripeCheckoutSession(
+      chosenShipmentMethod,
+      validatedCustomerData
+    );
+
+    if (result.success) {
+      router.push(result.data.url);
+    } else {
+      console.error("Checkout error:", result.error);
       toast({
         title: "Virhe",
-        description: "Maksun kasittely epaonnistui. Yrita uudelleen.",
+        description: result.error || "Maksun käsittely epäonnistui. Yritä uudelleen.",
         variant: "destructive",
       });
       setIsLoading(false);
@@ -139,7 +158,7 @@ const StripeCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
             <SelectShipmentMethod
               shippingOptions={shippingOptions}
               onSelect={setSelectedShipping}
-              cartTotal={cartTotal}
+              cartTotal={cartTotalAfterDiscount}
             />
           </div>
           <div className="mt-12 flex justify-between items-center mx-auto max-w-2xl gap-4">

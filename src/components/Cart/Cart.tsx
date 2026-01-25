@@ -107,11 +107,11 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
               {totalSavings > 0 && (
                 <div className="space-y-2 text-sm font-secondary">
                   <div className="flex justify-between text-stone">
-                    <span>Alkuperainen hinta</span>
+                    <span>Alkuperäinen hinta</span>
                     <span>{(originalTotal / 100).toFixed(2)} €</span>
                   </div>
                   <div className="flex justify-between text-wine">
-                    <span>Kampanja saasto</span>
+                    <span>Kampanja säästö</span>
                     <span>-{(totalSavings / 100).toFixed(2)} €</span>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
               {/* Total */}
               <div className="flex justify-between items-center py-2">
                 <span className="font-secondary text-midnight uppercase tracking-wider text-sm">
-                  Yhteensa
+                  Yhteensä
                 </span>
                 <span className="text-base text-midnight font-semibold">
                   {(cartTotal / 100).toFixed(2)} €
@@ -129,7 +129,7 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
 
               {totalSavings > 0 && (
                 <p className="text-xs font-secondary text-center text-wine">
-                  Saastat {(totalSavings / 100).toFixed(2)} € kampanjalla!
+                  Säästät {(totalSavings / 100).toFixed(2)} € kampanjalla!
                 </p>
               )}
 
@@ -174,16 +174,16 @@ const Cart = ({ campaigns }: { campaigns: Campaign[] }) => {
                 src="https://dsh3gv4ve2.ufs.sh/f/PRCJ5a0N1o4i4qKGOmoWuI5hetYs2UbcZvCKz06lFmBSQgq9"
                 fill
                 sizes="200px, 200px"
-                alt="Tyhja ostoskori"
+                alt="Tyhjä ostoskori"
                 className="object-contain opacity-80"
               />
             </div>
 
             <h3 className="font-primary text-xl md:text-2xl text-midnight mb-2">
-              Ostoskorisi on tyhja
+              Ostoskorisi on tyhjä
             </h3>
             <p className="text-sm md:text-base font-secondary text-stone text-center mb-6">
-              Loyda itsellesi sopiva vaate valikoimastamme
+              Löydä itsellesi sopiva vaate valikoimastamme
             </p>
 
             <SheetTrigger asChild>

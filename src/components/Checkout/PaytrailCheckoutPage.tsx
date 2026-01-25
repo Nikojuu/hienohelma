@@ -25,8 +25,18 @@ import PaymentSelection from "./PaytrailPaymentSelection";
 
 const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
   const { toast } = useToast();
-  const { items: cartItems } = useCart();
+  const { items: cartItems, discount } = useCart();
   const { cartTotal } = calculateCartWithCampaigns(cartItems, campaigns);
+
+  // Calculate discount amount from discount code (if applied)
+  const discountAmount = discount
+    ? discount.discountType === "PERCENTAGE"
+      ? Math.round((cartTotal * discount.discountValue) / 100)
+      : discount.discountValue
+    : 0;
+
+  // Cart total after discount code (used for free shipping threshold)
+  const cartTotalAfterDiscount = cartTotal - discountAmount;
   const [isLoading, setIsLoading] = useState(false);
   const [customerData, setCustomerData] = useState<CustomerData | null>(null);
   const [shippingOptions, setShippingOptions] =
@@ -49,27 +59,33 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
     if (!data) {
       return;
     }
-    try {
-      // Fetch shipping options for the customer's postal code
-      // Pass campaigns for accurate free shipping calculation
-      const response = await getShippingOptions(data.postal_code, cartItems, campaigns);
-      setShippingOptions(response);
+
+    // Fetch shipping options for the customer's postal code
+    // Pass campaigns and discountAmount for accurate free shipping calculation
+    const result = await getShippingOptions(
+      data.postal_code,
+      cartItems,
+      campaigns,
+      discountAmount
+    );
+
+    if (result.success) {
+      setShippingOptions(result.data);
       setStep(2);
-    } catch (error) {
+    } else {
       toast({
         title: "Virhe haettaessa toimitustapoja",
-        description:
-          "Virhe haettaessa toimitustapoja, yritä myöhemmin uudestaan",
-        className:
-          "bg-wine/10 border-wine/30",
+        description: result.error || "Yritä myöhemmin uudestaan",
+        className: "bg-wine/10 border-wine/30",
         action: (
           <div className="flex items-center space-x-2">
             <XCircle className="h-5 w-5 text-wine" />
           </div>
         ),
       });
-      console.error("Error fetching shipping options:", error);
+      console.error("Error fetching shipping options:", result.error);
     }
+
     setIsLoading(false);
   };
 
@@ -83,43 +99,38 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
     const validatedCustomerData = validationResult.data;
     setIsLoading(true);
 
-    try {
-      // Convert to the format expected by the checkout API
-      const chosenShipmentMethod = selectedShipping
-        ? {
-            shipmentMethodId: selectedShipping.shipmentMethodId,
-            pickupId: selectedShipping.pickupPointId,
-            serviceId: selectedShipping.serviceId,
-          }
-        : null;
+    // Convert to the format expected by the checkout API
+    const chosenShipmentMethod = selectedShipping
+      ? {
+          shipmentMethodId: selectedShipping.shipmentMethodId,
+          pickupId: selectedShipping.pickupPointId,
+          serviceId: selectedShipping.serviceId,
+        }
+      : null;
 
-      const paytrailData = await apiCreatePaytrailCheckoutSession(
-        chosenShipmentMethod,
-        validatedCustomerData
-      );
+    const result = await apiCreatePaytrailCheckoutSession(
+      chosenShipmentMethod,
+      validatedCustomerData
+    );
 
-      setPaytrailData(paytrailData);
+    if (result.success) {
+      setPaytrailData(result.data);
       setStep(3);
-    } catch (error) {
-      console.error("Checkout failed:", error);
-
-      const errorMessage =
-        error instanceof Error ? error.message : "Tuntematon virhe";
-
+    } else {
+      console.error("Checkout failed:", result.error);
       toast({
         title: "Virhe maksun käsittelyssä",
-        description: errorMessage,
-        className:
-          "bg-wine/10 border-wine/30",
+        description: result.error || "Tuntematon virhe",
+        className: "bg-wine/10 border-wine/30",
         action: (
           <div className="flex items-center space-x-2">
             <XCircle className="h-5 w-5 text-wine" />
           </div>
         ),
       });
-    } finally {
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
 
   const handleGoBack = () => {
@@ -153,7 +164,7 @@ const PaytrailCheckoutPage = ({ campaigns }: { campaigns: Campaign[] }) => {
               <SelectShipmentMethod
                 shippingOptions={shippingOptions}
                 onSelect={setSelectedShipping}
-                cartTotal={cartTotal}
+                cartTotal={cartTotalAfterDiscount}
               />
             </div>
             <div className="mt-12 flex justify-between items-center mx-auto max-w-2xl gap-4">
