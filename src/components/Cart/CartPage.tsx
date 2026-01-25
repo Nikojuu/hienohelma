@@ -65,57 +65,61 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
   const handleCheckout = async () => {
     if (isValidating) return;
     setIsValidating(true);
+    setValidationError(null);
 
-    try {
-      setValidationError(null);
-      const validation = await cart.validateCart(campaigns);
+    const result = await cart.validateCart(campaigns);
 
-      if (validation.hasChanges) {
-        const messages: string[] = [];
-        if (validation.changes.removedItems > 0) {
-          messages.push(
-            `${validation.changes.removedItems} tuotetta poistettiin (loppu varastosta tai poistettu)`
-          );
-        }
-        if (validation.changes.quantityAdjusted > 0) {
-          messages.push(
-            `${validation.changes.quantityAdjusted} tuotteen määrää vähennettiin varastotilanteen mukaan`
-          );
-        }
-        if (validation.changes.priceChanged > 0) {
-          messages.push(
-            `${validation.changes.priceChanged} tuotteen hinta päivitettiin`
-          );
-        }
-        if (validation.changes.discountCouponRemoved) {
-          messages.push("Alennuskoodi poistettiin kampanja-alennuksen vuoksi");
-        }
-
-        toast({
-          title:
-            "Ostoskorissa on tapahtunut muutoksia. Tarkista ostoskori ennen jatkamista.",
-          description: messages.join(". "),
-          variant: "default",
-        });
-
-        setValidationError(
-          "Tuotteissa on tapahtunut muutoksia tarkista ostoskori ennen jatkamista"
-        );
-
-        return;
-      }
-
-      router.push("/payment/checkout");
-    } catch (error) {
-      console.error("Validation failed:", error);
+    if (!result.success) {
+      console.error("Validation failed:", result.error);
       toast({
         title: "Virhe",
-        description: "Ostoskorin tarkistus epäonnistui. Yritä uudelleen.",
+        description: result.error || "Ostoskorin tarkistus epäonnistui. Yritä uudelleen.",
         variant: "destructive",
       });
-    } finally {
       setIsValidating(false);
+      return;
     }
+
+    const validation = result.data!;
+
+    if (validation.hasChanges) {
+      const messages: string[] = [];
+      if (validation.changes.removedItems > 0) {
+        messages.push(
+          `${validation.changes.removedItems} tuotetta poistettiin (loppu varastosta tai poistettu)`
+        );
+      }
+      if (validation.changes.quantityAdjusted > 0) {
+        messages.push(
+          `${validation.changes.quantityAdjusted} tuotteen määrää vähennettiin varastotilanteen mukaan`
+        );
+      }
+      if (validation.changes.priceChanged > 0) {
+        messages.push(
+          `${validation.changes.priceChanged} tuotteen hinta päivitettiin`
+        );
+      }
+      if (validation.changes.discountCouponRemoved) {
+        messages.push("Alennuskoodi poistettiin kampanja-alennuksen vuoksi");
+      }
+
+      toast({
+        title:
+          "Ostoskorissa on tapahtunut muutoksia. Tarkista ostoskori ennen jatkamista.",
+        description: messages.join(". "),
+        variant: "default",
+      });
+
+      setValidationError(
+        "Tuotteissa on tapahtunut muutoksia tarkista ostoskori ennen jatkamista"
+      );
+
+      setIsValidating(false);
+      return;
+    }
+
+    setIsValidating(false);
+    router.push("/payment/checkout");
   };
 
   return (

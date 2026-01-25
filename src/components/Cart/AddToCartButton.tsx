@@ -40,24 +40,27 @@ const AddToCartButton = ({
   const handleAddToCart = async () => {
     if (isOutOfStock) return;
 
-    try {
-      await addItem(product, selectedVariation);
+    const result = await addItem(product, selectedVariation);
+
+    if (result.success) {
       setIsSuccess(true);
-    } catch (error: any) {
-      if (error.code === "CART_LIMIT_EXCEEDED") {
+    } else {
+      if (result.code === "CART_LIMIT_EXCEEDED") {
         toast({
           variant: "destructive",
           title: "Ostoskorin raja täynnä",
-          description: error.message || "Ostoskorissa voi olla maksimissaan rajallinen määrä eri tuotteita.",
+          description: result.error,
         });
       } else {
         toast({
           variant: "destructive",
           title: "Virhe",
-          description: "Tuotteen lisääminen ostoskoriin epäonnistui. Yritä uudelleen.",
+          description:
+            result.error ||
+            "Tuotteen lisääminen ostoskoriin epäonnistui. Yritä uudelleen.",
         });
       }
-      console.error("Failed to add to cart:", error);
+      console.error("Failed to add to cart:", result.error);
     }
   };
 
