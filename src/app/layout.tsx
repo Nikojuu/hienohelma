@@ -9,7 +9,7 @@ import StickyNavbar from "@/components/Navigation/StickyNavbar";
 import { getStoreConfig, getSEOValue, SEO_FALLBACKS } from "@/lib/storeConfig";
 import OrganizationSchema from "@/components/StructuredData/OrganizationSchema";
 import LocalBusinessSchema from "@/components/StructuredData/LocalBusinessSchema";
-import { GOOGLE_VERIFICATION, SEO_ENABLED } from "@/app/utils/constants";
+import { SEO_ENABLED } from "@/app/utils/constants";
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
@@ -19,7 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
     const description = getSEOValue(config.seo.seoDescription, SEO_FALLBACKS.description);
     const domain = getSEOValue(config.seo.domain, SEO_FALLBACKS.domain);
     const ogImage = getSEOValue(config.seo.openGraphImageUrl, SEO_FALLBACKS.openGraphImage);
+    const ogImageAlt = config.seo.ogImageAlt || title;
     const twitterImage = getSEOValue(config.seo.twitterImageUrl, SEO_FALLBACKS.twitterImage);
+    const twitterHandle = config.seo.twitterHandle;
 
     return {
       metadataBase: new URL(domain),
@@ -41,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
             url: ogImage,
             width: 1200,
             height: 630,
-            alt: title,
+            alt: ogImageAlt,
           },
         ],
         locale: "fi_FI",
@@ -52,11 +54,12 @@ export async function generateMetadata(): Promise<Metadata> {
         title,
         description,
         images: [twitterImage],
+        ...(twitterHandle && { site: twitterHandle, creator: twitterHandle }),
       },
-      ...(GOOGLE_VERIFICATION
+      ...(config.seo.googleVerificationCode
         ? {
             verification: {
-              google: GOOGLE_VERIFICATION,
+              google: config.seo.googleVerificationCode,
             },
           }
         : {}),
@@ -91,6 +94,8 @@ export default async function RootLayout({
   const storeConfig = await getStoreConfig();
   const campaigns = storeConfig.campaigns;
   const logoUrl = storeConfig.store.logoUrl || SEO_FALLBACKS.logoUrl;
+  const storeName = storeConfig.store.name;
+  const instagramUrl = storeConfig.seo.instagramUrl;
 
   return (
     <html
@@ -108,7 +113,7 @@ export default async function RootLayout({
           <Navbar campaigns={campaigns} logoUrl={logoUrl} />
         </StickyNavbar>
         <main className="min-h-[75vh] max-w-[3500px]">{children}</main>
-        <Footer logoUrl={logoUrl} />
+        <Footer logoUrl={logoUrl} storeName={storeName} instagramUrl={instagramUrl} />
 
         <Toaster />
       </body>

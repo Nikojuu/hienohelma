@@ -1,9 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
-import { STORE_NAME } from "@/app/utils/constants";
 
-export function Footer({ logoUrl }: { logoUrl: string }) {
+interface FooterProps {
+  logoUrl: string;
+  storeName: string;
+  instagramUrl?: string | null;
+}
+
+export function Footer({ logoUrl, storeName, instagramUrl }: FooterProps) {
+  // Extract Instagram handle from URL for display
+  const instagramHandle = instagramUrl
+    ? instagramUrl.split("/").filter(Boolean).pop() || storeName.toLowerCase().replace(/\s+/g, "_")
+    : storeName.toLowerCase().replace(/\s+/g, "_");
+
   return (
     <footer className="relative bg-midnight overflow-hidden">
       {/* Top gradient line */}
@@ -17,7 +27,7 @@ export function Footer({ logoUrl }: { logoUrl: string }) {
               <div className="relative">
                 <Image
                   src={logoUrl}
-                  alt={`${STORE_NAME} logo`}
+                  alt={`${storeName} logo`}
                   width={80}
                   height={80}
                   className="w-16 h-16 md:w-20 md:h-20 transition-transform duration-500 group-hover:scale-105"
@@ -64,16 +74,18 @@ export function Footer({ logoUrl }: { logoUrl: string }) {
             <p className="text-soft-ivory/60 font-secondary text-sm text-center md:text-right mb-2">
               Loyda meidat myos somesta!
             </p>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="group flex items-center gap-2 text-soft-ivory/70 hover:text-blush transition-colors duration-300"
-            >
-              <InstagramLogoIcon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
-              <span className="text-sm font-secondary">@{STORE_NAME.toLowerCase().replace(/\s+/g, '_')}</span>
-            </a>
+            {instagramUrl && (
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="group flex items-center gap-2 text-soft-ivory/70 hover:text-blush transition-colors duration-300"
+              >
+                <InstagramLogoIcon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
+                <span className="text-sm font-secondary">@{instagramHandle}</span>
+              </a>
+            )}
           </div>
         </div>
 
@@ -87,7 +99,7 @@ export function Footer({ logoUrl }: { logoUrl: string }) {
         {/* Copyright */}
         <div className="text-center">
           <p className="text-xs font-secondary text-soft-ivory/70">
-            &copy; {new Date().getFullYear()} {STORE_NAME}. Kaikki oikeudet pidatetaan.
+            &copy; {new Date().getFullYear()} {storeName}. Kaikki oikeudet pidatetaan.
           </p>
         </div>
       </div>
