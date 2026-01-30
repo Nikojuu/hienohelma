@@ -52,7 +52,7 @@ export function Footer({ logoUrl, storeName, instagramUrl }: FooterProps) {
                 Yhteystiedot
               </Link>
               <Link
-                href="/privacy-policy"
+                href="/privacy"
                 className="text-sm font-secondary text-soft-ivory/70 hover:text-blush transition-colors duration-300"
               >
                 Tietosuojakaytanto

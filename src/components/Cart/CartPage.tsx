@@ -124,7 +124,7 @@ const CartPage = ({ campaigns }: { campaigns: Campaign[] }) => {
 
   return (
     <section className="pt-8 md:pt-16 pb-16 bg-soft-ivory">
-      <Subtitle subtitle="Ostoskori" />
+      <Subtitle subtitle="Ostoskori" as="h1" />
 
       <div className="container mx-auto px-4 max-w-screen-xl">
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">

@@ -8,6 +8,7 @@ interface SubtitleProps {
   description?: string;
   dark?: boolean;
   alignment?: "center" | "left";
+  as?: "h1" | "h2";
 }
 
 const Subtitle = ({
@@ -15,6 +16,7 @@ const Subtitle = ({
   description,
   dark,
   alignment = "center",
+  as: Tag = "h2",
 }: SubtitleProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -47,13 +49,13 @@ const Subtitle = ({
         </motion.div>
 
         {/* Main title */}
-        <h2
+        <Tag
           className={`text-3xl md:text-4xl lg:text-5xl font-primary tracking-tight ${
             dark ? "text-soft-ivory" : "text-midnight"
           }`}
         >
           {subtitle}
-        </h2>
+        </Tag>
 
         {/* Optional description */}
         {description && (
